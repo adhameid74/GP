@@ -22,7 +22,7 @@
  * @param Copy_u8TimerNumber      TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4 
  * @param Copy_u8PrescalerValue   (u16) Prescaler value
  */
-void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u8PrescalerValue);
+void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u16PrescalerValue);
 /**
  * @brief  Synchronus Function for setting timer in Busywait for certain time 
  * 
