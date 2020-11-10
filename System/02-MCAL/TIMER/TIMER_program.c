@@ -19,7 +19,7 @@ static void (*TIMER_Callback[6]) (void) ;
 static u8 TIMER_u8IntervalType[6] ;
 
 
-void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u8PrescalerValue)
+void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u16PrescalerValue)
 {
     switch (Copy_u8TimerNumber)
     {
