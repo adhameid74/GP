@@ -130,7 +130,6 @@ void ADC_voidSetCallBackRegular(void (*Copy_Notification)(u16))
 u16 ADC_u16ReadRegularSync()
 {
 	u16 ADC_Reading;
-	SET_BIT(MADC->CR2,SWSTART_BIT);
 	while(GET_BIT(MADC->SR,EOC) == 0);
 	ADC_Reading = 0xFFFF & MADC->DR;
 	CLR_BIT(MADC->SR,EOC);
