@@ -3,7 +3,7 @@
  *  @Title       : DIO Module
  *  @Filename    : DIO_program.c
  *  @Author      : Ahmed Hendawy
- *  @Origin Date : 11/9/2020
+ *  @Origin Date : 16/11/2020
  *  @Version     : 1.0.0
  *  @Notes       : None
  *
@@ -285,7 +285,35 @@ void Dio_WriteChannelGroup( const Dio_ChannelGroupType* ChannelGroupIdPtr, Dio_P
  *  @endocde
  *
  */
-//Dio_LevelType Dio_FlipChannel( Dio_ChannelType ChannelId){}
+Dio_LevelType Dio_FlipChannel( Dio_ChannelType ChannelId){
+
+	Dio_LevelType Temp ;
+
+	if(ChannelId < 16 ){
+		Temp = GET_BIT(PORTA -> ODR , ChannelId % 16 );
+		if(Temp == 0)
+			SET_BIT(PORTA ->BSRR ,ChannelId % 16 );
+        else if(Temp == 1)
+            SET_BIT(PORTA ->BSRR ,(ChannelId % 16)+16);
+	}
+	else if(ChannelId < 32){
+		Temp = GET_BIT(PORTB -> ODR , ChannelId % 16 );
+		if(Temp ==0 )
+			SET_BIT(PORTB ->BSRR ,ChannelId % 16 );
+        else if(Temp == 1)
+            SET_BIT(PORTB ->BSRR ,(ChannelId % 16)+16);
+	}
+
+	else if(ChannelId < 48){
+		Temp = GET_BIT(PORTB -> ODR , ChannelId % 16 );
+		if(Temp == 0)
+			SET_BIT(PORTC ->BSRR ,ChannelId % 16 );
+        else if(Temp == 1)
+            SET_BIT(PORTC ->BSRR ,(ChannelId % 16)+16);
+	}
+
+	return Temp;
+}
 //*********************************************************************
 //                      Not Follow Autosar
 //*********************************************************************
@@ -295,7 +323,7 @@ void Dio_WriteChannelGroup( const Dio_ChannelGroupType* ChannelGroupIdPtr, Dio_P
  */
 /**
  *  @Description  :
- *  
+ *
  *  This function is used to determine the direction of pin .
  *
  *  PRE_CONDITOIN  : None .
@@ -307,7 +335,7 @@ void Dio_WriteChannelGroup( const Dio_ChannelGroupType* ChannelGroupIdPtr, Dio_P
  *
  *  \b Example :
  *  @code
- *  
+ *
  *  Port_SetPinDirection(PA0,OUTPUT_S10MHZ);
  *
  *  @endocde
