@@ -19,13 +19,15 @@ void (*ADC_ISR)(u16) = NULL;
 
 void ADC_voidInit(void)
 {
-	/*Enable ADC*/
-	SET_BIT(MADC->CR2,ADON);
+
 
 	MADC->CR1 = 0;
 	MADC->CR2 = 0;
 	MADC->SQR[0] = 0;
 	MADC->JSQR = 0;
+
+	/*Enable ADC*/
+	SET_BIT(MADC->CR2,ADON);
 
 	#if ADC_MODE == SINGLE_CHANNEL_SINGLE_CONVERSION_MODE
 	#elif ADC_MODE == DISCONTINUOUS_MODE
@@ -130,9 +132,10 @@ void ADC_voidSetCallBackRegular(void (*Copy_Notification)(u16))
 u16 ADC_u16ReadRegularSync()
 {
 	u16 ADC_Reading;
+	SET_BIT(MADC->CR2,SWSTART_BIT);
 	while(GET_BIT(MADC->SR,EOC) == 0);
 	ADC_Reading = 0xFFFF & MADC->DR;
-	CLR_BIT(MADC->SR,EOC);
+	//CLR_BIT(MADC->SR,EOC);
 	return ADC_Reading;
 }
 
