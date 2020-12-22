@@ -2,7 +2,7 @@
  * @file TIMER_private.h
  * @author Eslam Khaled (Eslam.kh.kamal@gmail.com)
  * @brief  TIMER private file
- * @version 0.1
+ * @version 0.2
  * @date 2020-11-10
  * 
  * @copyright Copyright (c) 2020
@@ -93,5 +93,15 @@
 #define TIM5_CCR4           *((volatile u16 *)0x40000C40)
 #define TIM5_DCR            *((volatile u16 *)0x40000C48)
 #define TIM5_DMAR           *((volatile u16 *)0x40000C4C)
+
+#define CHANNEL1_OUTPUT_PWM_MODE1            0x0060
+#define CHANNEL2_OUTPUT_PWM_MODE1            0x6000
+#define CHANNEL3_OUTPUT_PWM_MODE1            0x0060
+#define CHANNEL4_OUTPUT_PWM_MODE1            0x6000
+
+#define CHANNEL1_OUTPUT_ENABLE               0x0001
+#define CHANNEL2_OUTPUT_ENABLE               0x0010
+#define CHANNEL3_OUTPUT_ENABLE               0x0100
+#define CHANNEL4_OUTPUT_ENABLE               0x1000
 
 #endif
