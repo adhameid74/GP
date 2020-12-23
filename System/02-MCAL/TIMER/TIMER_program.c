@@ -2,7 +2,7 @@
  * @file TIMER_program.c
  * @author Eslam Khaled (Eslam.kh.kamal@gmail.com)
  * @brief  TIMER program file
- * @version 0.1
+ * @version 0.2
  * @date 2020-11-10
  * 
  * @copyright Copyright (c) 2020
@@ -323,6 +323,146 @@ void TIMER_voidResetTimer(u8 Copy_u8TimerNumber)
     case TIMER_TIMER5:
         TIM5_ARR = 0;
         TIM5_CNT = 0;
+        break;
+    default:
+        break;
+    }
+}
+void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime , u16 Copy_u16TimeON);
+{
+     switch (Copy_u8TimerChannelNumber)
+    {
+    case TIMER_TIMER2_CHANNEL1:
+        TIM2_CCR1 = Copy_u16TimeON;           // Set TimeON value in capture compare register
+        TIM2_CCMR1 |= CHANNEL1_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM2_CCER  |= CHANNEL1_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM2_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM2_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM2_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM2_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM2_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM2_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER2_CHANNEL2:
+        TIM2_CCR2 = Copy_u16TimeON;
+        TIM2_CCMR1 |= CHANNEL2_OUTPUT_PWM_MODE1  ;  // Set the channel to be output
+        TIM2_CCER  |= CHANNEL2_OUTPUT_ENABLE; // Enable the channel output and PWM MODE 1
+        CLR_BIT(TIM2_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM2_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM2_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM2_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM2_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM2_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER2_CHANNEL3:
+        TIM2_CCR3 = Copy_u16TimeON;
+        TIM2_CCMR2 |= CHANNEL3_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM2_CCER  |= CHANNEL3_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM2_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM2_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM2_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM2_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM2_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM2_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER2_CHANNEL4:
+        TIM2_CCR4 = Copy_u16TimeON;
+        TIM2_CCMR2 |= CHANNEL4_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM2_CCER  |= CHANNEL4_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM2_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM2_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM2_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM2_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM2_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM2_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER3_CHANNEL1:
+        TIM3_CCR1 = Copy_u16TimeON;
+        TIM3_CCMR1 |= CHANNEL1_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM3_CCER  |= CHANNEL1_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM3_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM3_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM3_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM3_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM3_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM3_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER3_CHANNEL2:
+        TIM3_CCR2 = Copy_u16TimeON;
+        TIM3_CCMR1 |= CHANNEL2_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM3_CCER  |= CHANNEL2_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM3_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM3_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM3_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM3_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM3_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM3_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER3_CHANNEL3:
+        TIM3_CCR3 = Copy_u16TimeON;
+        TIM3_CCMR2 |= CHANNEL3_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM3_CCER  |= CHANNEL3_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM3_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM3_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM3_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM3_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM3_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM3_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER3_CHANNEL4:
+        TIM3_CCR4 = Copy_u16TimeON;
+        TIM3_CCMR2 |= CHANNEL4_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM3_CCER  |= CHANNEL4_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM3_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM3_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM3_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM3_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM3_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM3_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER4_CHANNEL1:
+        TIM4_CCR1 = Copy_u16TimeON;
+        TIM4_CCMR1 |= CHANNEL1_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM4_CCER  |= CHANNEL1_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM4_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM4_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM4_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM4_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM4_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM4_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER4_CHANNEL2:
+        TIM4_CCR2 = Copy_u16TimeON;
+        TIM4_CCMR1 |= CHANNEL2_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM4_CCER  |= CHANNEL2_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM4_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM4_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM4_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM4_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM4_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM4_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER4_CHANNEL3:
+        TIM4_CCR3 = Copy_u16TimeON;
+        TIM4_CCMR2 |= CHANNEL3_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM4_CCER  |= CHANNEL3_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM4_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM4_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM4_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM4_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM4_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM4_CR1 , 0);                // Counter enabled
+        break;
+    case TIMER_TIMER4_CHANNEL4:
+        TIM4_CCR4 = Copy_u16TimeON;
+        TIM4_CCMR2 |= CHANNEL4_OUTPUT_PWM_MODE1  ;  // Set the channel to be output and PWM MODE 1
+        TIM4_CCER  |= CHANNEL4_OUTPUT_ENABLE; // Enable the channel output
+        CLR_BIT(TIM4_CR1 , 4);                // Counter used as upcounter
+        CLR_BIT(TIM4_CR1 , 3);                // Counter is not stopped at update event
+        CLR_BIT(TIM4_CR1 , 1);                // UEV enabled
+        SET_BIT(TIM4_CR1 , 2);                // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM4_ARR  = Copy_u16PeriodTime;       // Set the PeriodTime in Auto Reload Register
+        SET_BIT(TIM4_CR1 , 0);                // Counter enabled
         break;
     default:
         break;
