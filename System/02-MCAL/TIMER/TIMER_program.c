@@ -24,19 +24,19 @@ void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u16PrescalerValue)
     switch (Copy_u8TimerNumber)
     {
     case TIMER_TIMER2:
-        TIM2_PSC = Copy_u8PrescalerValue - 1 ;
+        TIM2_PSC = Copy_u16PrescalerValue - 1 ;
         break;
 
     case TIMER_TIMER3:
-        TIM3_PSC = Copy_u8PrescalerValue - 1 ;
+        TIM3_PSC = Copy_u16PrescalerValue - 1 ;
         break;
 
     case TIMER_TIMER4:
-        TIM4_PSC = Copy_u8PrescalerValue - 1 ;
+        TIM4_PSC = Copy_u16PrescalerValue - 1 ;
         break;
 
     case TIMER_TIMER5:
-        TIM5_PSC = Copy_u8PrescalerValue - 1 ;
+        TIM5_PSC = Copy_u16PrescalerValue - 1 ;
         break;
 
     default:
@@ -328,7 +328,7 @@ void TIMER_voidResetTimer(u8 Copy_u8TimerNumber)
         break;
     }
 }
-void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime , u16 Copy_u16TimeON);
+void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime , u16 Copy_u16TimeON)
 {
      switch (Copy_u8TimerChannelNumber)
     {
