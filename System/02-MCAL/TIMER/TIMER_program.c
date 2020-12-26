@@ -53,6 +53,7 @@ void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
         CLR_BIT(TIM2_CR1 , 1);     // UEV enabled
         SET_BIT(TIM2_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
         TIM2_ARR = Copy_u16Value ;
+        SET_BIT(TIM2_EGR, 0);
         SET_BIT(TIM2_CR1 , 0);    // Counter enabled
         while(GET_BIT(TIM2_SR , 0) == 0);  // Wait untill overflow
         SET_BIT(TIM2_CR1 , 1);     // UEV disabled
@@ -65,6 +66,7 @@ void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
         CLR_BIT(TIM3_CR1 , 1);     // UEV enabled
         SET_BIT(TIM3_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
         TIM3_ARR = Copy_u16Value ;
+        SET_BIT(TIM3_EGR, 0);
         SET_BIT(TIM3_CR1 , 0);    // Counter enabled
         while(GET_BIT(TIM3_SR , 0) == 0);  // Wait untill overflow
         SET_BIT(TIM3_CR1 , 1);     // UEV disabled
@@ -77,6 +79,7 @@ void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
         CLR_BIT(TIM4_CR1 , 1);     // UEV enabled
         SET_BIT(TIM4_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
         TIM4_ARR = Copy_u16Value ;
+        SET_BIT(TIM4_EGR, 0);
         SET_BIT(TIM4_CR1 , 0);    // Counter enabled
         while(GET_BIT(TIM4_SR , 0) == 0);  // Wait untill overflow
         SET_BIT(TIM4_CR1 , 1);     // UEV disabled
@@ -89,6 +92,7 @@ void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
         CLR_BIT(TIM5_CR1 , 1);     // UEV enabled
         SET_BIT(TIM5_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
         TIM5_ARR = Copy_u16Value ;
+        SET_BIT(TIM5_EGR, 0);
         SET_BIT(TIM5_CR1 , 0);    // Counter enabled
         while(GET_BIT(TIM5_SR , 0) == 0);  // Wait untill overflow
         SET_BIT(TIM5_CR1 , 1);     // UEV disabled
@@ -112,6 +116,7 @@ void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , voi
         TIM2_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[2] = SINGLE_SHOT ;
         TIMER_Callback[2] = Copy_ptr ;
+        SET_BIT(TIM2_EGR, 0);
         SET_BIT(TIM2_CR1 , 0);    // Counter enabled
         break;
 
@@ -124,7 +129,8 @@ void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , voi
         TIM3_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[3] = SINGLE_SHOT ;
         TIMER_Callback[3] = Copy_ptr ;
-        SET_BIT(TIM3_CR1 , 0);    // Counter enabled
+        SET_BIT(TIM3_EGR, 0);
+       SET_BIT(TIM3_CR1 , 0);    // Counter enabled
         break;
 
     case TIMER_TIMER4:
@@ -136,6 +142,7 @@ void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , voi
         TIM4_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[4] = SINGLE_SHOT ;
         TIMER_Callback[4] = Copy_ptr ;
+        SET_BIT(TIM4_EGR, 0);
         SET_BIT(TIM4_CR1 , 0);    // Counter enabled
         break;
 
@@ -148,6 +155,7 @@ void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , voi
         TIM5_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[5] = SINGLE_SHOT ;
         TIMER_Callback[5] = Copy_ptr ;
+        SET_BIT(TIM5_EGR, 0);
         SET_BIT(TIM5_CR1 , 0);    // Counter enabled
         break;
 
@@ -169,6 +177,7 @@ void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , v
         TIM2_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[2] = MULTI_SHOT ;
         TIMER_Callback[2] = Copy_ptr ;
+        SET_BIT(TIM2_EGR, 0);
         SET_BIT(TIM2_CR1 , 0);    // Counter enabled
         break;
 
@@ -181,6 +190,7 @@ void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , v
         TIM3_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[3] = MULTI_SHOT ;
         TIMER_Callback[3] = Copy_ptr ;
+        SET_BIT(TIM3_EGR, 0);
         SET_BIT(TIM3_CR1 , 0);    // Counter enabled
         break;
 
@@ -193,6 +203,7 @@ void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , v
         TIM4_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[4] = MULTI_SHOT ;
         TIMER_Callback[4] = Copy_ptr ;
+        SET_BIT(TIM4_EGR, 0);
         SET_BIT(TIM4_CR1 , 0);    // Counter enabled
         break;
 
@@ -205,6 +216,7 @@ void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , v
         TIM5_ARR = Copy_u16Value ;
         TIMER_u8IntervalType[5] = MULTI_SHOT ;
         TIMER_Callback[5] = Copy_ptr ;
+        SET_BIT(TIM5_EGR, 0);
         SET_BIT(TIM5_CR1 , 0);    // Counter enabled
         break;
 
