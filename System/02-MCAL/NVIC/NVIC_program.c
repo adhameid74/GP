@@ -130,10 +130,6 @@ void NVIC_voidSetPriority  (u8 Copy_u8IntNumber ,u8 Copy_u8GroupPriority ,u8 Cop
 {
     u8 Local_u8Priority;
     Local_u8Priority = Copy_u8SupPriority|(Copy_u8GroupPriority<<((Copy_u32Channel-NVIC_4GROUP_0SUB)/256));
-
-    if (Copy_u8IntNumber >= 0)
-    {
-        NVIC_IPR[Copy_u8IntNumber] = Local_u8Priority << 4;
-    }
+    NVIC_IPR[Copy_u8IntNumber] = Local_u8Priority << 4;
     SCB_AIRCR = Copy_u32Channel;    
 }
