@@ -2,7 +2,7 @@
  * @file TIMER_program.c
  * @author Eslam Khaled (Eslam.kh.kamal@gmail.com)
  * @brief  TIMER program file
- * @version 0.2
+ * @version 0.3
  * @date 2020-11-10
  * 
  * @copyright Copyright (c) 2020
@@ -316,33 +316,59 @@ u16 TIMER_u16GetRemainingTime(u8 Copy_u8TimerNumber)
     }
     return Local_u16Time ;
 }
-void TIMER_voidResetTimer(u8 Copy_u8TimerNumber)
+void TIMER_voidSetResetTimer(u8 Copy_u8TimerNumber,u8 Copy_u8Statue,u16 Copy_u16Value)
 {
-    switch (Copy_u8TimerNumber)
+    if (Copy_u8Statue==TIMER_SET)
     {
-    case TIMER_TIMER2:
-        TIM2_ARR = 0;
-        TIM2_CNT = 0;
-        break;
-    case TIMER_TIMER3:
-        TIM3_ARR = 0;
-        TIM3_CNT = 0;
-        break;
-    case TIMER_TIMER4:
-        TIM4_ARR = 0;
-        TIM4_CNT = 0;
-        break;
-    case TIMER_TIMER5:
-        TIM5_ARR = 0;
-        TIM5_CNT = 0;
-        break;
-    default:
-        break;
+        switch (Copy_u8TimerNumber)
+        {
+        case TIMER_TIMER2:
+            TIM2_ARR = Copy_u16Value;
+            TIM2_CNT = 0;
+            break;
+        case TIMER_TIMER3:
+            TIM3_ARR = Copy_u16Value;
+            TIM3_CNT = 0;
+            break;
+        case TIMER_TIMER4:
+            TIM4_ARR = Copy_u16Value;
+            TIM4_CNT = 0;
+            break;
+        case TIMER_TIMER5:
+            TIM5_ARR = Copy_u16Value;
+            TIM5_CNT = 0;
+            break;
+        default:
+            break;
+        }
+    }
+    else{
+        switch (Copy_u8TimerNumber)
+        {
+        case TIMER_TIMER2:
+            TIM2_ARR = 0;
+            TIM2_CNT = 0;
+            break;
+        case TIMER_TIMER3:
+            TIM3_ARR = 0;
+            TIM3_CNT = 0;
+            break;
+        case TIMER_TIMER4:
+            TIM4_ARR = 0;
+            TIM4_CNT = 0;
+            break;
+        case TIMER_TIMER5:
+            TIM5_ARR = 0;
+            TIM5_CNT = 0;
+            break;
+        default:
+            break;
+        }
     }
 }
 void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime , u16 Copy_u16TimeON)
 {
-     switch (Copy_u8TimerChannelNumber)
+    switch (Copy_u8TimerChannelNumber)
     {
     case TIMER_TIMER2_CHANNEL1:
         TIM2_CCR1 = Copy_u16TimeON;           // Set TimeON value in capture compare register
@@ -478,5 +504,48 @@ void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime
         break;
     default:
         break;
+    }
+}
+
+
+void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber ,u8 Copy_u8Statue){
+    if (Copy_u8Statue==TIMER_START)
+    {
+        switch (Copy_u8TimerNumber)
+        {
+        case TIMER_TIMER2:
+            SET_BIT(TIM2_CR1 , 0);
+            break;
+        case TIMER_TIMER3:
+            SET_BIT(TIM3_CR1 , 0);
+            break;
+        case TIMER_TIMER4:
+            SET_BIT(TIM4_CR1 , 0);
+            break;
+        case TIMER_TIMER5:
+            SET_BIT(TIM5_CR1 , 0);
+            break;
+        default:
+            break;
+        }
+    }
+    else{
+        switch (Copy_u8TimerNumber)
+        {
+        case TIMER_TIMER2:
+            CLR_BIT(TIM2_CR1 , 0);
+            break;
+        case TIMER_TIMER3:
+            CLR_BIT(TIM3_CR1 , 0);
+            break;
+        case TIMER_TIMER4:
+            CLR_BIT(TIM4_CR1 , 0);
+            break;
+        case TIMER_TIMER5:
+            CLR_BIT(TIM5_CR1 , 0);
+            break;
+        default:
+            break;
+        }
     }
 }
