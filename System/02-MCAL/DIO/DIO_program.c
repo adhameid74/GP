@@ -3,7 +3,7 @@
  *  @Title       : DIO Module
  *  @Filename    : DIO_program.c
  *  @Author      : Ahmed Hendawy
- *  @Origin Date : 16/11/2020
+ *  @Origin Date : 11/9/2020
  *  @Version     : 1.0.0
  *  @Notes       : None
  *
@@ -15,6 +15,9 @@
 
 #include "DIO_interface.h"
 #include "DIO_private.h"
+#include "Dio_config.h"
+
+
 
 /*****************************************************************
 *                  Follow Autosar                                *
@@ -203,11 +206,11 @@ Dio_PortLevelType Dio_ReadChannelGroup( const Dio_ChannelGroupType* ChannelGroup
 	Dio_PortLevelType Temp ;
 	Dio_PortLevelType Mask = (ChannelGroupIdPtr -> mask )<< ChannelGroupIdPtr -> offset;
 	if(ChannelGroupIdPtr -> port == 0)
-		Temp = (PORTA -> ODR) & Mask ;
+		Temp = (PORTA -> IDR) & Mask ;
 	else if(ChannelGroupIdPtr -> port == 1)
-		Temp = (PORTB -> ODR) & Mask ;
+		Temp = (PORTB -> IDR) & Mask ;
 	else if(ChannelGroupIdPtr -> port == 2)
-		Temp = (PORTC -> ODR) & Mask ;
+		Temp = (PORTC -> IDR) & Mask ;
 	
 	return Temp ;
 }
@@ -343,24 +346,37 @@ Dio_LevelType Dio_FlipChannel( Dio_ChannelType ChannelId){
  */
 void Port_SetPinDirection( u8 Pin, u8 Direction){
 
-	u8 Temp = Pin %16 ;
+    u8 Temp = Pin %16 ;
 	if(Pin < 16 ){
-		if(Temp < 8)
+		if(Temp < 8){
+			PORTA -> CRL &= ~(0xF << 4*Temp);
 			PORTA -> CRL |= Direction << 4 * Temp ;
-		else
+		}
+		else{
+			PORTA -> CRH &= ~(0xF << 4*(Temp - 8));
 			PORTA -> CRH |= Direction << 4 * (Temp - 8) ;
+
+		}
 	}
 	else if(Pin < 32){
-		if(Temp < 8)
+		if(Temp < 8){
+			PORTB -> CRL &= ~(0xF << 4*Temp);
 			PORTB -> CRL |= Direction << 4 * Temp ;
-		else
+		}
+		else{
+			PORTB -> CRH &= ~(0xF << 4*(Temp - 8));
 			PORTB -> CRH |= Direction << 4 * (Temp - 8) ;
+		}
 	}
 	else if(Pin < 48){
-		if(Temp < 8)
+		if(Temp < 8){
+			PORTC -> CRL &= ~(0xF << 4*Temp);
 			PORTC -> CRL |= Direction << 4 * Temp ;
-		else
+		}
+		else{
+			PORTC -> CRH &= ~(0xF << 4*(Temp - 8));
 			PORTC -> CRH |= Direction << 4 * (Temp - 8) ;
+		}
 	}
 }
 /*****************************************************************
@@ -402,13 +418,13 @@ void Port_SetPinMode( u8 Pin, u8 Mode ){
 
 		}
 		if(Temp < 8){
-			CLR_BIT (PORTA -> CRL, Temp + 2);
+			CLR_BIT (PORTA -> CRL, 4*Temp + 2);
 			PORTA -> CRL |= Mode << 4 * Temp + 2;
 
 			}
 		else {
 			Temp =Temp - 8 ;
-			CLR_BIT (PORTA -> CRH, Temp + 2);
+			CLR_BIT (PORTA -> CRH,4* Temp + 2);
 			PORTA -> CRH |= Mode << 4 * Temp + 2 ;
 
 			}
@@ -423,12 +439,13 @@ void Port_SetPinMode( u8 Pin, u8 Mode ){
 
 		}
 		if(Temp < 8){
-			CLR_BIT (PORTB -> CRL, Temp + 2);
+			CLR_BIT (PORTB -> CRL,4* Temp + 2);
 			PORTB -> CRL |= Mode << 4 * Temp + 2;
 			}
 		else{
-			CLR_BIT (PORTB -> CRH, Temp + 2);
-     		PORTB -> CRH |= Mode << 4 * (Temp - 8) + 2;
+			Temp =Temp - 8 ;
+			CLR_BIT (PORTB -> CRH,4* Temp + 2);
+     		PORTB -> CRH |= Mode << 4 *Temp + 2;
 			}
 
 	}
@@ -441,12 +458,13 @@ void Port_SetPinMode( u8 Pin, u8 Mode ){
 
 		}
 		if(Temp < 8){
-			CLR_BIT (PORTC -> CRL, Temp + 2);
+			CLR_BIT (PORTC -> CRL, 4*Temp + 2);
 			PORTC -> CRL |= Mode << 4 * Temp + 2 ;
 		}
 		else{
-			CLR_BIT (PORTC -> CRH, Temp + 2);
-			PORTC -> CRH |= Mode << 4 * (Temp - 8) + 2;
+			Temp =Temp - 8 ;
+			CLR_BIT (PORTC -> CRH, 4*Temp + 2);
+			PORTC -> CRH |= Mode << 4 *Temp+ 2;
 			}
 
 	}
