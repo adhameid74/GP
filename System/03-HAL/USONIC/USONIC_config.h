@@ -15,8 +15,8 @@
 /*
     Example PA1
 */
-#define USONIC_ECHO			    PORTB,PIN10
-#define USONIC_TRIGGER			PORTB,PIN11
+#define USONIC_ECHO			    PB10
+#define USONIC_TRIGGER			PB11
 
 /*
     options:
@@ -24,7 +24,7 @@
     TIMER_TIMER3
     TIMER_TIMER4
 */
-#define USONIC_TIMER    TIMER_TIMER3
+#define USONIC_TIMER    TIMER_TIMER2
 
 
 #endif

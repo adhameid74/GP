@@ -22,13 +22,18 @@ u8 Local_u8Flag=0;
 
 void USONIC_voidInit(){
     //Set ECHO pin as 2MHZ output pin and initialy Low
-	DIO_voidSetPinDirection (USONIC_TRIGGER, OUTPUT_GP_2MHZ_PP);
-	DIO_voidSetPinValue     (USONIC_TRIGGER, LOW);
+	Port_SetPinDirection( USONIC_TRIGGER, OUTPUT_S2MHZ);
+	Port_SetPinMode( USONIC_TRIGGER, GP_OUTPUT_PUSH_PULL );
+	Dio_WriteChannel( USONIC_TRIGGER, 0);
+	//DIO_voidSetPinSpecs (USONIC_TRIGGER,DIO_PIN_OUTPUT_2M_PP);
+	//DIO_voidSetPinValue     (USONIC_TRIGGER, DIO_PIN_VALUE_LOW);
     //Port_SetPinDirection(USONIC_TRIGGER,OUTPUT_S2MHZ);
     //Port_SetPinMode(USONIC_TRIGGER,GP_OUTPUT_PUSH_PULL);
     //Dio_WriteChannel(USONIC_TRIGGER,0);
     //Set the Trigger pin as floating input
-	DIO_voidSetPinDirection (USONIC_ECHO, INPUT_FLOATING);
+	Port_SetPinDirection( USONIC_ECHO, INPUT);
+	Port_SetPinMode( USONIC_ECHO, INPUT_FLOATING );
+	//DIO_voidSetPinSpecs (USONIC_ECHO, DIO_PIN_INPUT_FLOATING);
     //Port_SetPinDirection(USONIC_ECHO,INPUT);
     //Port_SetPinMode(USONIC_ECHO,INPUT_FLOATING);
     //Set the prescaler of the timer so that the CLK is 1MHZ
@@ -40,13 +45,15 @@ void USONIC_voidInit(){
 f32 USONIC_f32GetDistance(){
     Local_u8Flag=0;
     f32 Local_f32Distance=0;
-    DIO_voidSetPinValue(USONIC_TRIGGER,1);
+    Dio_WriteChannel( USONIC_TRIGGER, 1);
+    //DIO_voidSetPinValue(USONIC_TRIGGER,DIO_PIN_VALUE_HIGH);
     TIMER_voidSetBusyWait(USONIC_TIMER,10);
-    DIO_voidSetPinValue(USONIC_TRIGGER,0);
+    Dio_WriteChannel( USONIC_TRIGGER, 0);
+    //DIO_voidSetPinValue(USONIC_TRIGGER,DIO_PIN_VALUE_LOW);
     TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_SET,0xFFFF);
-    while (DIO_u8GetPinValue(USONIC_ECHO)==0);
+    while (Dio_ReadChannel(USONIC_ECHO)==0);
     TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
-    while (DIO_u8GetPinValue(USONIC_ECHO)==1);
+    while (Dio_ReadChannel(USONIC_ECHO)==1);
     TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
     Local_f32Distance=(f32)TIMER_u16GetElapsedTime(USONIC_TIMER)/58.82;
     TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_RESET,0);
