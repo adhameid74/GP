@@ -28,4 +28,19 @@ void USONIC_voidInit();
 f32 USONIC_f32GetDistance();
 
 
+/**
+ * @brief  Fuction that return the distance to the object in CM with the input Freq in MHZ
+ * 
+ */
+//f32 USONIC_f32GetDistanceSynch();
+
+
+/**
+ * @brief  Fuction that return the distance to the object in CM with the input Freq in MHZ
+ * 
+ * 
+ * @param CallBackFunc IRQ Pointer To Function
+ */
+//void USONIC_f32GetDistanceAsynch(void (*CallBackFunc) (f32))
+
 #endif
