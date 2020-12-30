@@ -12,7 +12,7 @@
 #define USONIC_private_H
 
 
-void voidTimeOut (void);
+static void voidTimeOut (void);
 
 
 #endif
