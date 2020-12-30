@@ -1,13 +1,17 @@
 /// @file DIO_interface.h
-/**
- *  @Title       : DIO Module
- *  @Filename    : DIO_interface.h
- *  @Author      : Ahmed Hendawy
- *  @Origin Date : 16/11/2020
- *  @Version     : 1.0.0
- *  @Notes       : None
- *
- */
+/*********************************************************************************
+*
+* Module      : DIO
+*
+* File Name   : DIO_interface.h
+*
+* Description : Header file for Dio module
+*
+* Author      : Ahmed Hendawy 
+*
+* Date        : 11/7/2020
+*
+**********************************************************************************/
 
 #ifndef DIO_INTERFACE_H
 #define DIO_INTERFACE_H
@@ -19,7 +23,6 @@
 #define OUTPUT_S2MHZ           0b10 ///< output direction with maximum speed 2  MHz .
 #define OUTPUT_S50MHZ          0b11 ///< output direction with maximum speed 50 MHz .
 
-// configrations for a pin 
 #define GP_OUTPUT_PUSH_PULL    0b00
 #define GP_OUTPUT_OPEN_DRAIN   0b01
 #define AF_OUTPUT_PUSH_PULL    0b10
@@ -30,12 +33,10 @@
 #define INPUT_PULL_DOWN        0b100
 #define INPUT_PULL_UP          0b101
 
-// IDs for ports
 #define PORTAID                0
 #define PORTBID                1
 #define PORTCID              ` 2
 
-// ID for a pins
 #define PA0                    0
 #define PA1                    1
 #define PA2                    2

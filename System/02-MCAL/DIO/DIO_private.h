@@ -8,7 +8,7 @@
 * 
 * Author      : Ahmed Hendawy 
 *
-* Date        : 16/11/2020
+* Date        : 11/9/2020
 *
 **********************************************************************************/
 #ifndef DIO_PRIVATE_H
@@ -16,16 +16,19 @@
 /*****************************************************************
 *                Register Definition                             *
 ******************************************************************/
-
+/**
+ * That is Registers definition for General Purpose Input Output(GPIO) .
+ */
 typedef struct {
-	u32 CRL  ;
-	u32 CRH  ;
-	u32 IDR  ;
-	u32 ODR  ;
-	u32 BSRR ;
-	u32 BRR  ;
-	u32 LCKR ;
+	volatile u32 CRL  ;/**<Configuration Register Low*/
+	volatile u32 CRH  ;/**<Configuration Register High*/
+	volatile u32 IDR  ;/**<Input Data Register*/
+	volatile u32 ODR  ;/**<Output Data Register*/
+	volatile u32 BSRR ;/**<Bit Set/Reset Register*/
+	volatile u32 BRR  ;/**<Bit Reset Register*/
+	volatile u32 LCKR ;/**<Configuration Lock Register*/
 }Dio_Regs;
+
 
 #define PORTA_ADDRESS  0x40010800
 #define PORTA          ((volatile Dio_Regs *)PORTA_ADDRESS)
