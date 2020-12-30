@@ -16,7 +16,7 @@
 #ifndef DIO_INTERFACE_H
 #define DIO_INTERFACE_H
 
-#include "Dio_cfg.h"
+#include "DIO_config.h"
 
 #define INPUT                  0b00 ///< for pin direction .
 #define OUTPUT_S10MHZ          0b01 ///< output direction with maximum speed 10 MHz .

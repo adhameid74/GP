@@ -39,7 +39,7 @@ void EXTI_voidDisableEXTI(u8 Copy_u8Line)
 	}
 	else
 	{
-		CLEAR_BIT(EXTI->IMR, Copy_u8Line);
+		CLR_BIT(EXTI->IMR, Copy_u8Line);
 	}
 }
 
