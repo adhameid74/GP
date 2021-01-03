@@ -30,12 +30,12 @@
     MOTOR_CHANNEL3
     MOTOR_CHANNEL4
 */
-#define MOTOR1_PIN1			PORTA,11
-#define MOTOR1_PIN2			PORTA,12
+#define MOTOR1_PIN1			PA11
+#define MOTOR1_PIN2			PA12
 
-#define MOTOR2_PIN1			PORTA,13
-#define MOTOR2_PIN2			PORTA,14
+#define MOTOR2_PIN1			PA13
+#define MOTOR2_PIN2			PA14
 /*
-    Example PORTA,1
+    Example PA1
 */
 #endif

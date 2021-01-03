@@ -16,7 +16,7 @@
 #include  "MOTOR_private.h"
 
 #include  "TIMER_interface.h"
-#include  "GPIO_interface.h"
+#include  "DIO_interface.h"
 
 void MOTOR_voidMotorInit(void)
 {
@@ -102,16 +102,22 @@ void MOTOR_voidMotorInit(void)
         #define MOTOR2_TIMER_CHANNELx   MOTOR_TIMER4 + MOTOR_CHANNEL4
     #endif
     // Set the Direction of Motor1 pins to output PUSH_PULL  
-    GPIO_voidSetPinDirection(MOTOR1_PIN1 , OUTPUT_10MHZ , PUSH_PULL);
-    GPIO_voidSetPinDirection(MOTOR1_PIN2 , OUTPUT_10MHZ , PUSH_PULL);
+   Port_SetPinDirection(MOTOR1_PIN1 ,OUTPUT_S10MHZ);
+   Port_SetPinMode(MOTOR1_PIN1 , GP_OUTPUT_PUSH_PULL);
+   Port_SetPinDirection(MOTOR1_PIN2 , OUTPUT_S10MHZ);
+   Port_SetPinMode(MOTOR1_PIN2 , GP_OUTPUT_PUSH_PULL);
 
     // Set the Direction of Motor2 pins to output PUSH_PULL  
-    GPIO_voidSetPinDirection(MOTOR2_PIN1 , OUTPUT_10MHZ , PUSH_PULL);
-    GPIO_voidSetPinDirection(MOTOR2_PIN2 , OUTPUT_10MHZ , PUSH_PULL);
+   Port_SetPinDirection(MOTOR2_PIN1 ,OUTPUT_S10MHZ);
+   Port_SetPinMode(MOTOR2_PIN1 , GP_OUTPUT_PUSH_PULL);
+   Port_SetPinDirection(MOTOR2_PIN2 , OUTPUT_S10MHZ);
+   Port_SetPinMode(MOTOR2_PIN2 , GP_OUTPUT_PUSH_PULL);
 
     // Set the Direction of timer channels to AF_PUSH_PULL
-    GPIO_voidSetPinDirection(MOTOR1_TIMER_CHANNEL , OUTPUT_2MHZ , AF_PUSH_PULL);
-    GPIO_voidSetPinDirection(MOTOR2_TIMER_CHANNEL , OUTPUT_2MHZ , AF_PUSH_PULL);
+   Port_SetPinDirection(MOTOR1_TIMER_CHANNEL , OUTPUT_S2MHZ);
+   Port_SetPinMode (MOTOR1_TIMER_CHANNEL , AF_OUTPUT_PUSH_PULL);
+   Port_SetPinDirection(MOTOR2_TIMER_CHANNEL , OUTPUT_S2MHZ);
+   Port_SetPinMode (MOTOR2_TIMER_CHANNEL , AF_OUTPUT_PUSH_PULL);
 
     // Set the timer prescaler value 
     TIMER_voidSetPrescaler(MOTOR1_TIMER , 4);
@@ -123,36 +129,36 @@ void MOTOR_voidSetMotorDirection(u8 Copy_u8MotorID , u8 Copy_u8MotorDirection)
     {
         if(Copy_u8MotorDirection == MOTOR_DIRECTION_0)
         {
-            GPIO_voidSetPinValue(MOTOR1_PIN1 , LOW);
-            GPIO_voidSetPinValue(MOTOR1_PIN2 , LOW);
+           Dio_WriteChannel(MOTOR1_PIN1 , 0);
+           Dio_WriteChannel(MOTOR1_PIN2 , 0);
         }
         else if(Copy_u8MotorDirection == MOTOR_DIRECTION_1)
         {
-            GPIO_voidSetPinValue(MOTOR1_PIN1 , HIGH);
-            GPIO_voidSetPinValue(MOTOR1_PIN2 , LOW);
+           Dio_WriteChannel(MOTOR1_PIN1 , 1);
+           Dio_WriteChannel(MOTOR1_PIN2 , 0);
         }
         else if(Copy_u8MotorDirection == MOTOR_DIRECTION_2)
         {
-            GPIO_voidSetPinValue(MOTOR1_PIN1 , LOW);
-            GPIO_voidSetPinValue(MOTOR1_PIN2 , HIGH);
+           Dio_WriteChannel(MOTOR1_PIN1 , 0);
+           Dio_WriteChannel(MOTOR1_PIN2 , 1);
         }
     }
     if(Copy_u8MotorID == MOTOR2)
     {
         if(Copy_u8MotorDirection == MOTOR_DIRECTION_0)
         {
-            GPIO_voidSetPinValue(MOTOR2_PIN1 , LOW);
-            GPIO_voidSetPinValue(MOTOR2_PIN2 , LOW);
+           Dio_WriteChannel(MOTOR2_PIN1 , 0);
+           Dio_WriteChannel(MOTOR2_PIN2 , 0);
         }
         else if(Copy_u8MotorDirection == MOTOR_DIRECTION_1)
         {
-            GPIO_voidSetPinValue(MOTOR2_PIN1 , HIGH);
-            GPIO_voidSetPinValue(MOTOR2_PIN2 , LOW);
+           Dio_WriteChannel(MOTOR2_PIN1 , 1);
+           Dio_WriteChannel(MOTOR2_PIN2 , 0);
         }
         else if(Copy_u8MotorDirection == MOTOR_DIRECTION_2)
         {
-            GPIO_voidSetPinValue(MOTOR2_PIN1 , LOW);
-            GPIO_voidSetPinValue(MOTOR2_PIN2 , HIGH);
+           Dio_WriteChannel(MOTOR2_PIN1 , 0);
+           Dio_WriteChannel(MOTOR2_PIN2 , 1);
         }
     }
 }

@@ -14,20 +14,20 @@
 #define MOTOR1                          1
 #define MOTOR2                          2
 
-#define MOTOR_TIM2_CHN1                PORTA,0              
-#define MOTOR_TIM2_CHN2                PORTA,1
-#define MOTOR_TIM2_CHN3                PORTA,2
-#define MOTOR_TIM2_CHN4                PORTA,3
+#define MOTOR_TIM2_CHN1                PA0             
+#define MOTOR_TIM2_CHN2                PA1
+#define MOTOR_TIM2_CHN3                PA2
+#define MOTOR_TIM2_CHN4                PA3
 
-#define MOTOR_TIM3_CHN1                PORTA,6
-#define MOTOR_TIM3_CHN2                PORTA,7
-#define MOTOR_TIM3_CHN3                PORTB,0
-#define MOTOR_TIM3_CHN4                PORTB,1
+#define MOTOR_TIM3_CHN1                PA6
+#define MOTOR_TIM3_CHN2                PA7
+#define MOTOR_TIM3_CHN3                PB0
+#define MOTOR_TIM3_CHN4                PB1
 
-#define MOTOR_TIM4_CHN1                PORTB,6
-#define MOTOR_TIM4_CHN2                PORTB,7
-#define MOTOR_TIM4_CHN3                PORTB,8
-#define MOTOR_TIM4_CHN4                PORTB,9
+#define MOTOR_TIM4_CHN1                PB6
+#define MOTOR_TIM4_CHN2                PB7
+#define MOTOR_TIM4_CHN3                PB8
+#define MOTOR_TIM4_CHN4                PB9
 
 #define MOTOR_TIMER2                      20
 #define MOTOR_TIMER3                      30
@@ -36,7 +36,7 @@
 #define MOTOR_CHANNEL1                  1
 #define MOTOR_CHANNEL2                  2
 #define MOTOR_CHANNEL3                  3
-#define MOTOR_CHANNEL4                  3
+#define MOTOR_CHANNEL4                  4
 
 #define MOTOR_DIRECTION_0              0
 #define MOTOR_DIRECTION_1              1
