@@ -62,5 +62,5 @@ void MOTOR_voidSetMotorDirection(u8 Copy_u8MotorID , u8 Copy_u8MotorDirection);
  * @param Copy_u8MotorID                MOTOR1 or MOTOR2
  * @param Copy_u16MotorSpeedPercent     Percentage of Max speed (integer value from 0 : 100)
  */
-void MOTOR_voidSetMotorSpeed(u8 Copy_u8MotorID , u16 Copy_u16MotorSpeedPercent);
+void MOTOR_voidSetMotorSpeed(u8 Copy_u8MotorID , u8 Copy_u8MotorSpeedPercent);
 #endif

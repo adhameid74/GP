@@ -162,14 +162,14 @@ void MOTOR_voidSetMotorDirection(u8 Copy_u8MotorID , u8 Copy_u8MotorDirection)
         }
     }
 }
-void MOTOR_voidSetMotorSpeed(u8 Copy_u8MotorID , u16 Copy_u16MotorSpeedPercent)
+void MOTOR_voidSetMotorSpeed(u8 Copy_u8MotorID , u8 Copy_u8MotorSpeedPercent)
 {
     if(Copy_u8MotorID == MOTOR1)
     {
-        TIMER_voidGeneratePWM(MOTOR1_TIMER_CHANNELx,0x0064,Copy_u16MotorSpeedPercent);
+        TIMER_voidGeneratePWM(MOTOR1_TIMER_CHANNELx,0x0064,Copy_u8MotorSpeedPercent);
     }
     else if(Copy_u8MotorID == MOTOR2)
     {
-        TIMER_voidGeneratePWM(MOTOR2_TIMER_CHANNELx,0x0064,Copy_u16MotorSpeedPercent);
+        TIMER_voidGeneratePWM(MOTOR2_TIMER_CHANNELx,0x0064,Copy_u8MotorSpeedPercent);
     }
 }
