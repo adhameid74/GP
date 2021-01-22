@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2021
  * 
  */
-
 #ifndef OS_INTERFACE_H_
 #define OS_INTERFACE_H_
 
