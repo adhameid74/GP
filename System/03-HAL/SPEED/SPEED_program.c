@@ -2,7 +2,7 @@
  * @file SPEED_program.c
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief Program file of speed sensor
- * @version 1.0
+ * @version 2.0
  * @date 28-12-2020
  * 
  * @copyright Copyright (c) 2020
@@ -26,7 +26,7 @@ void SPEED_voidGetReadingSynch(SPEED_t* SENSOR)
 //	TIMER_voidSetIntervalSingle((SENSOR->TIMER_ID), (SENSOR->EVALUATION_TIME), CALL_BACK_FUNC);
 	TIMER_voidSetTimerValue((SENSOR->TIMER_ID), (SENSOR->EVALUATION_TIME));
 	TIMER_voidStartStopCount((SENSOR->TIMER_ID), TIMER_START);
-	while(TIMER_u16GetRemainingTime != 0)
+	while(TIMER_u16GetRemainingTime((SENSOR->TIMER_ID)) != 0)
 	{
 		if((Dio_ReadChannel(SENSOR->PIN)) == 1)
 		{
