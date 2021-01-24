@@ -25,22 +25,8 @@ void USONIC_voidInit();
  * @brief  Fuction that return the distance to the object in CM with the input Freq to its configrable timer is 8MHZ
  * 
  */
-f32 USONIC_f32GetDistance();
+f32 USONIC_f32GetDistance(u8 *DTC_CODE);
 
 
-/**
- * @brief  Fuction that return the distance to the object in CM with the input Freq in MHZ
- * 
- */
-//f32 USONIC_f32GetDistanceSynch();
-
-
-/**
- * @brief  Fuction that return the distance to the object in CM with the input Freq in MHZ
- * 
- * 
- * @param CallBackFunc IRQ Pointer To Function
- */
-//void USONIC_f32GetDistanceAsynch(void (*CallBackFunc) (f32))
 
 #endif
