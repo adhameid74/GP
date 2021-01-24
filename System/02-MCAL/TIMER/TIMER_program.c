@@ -549,3 +549,35 @@ void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber ,u8 Copy_u8Statue){
         }
     }
 }
+void TIMER_voidSetTimerValue(u8 Copy_u8TimerNumber  , u16 Copy_u16Value)
+{
+    switch (Copy_u8TimerNumber)
+    {
+    case TIMER_TIMER2:
+        CLR_BIT(TIM2_CR1 , 4);     // Counter used as upcounter
+        SET_BIT(TIM2_CR1 , 3);     // Counter stops counting at the next update event (clearing the bit CEN)
+        CLR_BIT(TIM2_CR1 , 1);     // UEV enabled
+        SET_BIT(TIM2_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM2_ARR = Copy_u16Value ;
+        break;
+
+    case TIMER_TIMER3:
+        CLR_BIT(TIM3_CR1 , 4);    // Counter used as upcounter
+        SET_BIT(TIM3_CR1 , 3);    // Counter stops counting at the next update event (clearing the bit CEN)
+        CLR_BIT(TIM3_CR1 , 1);     // UEV enabled
+        SET_BIT(TIM3_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM3_ARR = Copy_u16Value ;
+        break;
+
+    case TIMER_TIMER4:
+        CLR_BIT(TIM4_CR1 , 4);    // Counter used as upcounter
+        SET_BIT(TIM4_CR1 , 3);    // Counter stops counting at the next update event (clearing the bit CEN)
+        CLR_BIT(TIM4_CR1 , 1);     // UEV enabled
+        SET_BIT(TIM4_CR1 , 2);     // Only counter overflow/underflow generates an update interrupt or DMA request if enabled.
+        TIM4_ARR = Copy_u16Value ;
+        break;
+
+    default:
+        break;
+    }
+}

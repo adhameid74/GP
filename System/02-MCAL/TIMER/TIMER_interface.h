@@ -105,5 +105,12 @@ void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime
  * @param Copy_u8TimerNumber TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4
  * @param Copy_u8Statue      TIMER_START , TIMER_STOP
  */
-void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber ,u8 Copy_u8Statue);
+void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber , u8 Copy_u8Statue);
+/**
+ * @brief Set Auto Reload Register value
+ * 
+ * @param Copy_u8TimerNumber TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4
+ * @param Copy_u16Value      (u16) Timer Value
+ */
+void TIMER_voidSetTimerValue(u8 Copy_u8TimerNumber  , u16 Copy_u16Value);
 #endif
