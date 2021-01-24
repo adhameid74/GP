@@ -19,7 +19,9 @@ typedef struct
 {
 	u8 PIN; 				// Sensor O/P PIN number
 	u8 TIMER_ID;			// Timer to be used in the evaluation process
-	u16 Reading;			// The variable which should contain the speed value after the evaluation is done
+	u8 NUM_OF_HOLES;		// Wheel number of holes
+	u8 TICK_TIME;			// Timer tick time (in milliseconds)
+	u16 Reading;			// The variable which should contain the RPS value after the evaluation is done
 	u16 EVALUATION_TIME;	// The time of the evaluation process (Number of TICKS)
 }SPEED_t;
 

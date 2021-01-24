@@ -32,6 +32,8 @@ void SPEED_voidGetReadingSynch(SPEED_t* SENSOR)
 			while((Dio_ReadChannel(SENSOR->PIN)) == 1);
 		}
 	}
+	(SENSOR->Reading) = (SENSOR->Reading)/(SENSOR->NUM_OF_HOLES);
+	(SENSOR->Reading) = ((SENSOR->Reading)*1000)/((SENSOR->EVALUATION_TIME) * (SENSOR->TICK_TIME));
 }
 
 void SPEED_voidGetReadingAsynch(SPEED_t* SENSOR, void (*Copy_funcptr) (void))

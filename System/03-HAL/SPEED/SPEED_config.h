@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2020
  * 
  */
+#ifndef SPEED_CONFIG_H
 #define SPEED_CONFIG_H
 
 
