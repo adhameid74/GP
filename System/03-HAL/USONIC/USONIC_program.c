@@ -22,41 +22,67 @@ u8 Local_u8Flag=0;
 
 void USONIC_voidInit(){
     //Set ECHO pin as 2MHZ output pin and initialy Low
-	Port_SetPinDirection( USONIC_TRIGGER, OUTPUT_S2MHZ);
-	Port_SetPinMode( USONIC_TRIGGER, GP_OUTPUT_PUSH_PULL );
-	Dio_WriteChannel( USONIC_TRIGGER, 0);
+	Port_SetPinDirection( USONIC1_TRIGGER, OUTPUT_S2MHZ);
+    Port_SetPinDirection( USONIC2_TRIGGER, OUTPUT_S2MHZ);
+	Port_SetPinMode( USONIC1_TRIGGER, GP_OUTPUT_PUSH_PULL );
+    Port_SetPinMode( USONIC2_TRIGGER, GP_OUTPUT_PUSH_PULL );
+	Dio_WriteChannel( USONIC1_TRIGGER, 0);
+    Dio_WriteChannel( USONIC2_TRIGGER, 0);
     //Set the Trigger pin as floating input
-	Port_SetPinDirection( USONIC_ECHO, INPUT);
-	Port_SetPinMode( USONIC_ECHO, INPUT_PULL_DOWN );
+	Port_SetPinDirection( USONIC1_ECHO, INPUT);
+    Port_SetPinDirection( USONIC2_ECHO, INPUT);
+	Port_SetPinMode( USONIC1_ECHO, INPUT_PULL_DOWN );
+    Port_SetPinMode( USONIC2_ECHO, INPUT_PULL_DOWN );
     //Set the prescaler of the timer so that the CLK is 1MHZ
     TIMER_voidSetPrescaler(USONIC_TIMER,8);
 }
 
 
 
-f32 USONIC_f32GetDistance(u8 *DTC_CODE){
+f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
     Local_u8Flag=0;
     u8 Local_u8Counter=0;
     f32 Local_f32Distance=0;
     u16 Local_u16TimerCount=0;
-    Dio_WriteChannel( USONIC_TRIGGER, 1);
-    TIMER_voidSetBusyWait(USONIC_TIMER,10);
-    Dio_WriteChannel( USONIC_TRIGGER, 0);
-    TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_SET,0xFFFF);
-    while (Dio_ReadChannel(USONIC_ECHO)==0&&Local_u8Counter<0xFF)
+    if (Copy_u8UsonicNumber==USONIC1)
     {
-        Local_u8Counter++;
+        Dio_WriteChannel( USONIC1_TRIGGER, 1);
+        TIMER_voidSetBusyWait(USONIC_TIMER,10);
+        Dio_WriteChannel( USONIC1_TRIGGER, 0);
+        TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_SET,0xFFFF);
+        while (Dio_ReadChannel(USONIC1_ECHO)==0&&Local_u8Counter<0xFF)
+        {
+            Local_u8Counter++;
+        }
+        if (Local_u8Counter!=0xFF)
+        {
+            TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
+            while (Dio_ReadChannel(USONIC1_ECHO)==1);
+            TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
+            Local_u16TimerCount=TIMER_u16GetElapsedTime(USONIC_TIMER);
+            Local_f32Distance=(f32)Local_u16TimerCount/58.82;
+            TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_RESET,0);
+        }
     }
-    if (Local_u8Counter!=0xFF)
-    {
-        TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
-        while (Dio_ReadChannel(USONIC_ECHO)==1);
-        TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
-        Local_u16TimerCount=TIMER_u16GetElapsedTime(USONIC_TIMER);
-        Local_f32Distance=(f32)Local_u16TimerCount/58.82;
-        TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_RESET,0);
+    else{
+        Dio_WriteChannel( USONIC2_TRIGGER, 1);
+        TIMER_voidSetBusyWait(USONIC_TIMER,10);
+        Dio_WriteChannel( USONIC2_TRIGGER, 0);
+        TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_SET,0xFFFF);
+        while (Dio_ReadChannel(USONIC2_ECHO)==0&&Local_u8Counter<0xFF)
+        {
+            Local_u8Counter++;
+        }
+        if (Local_u8Counter!=0xFF)
+        {
+            TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
+            while (Dio_ReadChannel(USONIC2_ECHO)==1);
+            TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
+            Local_u16TimerCount=TIMER_u16GetElapsedTime(USONIC_TIMER);
+            Local_f32Distance=(f32)Local_u16TimerCount/58.82;
+            TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_RESET,0);
+        }
     }
-    
     
     if (Local_u8Counter==0xFF)
     {

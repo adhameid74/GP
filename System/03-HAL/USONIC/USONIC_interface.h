@@ -11,6 +11,8 @@
 #ifndef USONIC_INTERFACE_H
 #define USONIC_INTERFACE_H
 
+#define USONIC1         1
+#define USONIC2         2
 
 
 
@@ -25,7 +27,9 @@ void USONIC_voidInit();
  * @brief  Fuction that return the distance to the object in CM with the input Freq to its configrable timer is 8MHZ
  * 
  */
-f32 USONIC_f32GetDistance(u8 *DTC_CODE);
+f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE);
+
+
 
 
 

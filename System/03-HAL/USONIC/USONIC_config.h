@@ -15,8 +15,11 @@
 /*
     Example PA1
 */
-#define USONIC_ECHO			    PB10
-#define USONIC_TRIGGER			PB11
+#define USONIC1_ECHO			    PB10
+#define USONIC1_TRIGGER 			PB11
+
+#define USONIC2_ECHO			    PA10
+#define USONIC2_TRIGGER 			PA11
 
 /*
     options:
