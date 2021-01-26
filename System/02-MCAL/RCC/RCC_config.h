@@ -1,35 +1,46 @@
-/**********************************************/
-/* Author   : Eslam Khaled                    */
-/* Date     : 8 Aug 2020                      */
-/* Version  : V01                             */
-/**********************************************/
-#ifndef _RCC_CONFIG_H
-#define _RCC_CONFIG_H
+/**********************************************************/
+/* Author		: Abdallah Hassan 		*/
+/* Date 		: 8/8/2020				*/
+/* Version		: V01					*/
+/**********************************************************/
+#ifndef RCC_CONFIG_H
+#define RCC_CONFIG_H
 
-#define RCC_CLOCK_TYPE RCC_HSI              // RCC_HSI is default (you can change it)
-/* Options */
-/*
- RCC_HSE_CRYSTAL 
- RCC_HSE_RC      
- RCC_HSI         
- RCC_PLL         
+/* OPTIONS :
+1- RCC_HSE_CRYSTAL
+2- RCC_HSE_RC
+3- RCC_HSI
+4- RCC_PLL
 */
-#if RCC_CLOCK_TYPE == RCC_PLL
-    #define PLL_INPUT RCC_PLL_HSI_DIV_2     // RCC_PLL_HSI_DIV_2 is default (you can change it)
-#endif
-/* Options */
-/*
- RCC_PLL_HSI_DIV_2 
- RCC_PLL_HSE_DIV_2     
- RCC_HSE                 
-*/
+#define RCC_CLOCK_TYPE RCC_HSI
 
-#if RCC_CLOCK_TYPE == RCC_PLL
-    #define RCC_MUL_VALUE 2                 // 2 is default (you can change it)
-#endif
-/* Options */
-/*
- 2 to 16              
+/* OPTIONS :
+1- RCC_HSI_OVER_2
+2- RCC_HSE
+3- RCC_HSE_OVER_2
 */
+/* NOTE : ONLY CHOSEN WHEN RCC_CLOCK_TYPE IS RCC_PLL */
+#define RCC_PLL_INPUT RCC_HSE
+
+/*OPTIONS :
+1-  RCC_MULTIPLY_2
+2-  RCC_MULTIPLY_3
+3-  RCC_MULTIPLY_4
+4-  RCC_MULTIPLY_5
+5-  RCC_MULTIPLY_6
+6-  RCC_MULTIPLY_7
+7-  RCC_MULTIPLY_8
+8-  RCC_MULTIPLY_9
+9-  RCC_MULTIPLY_10
+10- RCC_MULTIPLY_11
+11- RCC_MULTIPLY_12
+12- RCC_MULTIPLY_13
+13- RCC_MULTIPLY_14
+14- RCC_MULTIPLY_15
+15- RCC_MULTIPLY_16
+*/
+/* NOTE : ONLY CHOSEN WHEN RCC_CLOCK_TYPE IS RCC_PLL */
+#define RCC_PLL_MULTIPLER RCC_MULTIPLY_2
+
 
 #endif
