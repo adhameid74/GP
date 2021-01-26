@@ -24,9 +24,9 @@ void SPEED_voidGetReadingSynch(SPEED_t* SENSOR)
 	MODE = SYNCH;
 	(SENSOR->Reading) = 0;
 //	TIMER_voidSetIntervalSingle((SENSOR->TIMER_ID), (SENSOR->EVALUATION_TIME), CALL_BACK_FUNC);
-	TIMER_voidSetTimerValue((SENSOR->TIMER_ID), (SENSOR->EVALUATION_TIME));
+	TIMER_voidSetResetTimer((SENSOR->TIMER_ID), TIMER_SET, (SENSOR->EVALUATION_TIME));
 	TIMER_voidStartStopCount((SENSOR->TIMER_ID), TIMER_START);
-	while(TIMER_u16GetRemainingTime((SENSOR->TIMER_ID)) != 0)
+	while( TIMER_u16GetRemainingTime((SENSOR->TIMER_ID)) != 1)
 	{
 		if((Dio_ReadChannel(SENSOR->PIN)) == 1)
 		{
@@ -34,7 +34,7 @@ void SPEED_voidGetReadingSynch(SPEED_t* SENSOR)
 			while((Dio_ReadChannel(SENSOR->PIN)) == 1);
 		}
 	}
-	TIMER_voidSetResetTimer((SENSOR->TIMER_ID), TIMER_START, 0);
+	TIMER_voidSetResetTimer((SENSOR->TIMER_ID), TIMER_RESET, 0);
 	(SENSOR->Reading) = (SENSOR->Reading)/(SENSOR->NUM_OF_HOLES);
 	(SENSOR->Reading) = ((SENSOR->Reading)*1000)/((SENSOR->EVALUATION_TIME) * (SENSOR->TICK_TIME));
 }
