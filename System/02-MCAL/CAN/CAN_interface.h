@@ -12,6 +12,8 @@
 #ifndef CAN_INTERFACE_H
 #define CAN_INTERFACE_H
 
+typedef u8 TX_STATE_t;
+
 /**
  * @brief Macros of frame types (RTR)
  * 
@@ -65,6 +67,8 @@ typedef struct
 	u8 FIFO_ID;		// RX FIFO ID (CAN_FIFO0 or CAN_FIFO1)
 }CAN_filter_t;
 
+CAN_msg_t CAN_RECIEVED_MSG;
+
 /**
  * @brief Initialization function of CAN peripheral
  * 
@@ -72,7 +76,7 @@ typedef struct
 void CAN_voidInit();
 
 /**
- * @brief Busy wait untill the desired TX mailbox is empty
+ * @brief Busy wait until the desired TX mailbox is empty
  * 
  * @param Copy_u8MailBoxID TX mailbox (ex: CAN_MAILBOX1)
  */
@@ -84,12 +88,12 @@ void CAN_voidWaitReady(u8 Copy_u8MailBoxID);
  * @param Copy_ptrMsg The message struct to be transmitted
  * @return u8 Transmission state (CAN_TX_OK: Successful, CAN_TX_FAIL: Failed as there's no empty mailbox)
  */
-u8 CAN_voidWriteMsg(CAN_msg_t* Copy_ptrMsg);
+TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg);
 
 /**
- * @brief Reads a recieved message through CAN bus
+ * @brief Reads a received message through CAN bus
  * 
- * @param Copy_ptrMsg Recieved message
+ * @param Copy_ptrMsg Received message
  * @param Copy_u8FIFOID RX FIFO ID (ex: CAN_FIFO0)
  */
 void CAN_voidReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID);
@@ -107,5 +111,7 @@ void CAN_voidWriteFilter(CAN_filter_t* Copy_ptrFilter);
  * @param Copy_u8TestMode The desired test mode (ex: CAN_SILENT_LOOP_BACK_MODE)
  */
 void CAN_voidSetTestMode(u8 Copy_u8TestMode);
+
+void CAN_voidStart();
 
 #endif

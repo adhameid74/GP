@@ -23,7 +23,7 @@
 
 #define RX_FIFO_LOCK_ON_OVERRUN						DISABLED
 
-#define AUTO_RETRANSMISSION							ENABLED
+#define AUTO_RETRANSMISSION							DISABLED
 
 #define AUTO_WAKEUP									ENABLED
 
@@ -37,7 +37,7 @@
  * @brief CAN interrupts Configurations
  * 
  */
-#define TX_MAILBOX_EMPTY_INT						ENABLED
+#define TX_MAILBOX_EMPTY_INT						DISABLED
 
 #define FIFO0_MSG_PENDING_INT						ENABLED
 
