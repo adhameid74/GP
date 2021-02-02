@@ -42,6 +42,7 @@ void USONIC_voidInit(){
 f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
     Local_u8Flag=0;
     u8 Local_u8Counter=0;
+    u8 Local_u8Counter2=0;
     f32 Local_f32Distance=0;
     u16 Local_u16TimerCount=0;
     if (Copy_u8UsonicNumber==USONIC1)
@@ -57,7 +58,10 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
         if (Local_u8Counter!=0xFF)
         {
             TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
-            while (Dio_ReadChannel(USONIC1_ECHO)==1);
+            while (Dio_ReadChannel(USONIC1_ECHO)==1&&Local_u8Counter2<15000)
+            {
+            Local_u8Counter2++;
+            }
             TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
             Local_u16TimerCount=TIMER_u16GetElapsedTime(USONIC_TIMER);
             Local_f32Distance=(f32)Local_u16TimerCount/58.82;
@@ -76,7 +80,10 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
         if (Local_u8Counter!=0xFF)
         {
             TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_START);
-            while (Dio_ReadChannel(USONIC2_ECHO)==1);
+            while (Dio_ReadChannel(USONIC2_ECHO)==1&&Local_u8Counter2<15000)
+            {
+            Local_u8Counter2++;
+            }
             TIMER_voidStartStopCount(USONIC_TIMER ,TIMER_STOP);
             Local_u16TimerCount=TIMER_u16GetElapsedTime(USONIC_TIMER);
             Local_f32Distance=(f32)Local_u16TimerCount/58.82;
@@ -87,6 +94,10 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
     if (Local_u8Counter==0xFF)
     {
         *DTC_CODE=5;     //ECHO PIN DISCONNECTED
+    }
+    else if (Local_u8Counter2==15000)    //ECHO  NOT RECEIVED
+    {
+        *DTC_CODE=6; 
     }
     else if (Local_u16TimerCount<1766)    //less than 30 cm   
     {
