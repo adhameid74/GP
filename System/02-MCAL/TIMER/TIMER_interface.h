@@ -2,7 +2,7 @@
  * @file TIMER_interface.h
  * @author Eslam Khaled (Eslam.kh.kamal@gmail.com)
  * @brief  TIMER Interface file
- * @version 0.2
+ * @version 0.3
  * @date 2020-12-23
  * 
  * @copyright Copyright (c) 2020
@@ -113,4 +113,18 @@ void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber , u8 Copy_u8Statue);
  * @param Copy_u16Value      (u16) Timer Value
  */
 void TIMER_voidSetTimerValue(u8 Copy_u8TimerNumber  , u16 Copy_u16Value);
+/**
+ * @brief Set the timer clock to external input
+ * 
+ * @param Copy_u8TimerNumber        TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4
+ * @param Copy_u8TimerChannelNumber timer and cahnnel number TIMER_TIMERx_CHANNELx (works only for channel 1,2)
+ */
+void TIMER_voidEnableExternalClockSource(u8 Copy_u8TimerNumber, u8 Copy_u8TimerChannelNumber);
+/**
+ * @brief   Return the value of CNT Register ( same function of GetElappsedTime)
+ * 
+ * @param Copy_u8TimerNumber        TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4
+ * @return u16 
+ */
+u16 TIMER_u16GetCounts(u16 Copy_u8TimerNumber);
 #endif
