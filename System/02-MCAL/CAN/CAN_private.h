@@ -2,7 +2,7 @@
  * @file CAN_private.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 1.0
+ * @version 2.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021
@@ -124,5 +124,7 @@ typedef struct
 
 #define ENABLED					1
 #define DISABLED				2
+
+static void ReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID);
 
 #endif

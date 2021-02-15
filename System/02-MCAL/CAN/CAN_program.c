@@ -2,7 +2,7 @@
  * @file CAN_program.c
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 1.0
+ * @version 2.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021
@@ -19,12 +19,13 @@
 #include "CAN_private.h"
 #include "CAN_config.h"
 
+//static void (*CAN_CallBackFunc)(CAN_msg_t*) = NULL;
 
 void CAN_voidInit()
 {
 	u32 Local_u32BaudRate = (CAN_CLK / 18) / 500000;
 
-	Port_SetPinDirection(PA12, OUTPUT_S50MHZ);
+	Port_SetPinDirection(PA12, OUTPUT_S10MHZ);
 	Port_SetPinMode(PA12, AF_OUTPUT_PUSH_PULL);
 	Port_SetPinDirection(PA11, INPUT);
 	Port_SetPinMode(PA11, INPUT_FLOATING);
@@ -216,6 +217,18 @@ void CAN_voidInit()
 	CLR_BIT(bxCAN1->FMR, FMR_FINIT);
 }
 
+void CAN_voidStart()
+{
+	CLR_BIT(bxCAN1->MCR, MCR_SLEEP);
+	CLR_BIT(bxCAN1->MCR, MCR_INRQ);
+	while(GET_BIT(bxCAN1->MSR, MSR_INAK) != 0);
+}
+/*
+void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*))
+{
+	CAN_CallBackFunc = Copy_ptrCallBackFunc;
+}
+*/
 void CAN_voidWaitReady(u8 Copy_u8MailBoxID)
 {
 	switch(Copy_u8MailBoxID)
@@ -262,12 +275,12 @@ TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
 	bxCAN1->TxMailBox[Local_u8MailBoxID].TDTR &= ~TDTR_DLC_MASK;
 	bxCAN1->TxMailBox[Local_u8MailBoxID].TDTR |= Copy_ptrMsg->DLC;
 
-	SET_BIT(bxCAN1->IER, IER_TMEIE);
+//	SET_BIT(bxCAN1->IER, IER_TMEIE);
 	SET_BIT(bxCAN1->TxMailBox[Local_u8MailBoxID].TIR, TIR_TXRQ);
 	return CAN_TX_OK;
 }
 
-void CAN_voidReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID)
+static void ReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID)
 {
 	Copy_ptrMsg->ID = 0x000007FF & (bxCAN1->FIFOMailBox[Copy_u8FIFOID].RIR >> 21);
 	Copy_ptrMsg->RTR = GET_BIT(bxCAN1->FIFOMailBox[Copy_u8FIFOID].RIR, RIR_RTR);
@@ -362,13 +375,6 @@ void CAN_voidSetTestMode(u8 Copy_u8TestMode)
 	}
 }
 
-void CAN_voidStart()
-{
-	CLR_BIT(bxCAN1->MCR, MCR_SLEEP);
-	CLR_BIT(bxCAN1->MCR, MCR_INRQ);
-	while(GET_BIT(bxCAN1->MSR, MSR_INAK) != 0);
-}
-
 void USB_HP_CAN1_TX_IRQHandler()
 {
 	if(GET_BIT(bxCAN1->TSR, TSR_RQCP0) == 1)
@@ -390,16 +396,16 @@ void USB_LP_CAN1_RX0_IRQHandler()
 {
 	if( (bxCAN1->RF0R & RF0R_FMP_MASK) != 0)
 	{
-		CAN_voidReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO0);
+		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO0);
+//		CAN_CallBackFunc(&CAN_RECIEVED_MSG);
 	}
-	asm("NOP");
 }
 
 void CAN1_RX1_IRQHandler()
 {
 	if( (bxCAN1->RF1R & RF1R_FMP_MASK) != 0)
 	{
-		CAN_voidReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO1);
+		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO1);
+//		CAN_CallBackFunc(&CAN_RECIEVED_MSG);
 	}
-	asm("NOP");
 }

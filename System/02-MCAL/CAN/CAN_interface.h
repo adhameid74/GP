@@ -2,7 +2,7 @@
  * @file CAN_interface.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 1.0
+ * @version 2.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021
@@ -75,6 +75,10 @@ CAN_msg_t CAN_RECIEVED_MSG;
  */
 void CAN_voidInit();
 
+void CAN_voidStart();
+
+//void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*));
+
 /**
  * @brief Busy wait until the desired TX mailbox is empty
  * 
@@ -91,14 +95,6 @@ void CAN_voidWaitReady(u8 Copy_u8MailBoxID);
 TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg);
 
 /**
- * @brief Reads a received message through CAN bus
- * 
- * @param Copy_ptrMsg Received message
- * @param Copy_u8FIFOID RX FIFO ID (ex: CAN_FIFO0)
- */
-void CAN_voidReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID);
-
-/**
  * @brief Writes filter desired information
  * 
  * @param Copy_ptrFilter Information to be set
@@ -111,7 +107,5 @@ void CAN_voidWriteFilter(CAN_filter_t* Copy_ptrFilter);
  * @param Copy_u8TestMode The desired test mode (ex: CAN_SILENT_LOOP_BACK_MODE)
  */
 void CAN_voidSetTestMode(u8 Copy_u8TestMode);
-
-void CAN_voidStart();
 
 #endif

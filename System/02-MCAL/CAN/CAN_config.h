@@ -2,7 +2,7 @@
  * @file CAN_config.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 1.0
+ * @version 2.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021
@@ -23,7 +23,7 @@
 
 #define RX_FIFO_LOCK_ON_OVERRUN						DISABLED
 
-#define AUTO_RETRANSMISSION							DISABLED
+#define AUTO_RETRANSMISSION							ENABLED
 
 #define AUTO_WAKEUP									ENABLED
 
