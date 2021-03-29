@@ -39,16 +39,13 @@ void SPEED_voidGetReadingSynch(SPEED_t* SENSOR)
 	(SENSOR->Reading) = ((SENSOR->Reading)*1000)/((SENSOR->EVALUATION_TIME) * (SENSOR->TICK_TIME));
 }
 
-void SPEED_voidGetReadingAsynch(SPEED_t* SENSOR, void (*Copy_funcptr) (void))
+void SPEED_voidGetReadingAsynch(SPEED_t* SENSOR)
 {
 	MODE = ASYNCH;
-	u8 Local_u8Line = (SENSOR->PIN)%16;
+	TIMER_voidSetResetTimer((SENSOR->TIMER_ID), TIMER_RESET, 0);
 	(SENSOR->Reading) = 0;
+	TIMER_voidEnableExternalClockSource((SENSOR->TIMER_ID), (((SENSOR->TIMER_ID)*10)+21));
 	Reading = &(SENSOR->Reading);
-	EXTI_voidSetSignalLatch(Local_u8Line, EXTI_RISING);
-	EXTI_voidSetCallBack(CALL_BACK_FUNC, Local_u8Line);
-	TIMER_voidSetIntervalSingle((SENSOR->TIMER_ID), (SENSOR->EVALUATION_TIME), Copy_funcptr);
-	EXTI_voidEnableEXTI(Local_u8Line);
 }
 
 static void CALL_BACK_FUNC()
