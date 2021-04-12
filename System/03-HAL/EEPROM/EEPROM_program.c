@@ -44,9 +44,17 @@
   u32 HEEPROM_u32ReadWord(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress){
 	  u8 Data[4];
 	  u32 Temp;
-	  MI2C_voidReceiveFromAddress(Copy_u8EepromAddress ,Data,4,Copy_u8DataAddress);
-	  Temp =Data[0] | Data[1] << 8 |Data[2] << 16 |Data[24];
+
+	  /*
+	   * read wrong data
+	   * MI2C_voidReceiveFromAddress(Copy_u8EepromAddress ,Data,4,Copy_u8DataAddress);
+	  Temp =Data[0] | Data[1] << 8 |Data[2] << 16 |Data[3] << 24 ;
+	  return Temp ;*/
+	  for(Temp=0;Temp<4;Temp++){
+
+		  Data[Temp]=HEEPROM_u8ReadByte(Copy_u8EepromAddress,Copy_u8DataAddress+Temp);
+	  }
+	  Temp =Data[0] | Data[1] << 8 |Data[2] << 16 |Data[3] << 24 ;
 	  return Temp ;
-	  
 	  
   }

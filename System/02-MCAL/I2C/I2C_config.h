@@ -15,7 +15,7 @@
   */
  #define I2C_MODE            FM
 
- #define DUTY                 ENABLE
+#define DUTY                 ENABLE
  /************************************************/
  #define ACKNOWLEDGE         ENABLE
  

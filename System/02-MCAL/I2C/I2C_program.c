@@ -46,11 +46,12 @@ void MI2C_voidInti(){
 	
 	
 }
-void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
+void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit,u8 Copy_u8NumberOfData){
 	u8 i;
 	volatile u32 x ;
+	//Enable I2C
 	SET_BIT(I2C1->CR1,0);
-	if(*DataToTransmit != NULL){
+	if(Copy_u8NumberOfData > 0 ){
 
 		//Generate start condition 
 		SET_BIT(I2C1->CR1,8);
@@ -63,12 +64,13 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
 		x=I2C1->SR2;
 		//Transmit  Data 
 		// And condition for clear bit 1 in SR1(ADDR) and check for controller in master mode .
-		while(*DataToTransmit != NULL ){
+		i=0;
+		while(i<Copy_u8NumberOfData){
 			if( GET_BIT(I2C1->SR1,7)){
 				
-			    I2C1->DR  = *DataToTransmit;
+			    I2C1->DR  = DataToTransmit[i];
 			    while( GET_BIT(I2C1->SR1,7) == 0);
-			    DataToTransmit++;
+			    i++;
 			}
 			
 			
@@ -85,7 +87,7 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
  void MI2C_voidReceive (u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberOfData ){
 	u8 i; 
 	volatile u32 x ;
-	Copy_u8SlaveAddress = (Copy_u8SlaveAddress<< 1)| 1 ;
+	Copy_u8SlaveAddress = Copy_u8SlaveAddress |1 ;
 	 
 	//Generate start condition 
 	SET_BIT(I2C1->CR1,8);
@@ -94,8 +96,8 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
 	//write slave address on bus
 	I2C1->DR = Copy_u8SlaveAddress ;
 	//Wait until address transmited
-	while(GET_BIT(I2C1->SR1,1) ==0 && GET_BIT(I2C1->SR2,0));
-    /**********/
+	while(GET_BIT(I2C1->SR1,1) ==0 );
+	x=I2C1->SR2;
     //Disable ACKNOWLEDGE for one byte reception.
     if(Copy_u8NumberOfData == 1){
 		CLR_BIT(I2C1->CR1 ,10); 		
@@ -106,10 +108,10 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
 		if(i == Copy_u8NumberOfData-1){
 			CLR_BIT(I2C1->CR1 ,10);
 		}
-		while(GET_BIT(I2C1->SR1 , 7) == 0);
+		while(GET_BIT(I2C1->SR1 , 6) == 0);
 		
-		*DataToReceive = I2C1->DR ;
-		DataToReceive++;
+		DataToReceive[i] = I2C1->DR ;
+		i++;
 		
 	}
 	//Generate stop condition 
@@ -137,10 +139,7 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
 	//Write LS Byte on bus
 	I2C1->DR = Copy_u8AddressOfLocation ;
 	while(GET_BIT(I2C1->SR1,7) ==0);
-	//Disable ACKNOWLEDGE for last byte reception.
-    if(Copy_u8NumberOfData == 1){
-			CLR_BIT(I2C1->CR1 ,10);
-		}
+
 	//Generate  start condition 
 	SET_BIT(I2C1->CR1,8); 
 	//Wait until start bit generated
@@ -155,12 +154,16 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit){
 
 
     for(i=0 ; i < Copy_u8NumberOfData ;i++){
+    	//Disable ACKNOWLEDGE for last byte reception.
+        if(i==Copy_u8NumberOfData-1){
+    			CLR_BIT(I2C1->CR1 ,10);
+    		}
 
 
 		while(GET_BIT(I2C1->SR1 , 6) == 0);
 		
-		*DataToReceive = I2C1->DR ;
-		DataToReceive++;
+		DataToReceive[i] = I2C1->DR ;
+
 		
 	}
 	//Generate stop condition 
