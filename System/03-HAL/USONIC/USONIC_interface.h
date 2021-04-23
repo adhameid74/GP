@@ -1,7 +1,7 @@
 /**
  * @file USONIC_interface.h
  * @author Ahmed M.Abdelfattah (ahmedm7md24@gmail.com)
- * @brief  TIMER Interface file
+ * @brief  
  * @version 1
  * @date 2020-12-28
  * 
