@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef UDS_DiagnosticSessionControl_PRIVATE_H_
-#define UDS_DiagnosticSessionControl_PRIVATE_H_
+#ifndef UDS_DIAGNOSTICSESSIONCONTROL_PRIVATE_H_
+#define UDS_DIAGNOSTICSESSIONCONTROL_PRIVATE_H_
 
 
 

@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef UDS_DiagnosticSessionControl_INTERFACE_H_
-#define UDS_DiagnosticSessionControl_INTERFACE_H_
+#ifndef UDS_DIAGNOSTICSESSIONCONTROL_INTERFACE_H_
+#define UDS_DIAGNOSTICSESSIONCONTROL_INTERFACE_H_
 
 
 

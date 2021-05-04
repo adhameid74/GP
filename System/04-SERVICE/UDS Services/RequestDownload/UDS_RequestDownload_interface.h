@@ -1,5 +1,5 @@
 /**
- * @file UDS_DiagnosticSessionControl_config.h
+ * @file UDS_RequestDownload_interface.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
  * @version 1.0
@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef UDS_DIAGNOSTICSESSIONCONTROL_CONFIG_H_
-#define UDS_DIAGNOSTICSESSIONCONTROL_CONFIG_H_
+#ifndef UDS_REQUESTDOWNLOAD_INTERFACE_H_
+#define UDS_REQUESTDOWNLOAD_INTERFACE_H_
 
 
 
