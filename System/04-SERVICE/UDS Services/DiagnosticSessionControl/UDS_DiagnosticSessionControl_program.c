@@ -8,3 +8,14 @@
  * @copyright Copyright (c) 2021
  * 
  */
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "CAN_interface.h"
+#include "DoCAN_interface.h"
+
+#include "UDS_DiagnosticSessionControl_interface.h"
+#include "UDS_DiagnosticSessionControl_private.h"
+#include "UDS_DiagnosticSessionControl_config.h"
+
