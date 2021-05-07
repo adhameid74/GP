@@ -19,3 +19,7 @@
 #include "UDS_RequestDownload_private.h"
 #include "UDS_RequestDownload_config.h"
 
+u8 UDS_RequestDownload_voidStartDownload(u32 Copy_u32Address, u32 Copy_u32Length, u8 Copy_u8Format)
+{
+
+}
