@@ -12,6 +12,7 @@
 #ifndef UDS_DIAGNOSTICSESSIONCONTROL_PRIVATE_H_
 #define UDS_DIAGNOSTICSESSIONCONTROL_PRIVATE_H_
 
-
+#define subFunctionNotSupported 		0x12
+#define conditionsNotCorrect			0x22
 
 #endif

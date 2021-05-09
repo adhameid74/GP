@@ -19,11 +19,6 @@ static u8 UDS_u8CURRENT_SESSION = UDS_DEFAULT_SESSION;
 #define UDS_EXTENDED_SESSION				0x03
 #define UDS_SAFETY_SESSION					0x04
 
-
-u8 UDS_DiagnosticSessionControl_voidStartDefaultSession();
-u8 UDS_DiagnosticSessionControl_voidStartProgrammingSession();
-u8 UDS_DiagnosticSessionControl_voidStartExtendedSession();
-u8 UDS_DiagnosticSessionControl_voidStartSafetySession();
-u8 UDS_DiagnosticSessionControl_voidStartSession(u8 Copy_u8SessionId);
+void UDS_DiagnosticSessionControl_voidStartSession(u8 Copy_u8SessionId);
 
 #endif
