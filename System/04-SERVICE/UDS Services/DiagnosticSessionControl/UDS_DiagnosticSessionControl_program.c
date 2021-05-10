@@ -12,41 +12,82 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
-#include "CAN_interface.h"
 #include "DoCAN_interface.h"
 
 #include "UDS_DiagnosticSessionControl_interface.h"
 #include "UDS_DiagnosticSessionControl_private.h"
 #include "UDS_DiagnosticSessionControl_config.h"
 
-void UDS_DiagnosticSessionControl_voidStartSession(u8 Copy_u8SessionId)
+void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 {
-	if (UDS_DEFAULT_SESSION == Copy_u8SessionId)
+	if (ReceivedMessage.Length != 2)
 	{
-		UDS_u8CURRENT_SESSION = UDS_DEFAULT_SESSION;
+		SendNegResponse(incorrectMessageLengthOrInvalidFormat);
+		return;
 	}
-	else if (UDS_PROGRAMMING_SESSION == Copy_u8SessionId)
+	if (UDS_DEFAULT_SESSION == ReceivedMessage.MessageData[1])
 	{
-		UDS_u8CURRENT_SESSION = UDS_PROGRAMMING_SESSION;
+		SendPosResponse(UDS_DEFAULT_SESSION);
+		UDS_u8SessionTimer = 0;
+		UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
+		return;
 	}
-	else if (UDS_EXTENDED_SESSION == Copy_u8SessionId)
+	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage.MessageData[1])
 	{
-		if (UDS_PROGRAMMING_SESSION == UDS_u8CURRENT_SESSION)
+		SendPosResponse(UDS_PROGRAMMING_SESSION);
+		UDS_u8SessionTimer = 0;
+		UDS_u8ActiveSession = UDS_PROGRAMMING_SESSION;
+		return;
+	}
+	else if (UDS_EXTENDED_SESSION == ReceivedMessage.MessageData[1])
+	{
+		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			// NRC (conditionsNotCorrect 0x12)
+			SendNegResponse(conditionsNotCorrect);
+			return;
 		}
-		UDS_u8CURRENT_SESSION = UDS_EXTENDED_SESSION;
+		SendPosResponse(UDS_EXTENDED_SESSION);
+		UDS_u8SessionTimer = 0;
+		UDS_u8ActiveSession = UDS_EXTENDED_SESSION;
+		return;
 	}
-	else if (UDS_SAFETY_SESSION == Copy_u8SessionId)
+	else if (UDS_SAFETY_SESSION == ReceivedMessage.MessageData[1])
 	{
-		if (UDS_PROGRAMMING_SESSION == UDS_u8CURRENT_SESSION)
+		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			// NRC (conditionsNotCorrect 0x12)
+			SendNegResponse(conditionsNotCorrect);
+			return;
 		}
-		UDS_u8CURRENT_SESSION = UDS_SAFETY_SESSION;
+		SendPosResponse(UDS_SAFETY_SESSION);
+		UDS_u8SessionTimer = 0;
+		UDS_u8ActiveSession = UDS_SAFETY_SESSION;
+		return;
 	}
 	else
 	{
-		// NRC (subFunctionNotSupported 0x12)
+		SendNegResponse(subFunctionNotSupported);
+		return;
 	}
+}
+
+static void SendPosResponse(u8 Copy_u8Session)
+{
+	REQUEST_SDU PositiveResponse;
+	PositiveResponse.SA = SOURCE_ADDRESS;
+	PositiveResponse.TA = TARGET_ADDRESS;
+	PositiveResponse.Length = POS_RESPONSE_LENGTH;
+	u8 MSG[POS_RESPONSE_LENGTH] = {POS_RESPONSE_SID , Copy_u8Session};
+	PositiveResponse.MessageData = MSG;
+	DoCAN_voidRequestUsData(PositiveResponse);
+}
+
+static void SendNegResponse(u8 Copy_u8NRC)
+{
+	REQUEST_SDU NegativeResponse;
+	NegativeResponse.SA = SOURCE_ADDRESS;
+	NegativeResponse.TA = TARGET_ADDRESS;
+	NegativeResponse.Length = NRC_LENGTH;
+	u8 MSG[NRC_LENGTH] = {NRC_ID , SID , Copy_u8NRC};
+	NegativeResponse.MessageData = MSG;
+	DoCAN_voidRequestUsData(NegativeResponse);
 }

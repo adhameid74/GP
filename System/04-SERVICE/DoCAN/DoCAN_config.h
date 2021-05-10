@@ -10,6 +10,7 @@
  */
  #ifndef DOCAN_CONFIG_H
  #define DOCAN_CONFIG_H
- #define SOURCE_ADDRESS 0x55
- #define TARGET_ADDRESS 0x56
+
+
+
  #endif

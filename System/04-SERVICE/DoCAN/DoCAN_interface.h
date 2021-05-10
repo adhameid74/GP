@@ -10,6 +10,10 @@
  */
  #ifndef DOCAN_INTERFACE_H
  #define DOCAN_INTERFACE_H
+
+ #define SOURCE_ADDRESS 0x55
+ #define TARGET_ADDRESS 0x56
+
  typedef struct {
 	 u16 u12:12;
  }u12;
