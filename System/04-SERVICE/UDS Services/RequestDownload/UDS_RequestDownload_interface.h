@@ -12,6 +12,6 @@
 #ifndef UDS_REQUESTDOWNLOAD_INTERFACE_H_
 #define UDS_REQUESTDOWNLOAD_INTERFACE_H_
 
-u8 UDS_RequestDownload_voidStartDownload(u32 Copy_u32Address, u32 Copy_u32Length, u8 Copy_u8Format);
+void UDS_voidRequestDownload(INDICATION_SDU ReceivedMessage);
 
 #endif
