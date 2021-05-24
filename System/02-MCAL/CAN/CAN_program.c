@@ -247,7 +247,7 @@ void CAN_voidWaitReady(u8 Copy_u8MailBoxID)
 
 TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
 {
-	u8 Local_u8MailBoxID;
+	volatile u8 Local_u8MailBoxID;
 	for(Local_u8MailBoxID=CAN_MAILBOX0;Local_u8MailBoxID<=CAN_MAILBOX2;Local_u8MailBoxID++)
 	{
 		if( (GET_BIT(bxCAN1->TSR, (TSR_TME0+Local_u8MailBoxID))) == 1)
@@ -275,7 +275,7 @@ TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
 	bxCAN1->TxMailBox[Local_u8MailBoxID].TDTR &= ~TDTR_DLC_MASK;
 	bxCAN1->TxMailBox[Local_u8MailBoxID].TDTR |= Copy_ptrMsg->DLC;
 
-//	SET_BIT(bxCAN1->IER, IER_TMEIE);
+	SET_BIT(bxCAN1->IER, IER_TMEIE);
 	SET_BIT(bxCAN1->TxMailBox[Local_u8MailBoxID].TIR, TIR_TXRQ);
 	return CAN_TX_OK;
 }
