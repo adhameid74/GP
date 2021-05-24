@@ -22,7 +22,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 {
 	if (ReceivedMessage.Length != 2)
 	{
-		SendNegResponse(incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
 	if (UDS_DEFAULT_SESSION == ReceivedMessage.MessageData[1])
@@ -43,7 +43,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			SendNegResponse(conditionsNotCorrect);
+			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
 			return;
 		}
 		SendPosResponse(UDS_EXTENDED_SESSION);
@@ -55,7 +55,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			SendNegResponse(conditionsNotCorrect);
+			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
 			return;
 		}
 		SendPosResponse(UDS_SAFETY_SESSION);
@@ -65,7 +65,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 	}
 	else
 	{
-		SendNegResponse(subFunctionNotSupported);
+		UDSHandler_voidSendNegResponse(SID, subFunctionNotSupported);
 		return;
 	}
 }
@@ -79,15 +79,4 @@ static void SendPosResponse(u8 Copy_u8Session)
 	u8 MSG[POS_RESPONSE_LENGTH] = {POS_RESPONSE_SID , Copy_u8Session};
 	PositiveResponse.MessageData = MSG;
 	DoCAN_voidRequestUsData(PositiveResponse);
-}
-
-static void SendNegResponse(u8 Copy_u8NRC)
-{
-	REQUEST_SDU NegativeResponse;
-	NegativeResponse.SA = SOURCE_ADDRESS;
-	NegativeResponse.TA = TARGET_ADDRESS;
-	NegativeResponse.Length = NRC_LENGTH;
-	u8 MSG[NRC_LENGTH] = {NRC_ID , SID , Copy_u8NRC};
-	NegativeResponse.MessageData = MSG;
-	DoCAN_voidRequestUsData(NegativeResponse);
 }
