@@ -10,4 +10,11 @@
  */
 #ifndef UDS_ClearDiagnosticInformation_PRIVATE_H
 #define UDS_ClearDiagnosticInformation_PRIVATE_H
+
+
+#define SID											0x14
+#define POS_RESPONSE_SID							0x54
+
+
+
 #endif
