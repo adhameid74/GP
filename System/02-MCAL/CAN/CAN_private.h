@@ -2,7 +2,7 @@
  * @file CAN_private.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 2.0
+ * @version 1.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021

@@ -19,7 +19,7 @@
 #include "CAN_private.h"
 #include "CAN_config.h"
 
-//static void (*CAN_CallBackFunc)(CAN_msg_t*) = NULL;
+static void (*CAN_CallBackFunc)(CAN_msg_t) = NULL;
 
 void CAN_voidInit()
 {
@@ -223,12 +223,12 @@ void CAN_voidStart()
 	CLR_BIT(bxCAN1->MCR, MCR_INRQ);
 	while(GET_BIT(bxCAN1->MSR, MSR_INAK) != 0);
 }
-/*
+
 void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*))
 {
 	CAN_CallBackFunc = Copy_ptrCallBackFunc;
 }
-*/
+
 void CAN_voidWaitReady(u8 Copy_u8MailBoxID)
 {
 	switch(Copy_u8MailBoxID)
@@ -397,7 +397,7 @@ void USB_LP_CAN1_RX0_IRQHandler()
 	if( (bxCAN1->RF0R & RF0R_FMP_MASK) != 0)
 	{
 		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO0);
-//		CAN_CallBackFunc(&CAN_RECIEVED_MSG);
+		CAN_CallBackFunc(CAN_RECIEVED_MSG);
 	}
 }
 
@@ -406,6 +406,6 @@ void CAN1_RX1_IRQHandler()
 	if( (bxCAN1->RF1R & RF1R_FMP_MASK) != 0)
 	{
 		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO1);
-//		CAN_CallBackFunc(&CAN_RECIEVED_MSG);
+		CAN_CallBackFunc(CAN_RECIEVED_MSG);
 	}
 }

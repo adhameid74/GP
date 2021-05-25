@@ -2,7 +2,7 @@
  * @file CAN_interface.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
- * @version 2.0
+ * @version 1.0
  * @date 26-01-2021
  * 
  * @copyright Copyright (c) 2021
@@ -77,7 +77,7 @@ void CAN_voidInit();
 
 void CAN_voidStart();
 
-//void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*));
+void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*));
 
 /**
  * @brief Busy wait until the desired TX mailbox is empty
