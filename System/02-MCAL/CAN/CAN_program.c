@@ -224,7 +224,7 @@ void CAN_voidStart()
 	while(GET_BIT(bxCAN1->MSR, MSR_INAK) != 0);
 }
 
-void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*))
+void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t))
 {
 	CAN_CallBackFunc = Copy_ptrCallBackFunc;
 }
