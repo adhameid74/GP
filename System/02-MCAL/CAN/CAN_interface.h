@@ -77,7 +77,7 @@ void CAN_voidInit();
 
 void CAN_voidStart();
 
-void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t*));
+void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t));
 
 /**
  * @brief Busy wait until the desired TX mailbox is empty
