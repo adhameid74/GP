@@ -21,7 +21,7 @@
 #include "UDS_TesterPresent_private.h"
 #include "UDS_TesterPresent_config.h"
 
-void UDS_voidTesterPresent(INDICATION_SDU ReceivedMessage)
+void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage)
 {
 	if (ReceivedMessage.Length != 2)
 	{

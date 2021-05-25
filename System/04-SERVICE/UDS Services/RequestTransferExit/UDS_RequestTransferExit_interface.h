@@ -12,6 +12,6 @@
 #ifndef UDS_REQUESTTRANSFEREXIT_INTERFACE_H_
 #define UDS_REQUESTTRANSFEREXIT_INTERFACE_H_
 
-void UDS_voidRequestTransferExit(INDICATION_SDU ReceivedMessage);
+void UDS_voidRequestTransferExit(INDICATION_SDU* ReceivedMessage);
 
 #endif

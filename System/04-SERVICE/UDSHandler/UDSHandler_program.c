@@ -17,6 +17,7 @@
 #include "UDS_ClearDiagnosticInformation_interface.h"
 #include "UDS_DiagnosticSessionControl_interface.h"
 #include "UDS_ReadDataById_interface.h"
+#include "UDS_WriteDataById_interface.h"
 #include "UDS_ReadDTCInformation_interface.h"
 #include "UDS_RequestDownload_interface.h"
 #include "UDS_RequestTransferExit_interface.h"

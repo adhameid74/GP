@@ -19,7 +19,7 @@
 #include "UDS_DiagnosticSessionControl_private.h"
 #include "UDS_DiagnosticSessionControl_config.h"
 
-void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
+void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 {
 	if (ReceivedMessage.Length != 2)
 	{

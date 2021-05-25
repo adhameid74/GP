@@ -12,6 +12,6 @@
 #ifndef UDS_TRANSFERDATA_INTERFACE_H_
 #define UDS_TRANSFERDATA_INTERFACE_H_
 
-void UDS_voidTransferData(INDICATION_SDU ReceivedMessage);
+void UDS_voidTransferData(INDICATION_SDU* ReceivedMessage);
 
 #endif

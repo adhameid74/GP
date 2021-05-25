@@ -12,6 +12,6 @@
 #ifndef UDS_REQUESTDOWNLOAD_INTERFACE_H_
 #define UDS_REQUESTDOWNLOAD_INTERFACE_H_
 
-void UDS_voidRequestDownload(INDICATION_SDU ReceivedMessage);
+void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage);
 
 #endif

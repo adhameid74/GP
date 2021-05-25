@@ -19,7 +19,7 @@
 #include "UDS_RequestTransferExit_private.h"
 #include "UDS_RequestTransferExit_config.h"
 
-void UDS_voidRequestTransferExit(INDICATION_SDU ReceivedMessage)
+void UDS_voidRequestTransferExit(INDICATION_SDU* ReceivedMessage)
 {
 	if (ReceivedMessage.Length != 1)
 	{

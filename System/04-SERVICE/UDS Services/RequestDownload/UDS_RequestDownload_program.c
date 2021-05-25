@@ -19,7 +19,7 @@
 #include "UDS_RequestDownload_private.h"
 #include "UDS_RequestDownload_config.h"
 
-void UDS_voidRequestDownload(INDICATION_SDU ReceivedMessage)
+void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 {
 	u8 Local_u8AddressFormat, Local_u8LengthFormat;
 	if (ReceivedMessage.Length < 3)

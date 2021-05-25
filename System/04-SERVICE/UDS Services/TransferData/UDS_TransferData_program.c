@@ -19,7 +19,7 @@
 #include "UDS_TransferData_private.h"
 #include "UDS_TransferData_config.h"
 
-void UDS_voidTransferData(INDICATION_SDU ReceivedMessage)
+void UDS_voidTransferData(INDICATION_SDU* ReceivedMessage)
 {
 
 }

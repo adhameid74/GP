@@ -22,6 +22,6 @@
 u8 UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
 u8 UDS_u8SessionTimer = 0;
 
-void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage);
+void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage);
 
 #endif

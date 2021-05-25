@@ -12,6 +12,6 @@
 #ifndef UDS_TESTERPRESENT_INTERFACE_H_
 #define UDS_TESTERPRESENT_INTERFACE_H_
 
-void UDS_voidTesterPresent(INDICATION_SDU ReceivedMessage);
+void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage);
 
 #endif
