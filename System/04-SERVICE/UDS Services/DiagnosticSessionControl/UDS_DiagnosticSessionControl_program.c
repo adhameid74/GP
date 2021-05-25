@@ -13,6 +13,7 @@
 #include "BIT_MATH.h"
 
 #include "DoCAN_interface.h"
+#include "UDSHandler_interface.h"
 
 #include "UDS_DiagnosticSessionControl_interface.h"
 #include "UDS_DiagnosticSessionControl_private.h"
@@ -27,14 +28,16 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 	}
 	if (UDS_DEFAULT_SESSION == ReceivedMessage.MessageData[1])
 	{
-		SendPosResponse(UDS_DEFAULT_SESSION);
+		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_DEFAULT_SESSION};
+		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
 		return;
 	}
 	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage.MessageData[1])
 	{
-		SendPosResponse(UDS_PROGRAMMING_SESSION);
+		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_PROGRAMMING_SESSION};
+		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_PROGRAMMING_SESSION;
 		return;
@@ -46,7 +49,8 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
 			return;
 		}
-		SendPosResponse(UDS_EXTENDED_SESSION);
+		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_EXTENDED_SESSION};
+		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_EXTENDED_SESSION;
 		return;
@@ -58,7 +62,8 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
 			return;
 		}
-		SendPosResponse(UDS_SAFETY_SESSION);
+		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_SAFETY_SESSION};
+		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_SAFETY_SESSION;
 		return;
@@ -68,15 +73,4 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU ReceivedMessage)
 		UDSHandler_voidSendNegResponse(SID, subFunctionNotSupported);
 		return;
 	}
-}
-
-static void SendPosResponse(u8 Copy_u8Session)
-{
-	REQUEST_SDU PositiveResponse;
-	PositiveResponse.SA = SOURCE_ADDRESS;
-	PositiveResponse.TA = TARGET_ADDRESS;
-	PositiveResponse.Length = POS_RESPONSE_LENGTH;
-	u8 MSG[POS_RESPONSE_LENGTH] = {POS_RESPONSE_SID , Copy_u8Session};
-	PositiveResponse.MessageData = MSG;
-	DoCAN_voidRequestUsData(PositiveResponse);
 }

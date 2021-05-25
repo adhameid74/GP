@@ -16,6 +16,7 @@
 #define subFunctionNotSupported								0x12
 #define incorrectMessageLengthOrInvalidFormat				0x13
 #define conditionsNotCorrect								0x22
+#define requestSequenceError								0x24
 #define requestOutOfRange									0x31
 #define securityAccessDenied								0x33
 #define invalidKey											0x35
@@ -28,6 +29,9 @@
 #define requestCorrectlyReceived_ResponsePending			0x78
 #define subFunctionNotSupportedInActiveSession				0x7E
 #define serviceNotSupportedInActiveSession					0x7F
+#define voltageTooHigh										0x92
+#define voltageTooLow										0x93
+
 
 void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage);
 void UDSHandler_voidSendNegResponse(u8 Copy_u8SID, u8 Copy_u8NRC);
