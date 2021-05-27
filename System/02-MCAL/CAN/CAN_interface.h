@@ -52,6 +52,8 @@ typedef u8 TX_STATE_t;
 #define CAN_TX_OK						0
 #define CAN_TX_FAIL						1
 
+#define CAN_NO_AVAILABLE_FILTERS        2
+
 typedef struct
 {
 	u8 ID;			// Identifier
@@ -77,14 +79,13 @@ void CAN_voidInit();
 
 void CAN_voidStart();
 
-void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t));
+u8 CAN_u8SetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t));
 
 /**
  * @brief Busy wait until the desired TX mailbox is empty
  * 
- * @param Copy_u8MailBoxID TX mailbox (ex: CAN_MAILBOX1)
  */
-void CAN_voidWaitReady(u8 Copy_u8MailBoxID);
+u8 CAN_u8WaitReady()
 
 /**
  * @brief Requests to transmit a message
@@ -99,7 +100,7 @@ TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg);
  * 
  * @param Copy_ptrFilter Information to be set
  */
-void CAN_voidWriteFilter(CAN_filter_t* Copy_ptrFilter);
+u8 CAN_u8WriteFilter(CAN_filter_t* Copy_ptrFilter);
 
 /**
  * @brief controls the CAN test mode

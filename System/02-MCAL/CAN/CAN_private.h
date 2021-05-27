@@ -127,4 +127,18 @@ typedef struct
 
 static void ReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID);
 
+#define	TIMEOUT					1000
+
+#define DTCNUM					2
+
+#define TxFailure_FAILED_THRESHOLD        		10
+#define TxFailure_PASSED_THRESHOLD        		-5
+
+#define NonEmptyFilter_FAILED_THRESHOLD        	1
+#define NonEmptyFilter_PASSED_THRESHOLD        	-3
+
+#define AGING_THRESHOLD         		  		255
+
+static dtcItem_t CAN_DTC[DTCNUM];
+
 #endif

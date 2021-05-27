@@ -33,6 +33,17 @@ void CAN_voidInit()
 	NVIC_voidEnableInterrupt(NVIC_USB_HP_CAN_TX);
 	NVIC_voidEnableInterrupt(NVIC_USB_LP_CAN_RX0);
 
+    for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
+    {
+        CAN_DTC[Local_u8Counter].Property->Code = DTC_CANTxFailure+Local_u8Counter;
+        CAN_DTC[Local_u8Counter].Property->AgingThreshold = AGING_THRESHOLD;
+    }
+    CAN_DTC[0].Property->TestFailedThreshold = TxFailure_FAILED_THRESHOLD;
+    CAN_DTC[0].Property->TestPassedThreshold = TxFailure_PASSED_THRESHOLD;
+
+    CAN_DTC[1].Property->TestFailedThreshold = NonEmptyFilter_FAILED_THRESHOLD;
+    CAN_DTC[1].Property->TestPassedThreshold = NonEmptyFilter_PASSED_THRESHOLD;
+
 	CLR_BIT(bxCAN1->MCR, MCR_SLEEP);
 	SET_BIT(bxCAN1->MCR, MCR_INRQ);
 
@@ -224,25 +235,28 @@ void CAN_voidStart()
 	while(GET_BIT(bxCAN1->MSR, MSR_INAK) != 0);
 }
 
-void CAN_voidSetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t))
+u8 CAN_u8SetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t))
 {
-	CAN_CallBackFunc = Copy_ptrCallBackFunc;
+	if (Copy_ptrCallBackFunc != NULL)
+	{
+		CAN_CallBackFunc = Copy_ptrCallBackFunc;
+		return NO_ERROR;
+	}
+	return NULL_POINTER_ERROR;
 }
 
-void CAN_voidWaitReady(u8 Copy_u8MailBoxID)
+u8 CAN_u8WaitReady()
 {
-	switch(Copy_u8MailBoxID)
+	Local_u16Counter = 0;
+	while( ((GET_BIT(bxCAN1->TSR, TSR_TME0) == 0) || (GET_BIT(bxCAN1->TSR, TSR_TME1) == 0) || (GET_BIT(bxCAN1->TSR, TSR_TME2) == 0)) && (Local_u16Counter != TIMEOUT) )
 	{
-	case CAN_MAILBOX0:
-		while(GET_BIT(bxCAN1->TSR, TSR_TME0) == 0);
-		break;
-	case CAN_MAILBOX1:
-		while(GET_BIT(bxCAN1->TSR, TSR_TME1) == 0);
-		break;
-	case CAN_MAILBOX2:
-		while(GET_BIT(bxCAN1->TSR, TSR_TME2) == 0);
-		break;
+		Local_u16Counter++;
 	}
+	if (Local_u16Counter == TIMEOUT)
+	{
+		return TIMEOUT_ERROR;
+	}
+	return NO_ERROR;
 }
 
 TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
@@ -257,6 +271,7 @@ TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
 	}
 	if(Local_u8MailBoxID > CAN_MAILBOX2)
 	{
+		DTC_u8DetectFault(&CAN_DTC[0], 1);
 		return CAN_TX_FAIL;
 	}
 
@@ -277,6 +292,7 @@ TX_STATE_t CAN_u8WriteMsg(CAN_msg_t* Copy_ptrMsg)
 
 	SET_BIT(bxCAN1->IER, IER_TMEIE);
 	SET_BIT(bxCAN1->TxMailBox[Local_u8MailBoxID].TIR, TIR_TXRQ);
+	DTC_u8DetectFault(&CAN_DTC[0], 0);
 	return CAN_TX_OK;
 }
 
@@ -306,14 +322,15 @@ static void ReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID)
 	}
 }
 
-void CAN_voidWriteFilter(CAN_filter_t* Copy_ptrFilter)
+u8 CAN_u8WriteFilter(CAN_filter_t* Copy_ptrFilter)
 {
 	static u8 Local_u8FilterIndex = 0;
 	u32 Local_u32ID = 0;
 
 	if(Local_u8FilterIndex > 55)
 	{
-		return;
+		DTC_u8DetectFault(&CAN_DTC[1], 1);
+		return CAN_NO_AVAILABLE_FILTERS;
 	}
 
 	if( (Local_u8FilterIndex % 2) == 0)
@@ -348,6 +365,8 @@ void CAN_voidWriteFilter(CAN_filter_t* Copy_ptrFilter)
 	CLR_BIT(bxCAN1->FMR, FMR_FINIT);
 	SET_BIT(bxCAN1->FA1R, (Local_u8FilterIndex/4));
 	Local_u8FilterIndex++;
+	DTC_u8DetectFault(&CAN_DTC[1], 0);
+	return NO_ERROR;
 }
 
 void CAN_voidSetTestMode(u8 Copy_u8TestMode)
@@ -397,7 +416,10 @@ void USB_LP_CAN1_RX0_IRQHandler()
 	if( (bxCAN1->RF0R & RF0R_FMP_MASK) != 0)
 	{
 		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO0);
-		CAN_CallBackFunc(CAN_RECIEVED_MSG);
+		if(CAN_CallBackFunc != NULL)
+		{
+			CAN_CallBackFunc(CAN_RECIEVED_MSG);
+		}
 	}
 }
 
@@ -406,6 +428,9 @@ void CAN1_RX1_IRQHandler()
 	if( (bxCAN1->RF1R & RF1R_FMP_MASK) != 0)
 	{
 		ReadMsg(&CAN_RECIEVED_MSG, CAN_FIFO1);
-		CAN_CallBackFunc(CAN_RECIEVED_MSG);
+		if(CAN_CallBackFunc != NULL)
+		{
+			CAN_CallBackFunc(CAN_RECIEVED_MSG);
+		}
 	}
 }

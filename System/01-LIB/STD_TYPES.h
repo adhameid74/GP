@@ -14,6 +14,11 @@
 
 #define NULL 		(void *)0
 
+#define NO_ERROR                    30
+#define NULL_POINTER_ERROR          40
+#define TIMEOUT_ERROR               50
+#define PARAMETER_ERROR             60
+
 typedef	unsigned char u8;
 typedef signed char s8;
 typedef unsigned short int u16;
