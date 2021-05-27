@@ -85,7 +85,7 @@ u8 CAN_u8SetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t));
  * @brief Busy wait until the desired TX mailbox is empty
  * 
  */
-u8 CAN_u8WaitReady()
+u8 CAN_u8WaitReady();
 
 /**
  * @brief Requests to transmit a message

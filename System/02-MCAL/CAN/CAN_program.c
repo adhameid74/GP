@@ -15,6 +15,8 @@
 #include "DIO_interface.h"
 #include "NVIC_interface.h"
 
+#include "DTC_interface.h"
+
 #include "CAN_interface.h"
 #include "CAN_private.h"
 #include "CAN_config.h"
@@ -247,7 +249,7 @@ u8 CAN_u8SetCallBack(void (*Copy_ptrCallBackFunc)(CAN_msg_t))
 
 u8 CAN_u8WaitReady()
 {
-	Local_u16Counter = 0;
+	u16 Local_u16Counter = 0;
 	while( ((GET_BIT(bxCAN1->TSR, TSR_TME0) == 0) || (GET_BIT(bxCAN1->TSR, TSR_TME1) == 0) || (GET_BIT(bxCAN1->TSR, TSR_TME2) == 0)) && (Local_u16Counter != TIMEOUT) )
 	{
 		Local_u16Counter++;
