@@ -15,6 +15,7 @@
 #define DTC_TEST_RESULT_UNCOMPLITED			0
 #define DTC_TEST_RESULT_PASSED				1
 #define DTC_TEST_RESULT_FAILED				2
+#define DTC_NUMBER							5
 
 typedef enum
 {
@@ -25,7 +26,7 @@ typedef enum
     DTC_UsonicCloseDistance =0x02,
     DTC_UsonicNormalDistance =0x03,
     DTC_UsonicLongDistance =0x04,
-    DTC_SpeedFesa = 0x05;
+    DTC_SpeedZart = 0x05;
 } dtcCategory_e;
 
 
