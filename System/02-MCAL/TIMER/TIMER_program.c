@@ -583,176 +583,169 @@ void TIMER_voidSetTimerValue(u8 Copy_u8TimerNumber  , u16 Copy_u16Value)
 }
 void TIMER_voidEnableExternalClockSource(u8 Copy_u8TimerNumber, u8 Copy_u8TimerChannelNumber)
 {
-    switch (Copy_u8TimerNumber)
-    {
-    case TIMER_TIMER2:
-        // Configure the timer in external clock mode 1
-        SET_BIT(TIM2_SMCR,0);
-        SET_BIT(TIM2_SMCR,1);
-        SET_BIT(TIM2_SMCR,2);
-        TIM2_ARR = 0xFFFF;
-        switch (Copy_u8TimerChannelNumber)
-        {
-        case TIMER_TIMER2_CHANNEL1 :
-            // Configure channel 1 to detect rising edges
-            SET_BIT(TIM2_CCMR1,0);
-            CLR_BIT(TIM2_CCMR1,1);
-            // Configure the input filter 
-            CLR_BIT(TIM2_CCMR1,4);
-            CLR_BIT(TIM2_CCMR1,5);
-            CLR_BIT(TIM2_CCMR1,6);
-            CLR_BIT(TIM2_CCMR1,7);
-            // Select rising edge polarity 
-            CLR_BIT(TIM2_CCER,1);
-            // Select TI1 as the input source 
-            SET_BIT(TIM2_SMCR,4);
-            CLR_BIT(TIM2_SMCR,5);
-            SET_BIT(TIM2_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM2_CR1,0);
-            break;
+	switch (Copy_u8TimerNumber)
+	    {
+	    case TIMER_TIMER2:
+	        // 4. Configure the timer in external clock mode 1 by writing SMS=111 in the TIMx_SMCR
+	        // register.
+	        //TIM2_SMCR |= 0x0007;
+	        SET_BIT(TIM2_SMCR,0);
+	        SET_BIT(TIM2_SMCR,1);
+	        SET_BIT(TIM2_SMCR,2);
+	        TIM2_ARR = 0xFFFF;
+	        switch (Copy_u8TimerChannelNumber)
+	        {
+	        case TIMER_TIMER2_CHANNEL1 :
+	            // 1. Configure channel 1 to detect rising edges
+	            SET_BIT(TIM2_CCMR1,0);
+	            CLR_BIT(TIM2_CCMR1,1);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM2_CCMR1,4);
+	            CLR_BIT(TIM2_CCMR1,5);
+	            CLR_BIT(TIM2_CCMR1,6);
+	            CLR_BIT(TIM2_CCMR1,7);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM2_CCER,1);
+	            // 5. Select TI1 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            SET_BIT(TIM2_SMCR,4);
+	            CLR_BIT(TIM2_SMCR,5);
+	            SET_BIT(TIM2_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM2_CR1,0);
+	            break;
 
-        case TIMER_TIMER2_CHANNEL2 :
-            // Configure channel 2 to detect rising edges
-            SET_BIT(TIM2_CCMR1,8);
-            CLR_BIT(TIM2_CCMR1,9);
-            // Configure the input filter 
-            CLR_BIT(TIM2_CCMR1,12);
-            CLR_BIT(TIM2_CCMR1,13);
-            CLR_BIT(TIM2_CCMR1,14);
-            CLR_BIT(TIM2_CCMR1,15);
-            // Select rising edge polarity 
-            CLR_BIT(TIM2_CCER,5);
-            // Select TI2 as the input source
-            CLR_BIT(TIM2_SMCR,4);
-            CLR_BIT(TIM2_SMCR,5);
-            SET_BIT(TIM2_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM2_CR1,0);
-            break;
-        default:
-            break;
-        }
-        break;
-    case TIMER_TIMER3:
-        // Configure the timer in external clock mode 1 
-        SET_BIT(TIM3_SMCR,0);
-        SET_BIT(TIM3_SMCR,1);
-        SET_BIT(TIM3_SMCR,2);
-        TIM3_ARR = 0xFFFF;
-        switch (Copy_u8TimerChannelNumber)
-        {
-        case TIMER_TIMER3_CHANNEL1 :
-            // Configure channel 1 to detect rising edges
-            SET_BIT(TIM3_CCMR1,0);
-            CLR_BIT(TIM3_CCMR1,1);
-            // Configure the input filter 
-            CLR_BIT(TIM3_CCMR1,4);
-            CLR_BIT(TIM3_CCMR1,5);
-            CLR_BIT(TIM3_CCMR1,6);
-            CLR_BIT(TIM3_CCMR1,7);
-            // Select rising edge polarity 
-            CLR_BIT(TIM3_CCER,1);
-            // Select TI1 as the input source 
-            SET_BIT(TIM3_SMCR,4);
-            CLR_BIT(TIM3_SMCR,5);
-            SET_BIT(TIM3_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM3_CR1,0);
-            break;
+	        case TIMER_TIMER2_CHANNEL2 :
+	            // 1. Configure channel 2 to detect rising edges
+	            SET_BIT(TIM2_CCMR1,8);
+	            CLR_BIT(TIM2_CCMR1,9);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM2_CCMR1,12);
+	            CLR_BIT(TIM2_CCMR1,13);
+	            CLR_BIT(TIM2_CCMR1,14);
+	            CLR_BIT(TIM2_CCMR1,15);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM2_CCER,5);
+	            // 5. Select TI2 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            CLR_BIT(TIM2_SMCR,4);
+	            SET_BIT(TIM2_SMCR,5);
+	            SET_BIT(TIM2_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM2_CR1,0);
+	            break;
+	        default:
+	            break;
+	        }
+	        break;
+	    case TIMER_TIMER3:
+	        // 4. Configure the timer in external clock mode 1 by writing SMS=111 in the TIMx_SMCR
+	        // register.
+	        //TIM2_SMCR |= 0x0007;
+	        SET_BIT(TIM3_SMCR,0);
+	        SET_BIT(TIM3_SMCR,1);
+	        SET_BIT(TIM3_SMCR,2);
+	        TIM3_ARR = 0xFFFF;
+	        switch (Copy_u8TimerChannelNumber)
+	        {
+	        case TIMER_TIMER3_CHANNEL1 :
+	            // 1. Configure channel 1 to detect rising edges
+	            SET_BIT(TIM3_CCMR1,0);
+	            CLR_BIT(TIM3_CCMR1,1);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM3_CCMR1,4);
+	            CLR_BIT(TIM3_CCMR1,5);
+	            CLR_BIT(TIM3_CCMR1,6);
+	            CLR_BIT(TIM3_CCMR1,7);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM3_CCER,1);
+	            // 5. Select TI1 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            SET_BIT(TIM3_SMCR,4);
+	            CLR_BIT(TIM3_SMCR,5);
+	            SET_BIT(TIM3_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM3_CR1,0);
+	            break;
 
-        case TIMER_TIMER3_CHANNEL2 :
-            // Configure channel 2 to detect rising edges
-            SET_BIT(TIM3_CCMR1,8);
-            CLR_BIT(TIM3_CCMR1,9);
-            // Configure the input filter 
-            CLR_BIT(TIM3_CCMR1,12);
-            CLR_BIT(TIM3_CCMR1,13);
-            CLR_BIT(TIM3_CCMR1,14);
-            CLR_BIT(TIM3_CCMR1,15);
-            // Select rising edge polarity 
-            CLR_BIT(TIM3_CCER,5);
-            // Select TI2 as the input source 
-            CLR_BIT(TIM3_SMCR,4);
-            CLR_BIT(TIM3_SMCR,5);
-            SET_BIT(TIM3_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM3_CR1,0);
-            break;
-        default:
-            break;
-        }
-        break;
-    case TIMER_TIMER4:
-        // Configure the timer in external clock mode 1 
-        SET_BIT(TIM4_SMCR,0);
-        SET_BIT(TIM4_SMCR,1);
-        SET_BIT(TIM4_SMCR,2);
-        TIM4_ARR = 0xFFFF;
-        switch (Copy_u8TimerChannelNumber)
-        {
-        case TIMER_TIMER2_CHANNEL1 :
-            // Configure channel 1 to detect rising edges
-            SET_BIT(TIM4_CCMR1,0);
-            CLR_BIT(TIM4_CCMR1,1);
-            // Configure the input filter 
-            CLR_BIT(TIM4_CCMR1,4);
-            CLR_BIT(TIM4_CCMR1,5);
-            CLR_BIT(TIM4_CCMR1,6);
-            CLR_BIT(TIM4_CCMR1,7);
-            // Select rising edge polarity 
-            CLR_BIT(TIM4_CCER,1);
-            // Select TI1 as the input source
-            SET_BIT(TIM4_SMCR,4);
-            CLR_BIT(TIM4_SMCR,5);
-            SET_BIT(TIM4_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM4_CR1,0);
-            break;
+	        case TIMER_TIMER3_CHANNEL2 :
+	            // 1. Configure channel 2 to detect rising edges
+	            SET_BIT(TIM3_CCMR1,8);
+	            CLR_BIT(TIM3_CCMR1,9);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM3_CCMR1,12);
+	            CLR_BIT(TIM3_CCMR1,13);
+	            CLR_BIT(TIM3_CCMR1,14);
+	            CLR_BIT(TIM3_CCMR1,15);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM3_CCER,5);
+	            // 5. Select TI2 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            CLR_BIT(TIM3_SMCR,4);
+	            SET_BIT(TIM3_SMCR,5);
+	            SET_BIT(TIM3_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM3_CR1,0);
+	            break;
+	        default:
+	            break;
+	        }
+	        break;
+	    case TIMER_TIMER4:
+	        // 4. Configure the timer in external clock mode 1 by writing SMS=111 in the TIMx_SMCR
+	        // register.
+	        //TIM2_SMCR |= 0x0007;
+	        SET_BIT(TIM4_SMCR,0);
+	        SET_BIT(TIM4_SMCR,1);
+	        SET_BIT(TIM4_SMCR,2);
+	        TIM4_ARR = 0xFFFF;
+	        switch (Copy_u8TimerChannelNumber)
+	        {
+	        case TIMER_TIMER2_CHANNEL1 :
+	            // 1. Configure channel 1 to detect rising edges
+	            SET_BIT(TIM4_CCMR1,0);
+	            CLR_BIT(TIM4_CCMR1,1);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM4_CCMR1,4);
+	            CLR_BIT(TIM4_CCMR1,5);
+	            CLR_BIT(TIM4_CCMR1,6);
+	            CLR_BIT(TIM4_CCMR1,7);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM4_CCER,1);
+	            // 5. Select TI1 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            SET_BIT(TIM4_SMCR,4);
+	            CLR_BIT(TIM4_SMCR,5);
+	            SET_BIT(TIM4_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM4_CR1,0);
+	            break;
 
-        case TIMER_TIMER4_CHANNEL2 :
-            // Configure channel 2 to detect rising edges
-            SET_BIT(TIM4_CCMR1,8);
-            CLR_BIT(TIM4_CCMR1,9);
-            // Configure the input filter 
-            CLR_BIT(TIM4_CCMR1,12);
-            CLR_BIT(TIM4_CCMR1,13);
-            CLR_BIT(TIM4_CCMR1,14);
-            CLR_BIT(TIM4_CCMR1,15);
-            // Select rising edge polarity 
-            CLR_BIT(TIM4_CCER,5);
-            // Select TI2 as the input source 
-            CLR_BIT(TIM4_SMCR,4);
-            CLR_BIT(TIM4_SMCR,5);
-            SET_BIT(TIM4_SMCR,6);
-            // Enable the counter
-            SET_BIT(TIM4_CR1,0);
-            break;
-        default:
-            break;
-        }
-        break;
-    
-    default:
-        break;
-    }
+	        case TIMER_TIMER4_CHANNEL2 :
+	            // 1. Configure channel 2 to detect rising edges
+	            SET_BIT(TIM4_CCMR1,8);
+	            CLR_BIT(TIM4_CCMR1,9);
+	            // 2. Configure the input filter
+	            CLR_BIT(TIM4_CCMR1,12);
+	            CLR_BIT(TIM4_CCMR1,13);
+	            CLR_BIT(TIM4_CCMR1,14);
+	            CLR_BIT(TIM4_CCMR1,15);
+	            // 3. Select rising edge polarity
+	            CLR_BIT(TIM4_CCER,5);
+	            // 5. Select TI2 as the input source by writing TS=101 in the TIMx_SMCR register.
+	            CLR_BIT(TIM4_SMCR,4);
+	            SET_BIT(TIM4_SMCR,5);
+	            SET_BIT(TIM4_SMCR,6);
+	            // 6. Enable the counter
+	            SET_BIT(TIM4_CR1,0);
+	            break;
+	        default:
+	            break;
+	        }
+	        break;
+
+	    default:
+	        break;
+	    }
+
+	    // Note: The capture prescaler is not used for triggering, so thereâ€™s no need to configure it.
+	    // When a rising edge occurs on TI2, the counter counts once and the TIF flag is set.
+	    // The delay between the rising edge on TI2 and the actual clock of the counter is due to the
+	    // resynchronization circuit on TI2 input.
 }
-u16 TIMER_voidGetCounts(Copy_u8TimerNumber)
-{
-    u16 Local_u8TimerCounts = 0 ;
-    switch (Copy_u8TimerNumber)
-    {
-    case TIMER_TIMER2:
-        Local_u8TimerCounts = TIM2_CNT;
-        break;
-    case TIMER_TIMER3:
-        Local_u8TimerCounts = TIM3_CNT;
-        break;
-    case TIMER_TIMER4:
-        Local_u8TimerCounts = TIM4_CNT;
-        break;
-    default:
-        break;
-    }
-    return Local_u8TimerCounts;
-}
+

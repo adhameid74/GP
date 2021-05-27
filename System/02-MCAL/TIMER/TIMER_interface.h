@@ -126,5 +126,4 @@ void TIMER_voidEnableExternalClockSource(u8 Copy_u8TimerNumber, u8 Copy_u8TimerC
  * @param Copy_u8TimerNumber        TIMER_TIMER2 , TIMER_TIMER3 , RIMER_TIMER4
  * @return u16 
  */
-u16 TIMER_u16GetCounts(u16 Copy_u8TimerNumber);
 #endif
