@@ -25,6 +25,7 @@ typedef enum
     DTC_UsonicCloseDistance =0x02,
     DTC_UsonicNormalDistance =0x03,
     DTC_UsonicLongDistance =0x04,
+    DTC_SpeedFesa = 0x05;
 } dtcCategory_e;
 
 
