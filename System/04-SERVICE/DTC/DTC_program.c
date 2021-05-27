@@ -20,29 +20,25 @@
 
 
 
-void dtcSetFault(dtcItem_t* it, dtcEnvironment_t* env)
+void dtcSetFault(dtcItem_t* it)
 {
 	it->Status.TestFailed = 1;
 	it->Status.ConfirmedDTC = 1;
 	it->Status.TestFailedThisOperationCycle = 1;
 	it->Status.TestNotCompletedThisOperationCycle = 0;
 	it->Status.WarningIndicatorRequested = it->Property->Bits.WarningIndicatorRequested;
-	env->CriticalFaultExist |= it->Property->Bits.IsCritical;
-	env->WarningIndicatorRequested |= it->Property->Bits.WarningIndicatorRequested;
 }
 
-void dtcSetPassed(dtcItem_t* it, dtcEnvironment_t* env)
+void dtcSetPassed(dtcItem_t* it)
 {
 	it->Status.TestFailed = 0;
 	it->Status.ConfirmedDTC = 1;
 	it->Status.TestFailedThisOperationCycle = 0;
 	it->Status.TestNotCompletedThisOperationCycle = 0;
 	it->Status.WarningIndicatorRequested = it->Property->Bits.WarningIndicatorRequested;
-	env->CriticalFaultExist |= it->Property->Bits.IsCritical;
-	env->WarningIndicatorRequested |= it->Property->Bits.WarningIndicatorRequested;
 }
 
-u8 DTC_u8DetectFault(dtcItem_t* it, dtcEnvironment_t *env, u8 isFault)
+u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 {
 	u8 StatusBits;
 	if(isFault)
@@ -58,7 +54,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it, dtcEnvironment_t *env, u8 isFault)
 		{
 			if(!it->Status.TestFailed)
 			{
-				dtcSetFault(it, env);
+				dtcSetFault(it);
 				StatusBits=0x07;
 				StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
 				HEEPROM_voidWriteByte(0xA0,it->Property->code,StatusBits);
@@ -85,7 +81,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it, dtcEnvironment_t *env, u8 isFault)
 				{
 					if(it->Property->Bits.AutoRestore)
 					{
-						dtcSetPassed(it, env);
+						dtcSetPassed(it);
 						StatusBits=0x02;
 						StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
 						HEEPROM_voidWriteByte(0xA0,it->Property->code,StatusBits);
@@ -98,7 +94,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it, dtcEnvironment_t *env, u8 isFault)
 				}
 				else
 				{
-					dtcSetPassed(it, env);
+					dtcSetPassed(it);
 					StatusBits=0x02;
 					StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
 					HEEPROM_voidWriteByte(0xA0,it->Property->code,StatusBits);

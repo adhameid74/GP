@@ -26,7 +26,6 @@ typedef enum
     DTC_UsonicCloseDistance =0x02,
     DTC_UsonicNormalDistance =0x03,
     DTC_UsonicLongDistance =0x04,
-    DTC_SpeedZart = 0x05;
 } dtcCategory_e;
 
 
@@ -173,21 +172,8 @@ typedef struct
 	//u16 SamplePeriodCounter;
 } dtcItem_t;
 
-typedef struct
-{
-	struct
-	{
-		u8
-		CriticalFaultExist				: 1,				
-		WarningIndicatorRequested		: 1,				
-		PowerOff						: 1,				
-
-		dummy : 5;
-	};
-} dtcEnvironment_t;
 
 
-
-u8 DTC_u8DetectFault(dtcItem_t* it, dtcEnvironment_t *env, u8 isFault);
+u8 DTC_u8DetectFault(dtcItem_t* it, u8 isFault);
 
 #endif

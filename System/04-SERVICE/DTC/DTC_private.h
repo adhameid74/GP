@@ -11,9 +11,9 @@
 #ifndef DTC_PRIVATE_H
 #define DTC_PRIVATE_H
 
-void dtcSetFault(dtcItem_t* it, dtcEnvironment_t* env);
+void dtcSetFault(dtcItem_t* it);
 
-void dtcSetPassed(dtcItem_t* it, dtcEnvironment_t* env);
+void dtcSetPassed(dtcItem_t* it);
 
 
 #endif
