@@ -1,6 +1,6 @@
 /**********************************************/
-/* Author   : Eslam Khaled                    */
-/* Date     : 2020-09-28                      */
+/* Author   : Abdallah Hassan                 */
+/* Date     : 2020-09-27                      */
 /* Version  : V01                             */
 /**********************************************/
 #include "STD_TYPES.h"
@@ -10,136 +10,149 @@
 #include  "UART_config.h"
 #include  "UART_private.h"
 
-void UART_voidInit(void)
+void MUART_voidInit(u8 Copy_u8TimerNumber)
 {
-    USART1 -> CR1 = 0 ;
-    #if UART_WORD_LENGTH == UART_9BIT
-        SET_BIT(USART1 -> CR1 , 12);
-    #endif
-    #if UART_WAKEUP == UART_ADDRESS_MARK
-        SET_BIT(USART1 -> CR1 , 11);
-    #endif
-    #if UART_PARITY_CONTROL == UART_PC_ENABLE
-        SET_BIT(USART1 -> CR1 , 10);
-    #endif    
-    #if UART_PARITY == UART_ODD_PARITY
-        SET_BIT(USART1 -> CR1 , 9);
-    #endif
+	if(Copy_u8TimerNumber==MUSRT1){
+		#if MUART_BAUD_RATE == 9600
+			MUART->BRR = 0x341;
+		#elif MUART_BAUD_RATE == 115200
+			MUART->BRR = 0x45;
+		#endif
+		SET_BIT(MUART->CR1,2);
+		SET_BIT(MUART->CR1,3);
+		SET_BIT(MUART->CR1,13);
+		SET_BIT(MUART->CR1,5);
+		/*CLR STATUS REGISTER*/
+		MUART->SR = 0;
+	}
+	else{
+		#if MUART2_BAUD_RATE == 9600
+			MUART2->BRR = 0x341;
+		#elif MUART2_BAUD_RATE == 115200
+			MUART2->BRR = 0x45;
+		#endif
+		SET_BIT(MUART2->CR1,2);
+		SET_BIT(MUART2->CR1,3);
+		SET_BIT(MUART2->CR1,13);
+		/*CLR STATUS REGISTER*/
+		MUART2->SR = 0;
+	}
 
-    USART1 -> CR2 = 0;
-    #if UART_STOP_BITS == UART_HALF_STOP_BITS
-        SET_BIT(USART1 -> CR2 , 12);
-    #elif UART_STOP_BITS == UART_2_STOP_BITS
-        SET_BIT(USART1 -> CR2 , 13);
-    #elif UART_STOP_BITS == UART_ONE_HALF_STOP_BITS
-        SET_BIT(USART1 -> CR2 , 12);
-        SET_BIT(USART1 -> CR2 , 13);
-    #endif
-      USART1 -> CR1 = 0 ;
-    #if UART_WORD_LENGTH == UART_9BIT
-        SET_BIT(USART1 -> CR1 , 12);
-    #endif
-    #if UART_WAKEUP == UART_ADDRESS_MARK
-        SET_BIT(USART1 -> CR1 , 11);
-    #endif
-    #if UART_PARITY_CONTROL == UART_PC_ENABLE
-        SET_BIT(USART1 -> CR1 , 10);
-    #endif    
-    #if UART_PARITY == UART_ODD_PARITY
-        SET_BIT(USART1 -> CR1 , 9);
-    #endif
-
-    USART2 -> CR2 = 0;
-    #if UART_STOP_BITS == UART_HALF_STOP_BITS
-        SET_BIT(USART2 -> CR2 , 12);
-    #elif UART_STOP_BITS == UART_2_STOP_BITS
-        SET_BIT(USART2 -> CR2 , 13);
-    #elif UART_STOP_BITS == UART_ONE_HALF_STOP_BITS
-        SET_BIT(USART2 -> CR2 , 12);
-        SET_BIT(USART2 -> CR2 , 13);
-    #endif
-
-    USART1 -> SR = 0 ;      // Clear status Register
-    USART2 -> SR = 0 ;      // Clear status Register
-
-    USART1 -> BRR = Get_BRR_Value();
-    USART2 -> BRR = Get_BRR_Value();
-    
-    SET_BIT(USART1 -> CR1 , 13) ;        // USART1 Enable 
-    SET_BIT(USART1 -> CR1 , 3)  ;        // Transmitter Enable 
-    SET_BIT(USART1 -> CR1 , 2)  ;        // Receiver Enable 
-
-    SET_BIT(USART2 -> CR1 , 13) ;        // USART2 Enable 
-    SET_BIT(USART2 -> CR1 , 3)  ;        // Transmitter Enable 
-    SET_BIT(USART2 -> CR1 , 2)  ;        // Receiver Enable 
-};
-void UART_voidTransmit (u8 Copy_UARTNumber , u8* Copy_DataTransmitted)
-{
-    u8 Local_counter = 0;
-    if(Copy_UARTNumber == UART1)
-    {
-        while(Copy_DataTransmitted[Local_counter] )
-        {
-            USART1 -> DR = Copy_DataTransmitted[Local_counter];
-            while(GET_BIT(USART1 -> SR , 6) == 0);      // Wait till the transmit is complete
-            Local_counter += 1 ;
-        }
-    }
-    else if(Copy_UARTNumber == UART2)
-    {
-        while(Copy_DataTransmitted[Local_counter] )
-        {
-            USART2 -> DR = Copy_DataTransmitted[Local_counter];
-            while(GET_BIT(USART2 -> SR , 6) == 0);      // Wait till the transmit is complete
-            Local_counter += 1 ;
-        }
-    }
-   
 }
-u8 UART_u8Receive  (u8 Copy_UARTNumber , u16 Copy_UARTTimeOut)
+void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[])
 {
-    u8 Local_Data = 0;
-    u16 Local_Timeout = 0 ;
-    if(Copy_UARTNumber = UART1)
-    {
-        while(GET_BIT(USART1 -> SR , 5) == 0)
-        {
-            Local_Timeout += 1;
-            if(Local_Timeout == Copy_UARTTimeOut)
-                {
-                    Local_Data = 255;
-                    break;   
-                }
-    }
-    Local_Data = (USART1 -> DR) & 0xFF;         // return 8bit only
-    return Local_Data;
-    }
-    else if(Copy_UARTNumber = UART2)
-    {
-        while(GET_BIT(USART2 -> SR , 5) == 0)
-        {
-            Local_Timeout += 1;
-            if(Local_Timeout == Copy_UARTTimeOut)
-                {
-                    Local_Data = 255;
-                    break;   
-                }
-    }
-    Local_Data = (USART2 -> DR) & 0xFF;         // return 8bit only
-    return Local_Data;
-    }
-    
+	if (Copy_u8TimerNumber==MUSRT1) {
+		u8 i = 0;
+		while(arr[i] != '\0'){
+			MUART -> DR = arr[i];
+			while((GET_BIT((MUART -> SR), 6)) == 0);
+			i++;
+		}
+	}
+	else{
+		u8 i = 0;
+		while(arr[i] != '\0'){
+			MUART2 -> DR = arr[i];
+			while((GET_BIT((MUART2 -> SR), 6)) == 0);
+			i++;
+		}
+	}
 }
-volatile static u16 Get_BRR_Value (void)
+u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber)
 {
-    f32 DIV = UART_Fck/(16.0*UART_BAUD_RATE);
-    u16 mantissa = DIV ;
-    f32 flt = DIV - mantissa ;
-    flt  = flt * 16 ;
-    if(flt >= 16.0) mantissa += 1;
-    u16 flt_int = flt ;
-    f32 flt_float = flt - flt_int ;
-    if(flt_float >= 0.5) flt_int += 1;
-    u16 BRR =  (mantissa<<4) + flt_int ;
-    return BRR ;
+	if (Copy_u8TimerNumber==MUSRT1) {
+		u8 Local_u8Received = 0;
+		while(GET_BIT(MUART->SR,5) == 0);
+		CLR_BIT(MUART->SR,5);
+		Local_u8Received = MUART->DR;
+		return Local_u8Received;
+	}
+	else{
+		u8 Local_u8Received = 0;
+		while(GET_BIT(MUART2->SR,5) == 0);
+		CLR_BIT(MUART2->SR,5);
+		Local_u8Received = MUART2->DR;
+		return Local_u8Received;
+	}
+}
+u8 MUART_u8ReceiveTimeOut(u8 Copy_u8TimerNumber)
+{
+	if(Copy_u8TimerNumber==MUSRT1){
+		u8 Local_u8Received = 0;
+		u16 timeout = 0;
+		while(GET_BIT(MUART->SR,5) == 0)
+		{
+			timeout++;
+			if(timeout == 1000)
+			{
+				Local_u8Received=255;
+				break;
+			}
+		}
+		if(Local_u8Received == 0)
+		{
+			Local_u8Received = MUART->DR;
+		}
+		return Local_u8Received;
+	}
+	else{
+		u8 Local_u8Received = 0;
+		u16 timeout = 0;
+		while(GET_BIT(MUART2->SR,5) == 0)
+		{
+			timeout++;
+			if(timeout == 1000)
+			{
+				Local_u8Received=255;
+				break;
+			}
+		}
+		if(Local_u8Received == 0)
+		{
+			Local_u8Received = MUART2->DR;
+		}
+		return Local_u8Received;
+	}
+}
+u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8TimerNumber)
+{
+	if(Copy_u8TimerNumber==MUSRT1){
+		u8 Local_u8Received = 0;
+		u16 timeout = 0;
+		while(GET_BIT(MUART->SR,5) == 0)
+		{
+			timeout++;
+			if(timeout == 65000)
+			{
+				Local_u8Received=255;
+				break;
+			}
+		}
+		if(Local_u8Received == 0)
+		{
+			Local_u8Received = MUART->DR;
+		}
+		return Local_u8Received;
+	}
+	else{
+		u8 Local_u8Received = 0;
+		u16 timeout = 0;
+		while(GET_BIT(MUART2->SR,5) == 0)
+		{
+			timeout++;
+			if(timeout == 65000)
+			{
+				Local_u8Received=255;
+				break;
+			}
+		}
+		if(Local_u8Received == 0)
+		{
+			Local_u8Received = MUART2->DR;
+		}
+		return Local_u8Received;
+	}
+}
+void MUART_voidClearRxne(){
+	CLR_BIT(MUART->SR,5);
 }
