@@ -89,11 +89,6 @@ void UDSHandler_voidSendPosResponse(u8* Copy_pu8Message, u8 Copy_u8Length)
 	PositiveResponse.SA = SOURCE_ADDRESS;
 	PositiveResponse.TA = TARGET_ADDRESS;
 	PositiveResponse.Length = Copy_u8Length;
-	u8 Local_au8Data[Copy_u8Length];
-	for (u8 Local_u8Counter = 0; Local_u8Counter < Copy_u8Length; Local_u8Counter++)
-	{
-		Local_au8Data[Local_u8Counter] = Copy_pu8Message[Local_u8Counter];
-	}
-	PositiveResponse.MessageData = Local_au8Data;
+	PositiveResponse.MessageData = Copy_pu8Message;
 	DoCAN_voidRequestUsData(PositiveResponse);
 }
