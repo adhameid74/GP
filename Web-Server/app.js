@@ -33,6 +33,7 @@ app.use('/img', express.static(path.join(__dirname, '/img')));
 app.use('/fonts', express.static(path.join(__dirname, '/fonts')));
 app.use('/assets', express.static(path.join(__dirname, '/assets')));
 app.use('/assets2', express.static(path.join(__dirname, '/assets2')));
+app.use('/assets3', express.static(path.join(__dirname, '/assets3')));
 app.use('/', express.static(path.join(__dirname, '/')));
 //app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 

@@ -14,6 +14,8 @@ function router(nav){
         console.log('--------request---------');
         console.log(req.body);
         const { username , password } = req.body;
+        console.log("-------- signup params -------")
+        console.log(username , password);
         const url = 'mongodb://localhost:27017';
         const dbName = 'libraryApp';
         (async function addUser(){
@@ -35,10 +37,12 @@ function router(nav){
     });
     authRouter.route('/signin')
         .get((req,res)=>{
-            res.render('signin');
+            res.render('signin2');
+            console.log("-------- signin params -------")
+            console.log(req.body);
         }).post(passport.authenticate('local',{
             successRedirect: '/auth/dashboard',
-            failureRedirect: '/'
+            failureRedirect: '/auth/signUp'
         }));
         
     authRouter.route('/dashboard')
@@ -48,34 +52,45 @@ function router(nav){
             next();
         }
         else{
-            res.redirect('/');
+            res.redirect('/auth/signUp');
         }
     })
     .get((req,res)=>{
         //res.json(req.user);
         res.render('dashboard');
     });
-    return authRouter;
-}
-authRouter.route('/services')
+    authRouter.route('/diagnose')
+    .all((req, res , next)=>{
+        if (req.user)
+        {
+            next();
+        }
+        else{
+            res.redirect('/auth/signUp');
+        }
+    })
+    .get((req,res)=>{
+        //res.json(req.user);
+        res.render('diagnose');
+    });
+
+    authRouter.route('/signUp')
+        .get((req,res)=>{
+            res.render('signup2');
+        }).post(passport.authenticate('local',{
+            successRedirect: '/diagnose',
+            failureRedirect: '/'
+        }));
+
+        authRouter.route('/services')
         .get((req,res)=>{
             res.render('services-list');
         }).post(passport.authenticate('local',{
             successRedirect: '/services',
             failureRedirect: '/'
         }));
-authRouter.route('/diagnose')
-        .get((req,res)=>{
-            res.render('diagnose');
-        }).post(passport.authenticate('local',{
-            successRedirect: '/diagnose',
-            failureRedirect: '/'
-        }));
-authRouter.route('/signUp')
-        .get((req,res)=>{
-            res.render('signup');
-        }).post(passport.authenticate('local',{
-            successRedirect: '/diagnose',
-            failureRedirect: '/'
-        }));
+
+    return authRouter;
+    
+}
 module.exports = router;

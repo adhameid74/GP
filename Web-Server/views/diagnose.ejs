@@ -17,7 +17,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <script src='//192.168.1.8:8080/socket.io/socket.io.js'></script>
+  <script src='//192.168.1.5:8080/socket.io/socket.io.js'></script>
   <link rel="apple-touch-icon" sizes="76x76" href="/assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets2/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -43,7 +43,7 @@
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="/" class="simple-text logo-normal">
-          Creative Tim
+          Makers
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -502,7 +502,7 @@
 
         });
       });
-      var socket = io.connect('//192.168.1.8:8080');
+      var socket = io.connect('//192.168.1.5:8080');
       socket.on('arduino', function(data) {
                 console.log(data);
                 // $('#hello').append('<li>' + data.message + '</li>');
