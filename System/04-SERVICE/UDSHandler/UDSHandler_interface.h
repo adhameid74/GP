@@ -12,6 +12,16 @@
 #ifndef UDSHANDLER_INTERFACE_H_
 #define UDSHANDLER_INTERFACE_H_
 
+#define DiagnosticSessionControl                            0x10
+#define ClearDiagnosticInformation                          0x14
+#define ReadDTCInformation                                  0x19
+#define ReadDataByIdentifier                                0x22
+#define WriteDataByIdentifier                               0x2E
+#define RequestDownload                                     0x34
+#define TransferData                                        0x36
+#define RequestTransferExit                                 0x37
+#define TesterPresent                                       0x3E
+
 #define generalReject										0x10
 #define subFunctionNotSupported								0x12
 #define incorrectMessageLengthOrInvalidFormat				0x13

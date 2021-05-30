@@ -28,6 +28,8 @@ typedef enum
     DTC_UsonicLongDistance =0x04,
     DTC_CANTxFailure = 0x05,
     DTC_CANNonEmptyFilter = 0x06,
+    DTC_VSenVoltageHigh = 0x07,
+    DTC_VSenVoltageLOW = 0x08,
 } dtcCategory_e;
 
 
