@@ -22,7 +22,11 @@ void PARSE_voidFlashRecord(u8* Copy_au8Record)
 {
     if( Copy_au8Record[RECORD_TYPE_INDEX] == UPPER_ADDRESS_RECORD )
     {
-
+        SetUpperAddress(Copy_au8Record);
+    }
+    else if ( Copy_au8Record[RECORD_TYPE_INDEX] == DATA_RECORD )
+    {
+        FlashData(Copy_au8Record);
     }
 }
 
