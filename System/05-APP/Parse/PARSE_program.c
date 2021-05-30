@@ -12,6 +12,8 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
+#include "FPEC_interface.h"
+
 #include "PARSE_interface.h"
 #include "PARSE_private.h"
 #include "PARSE_config.h"
