@@ -10,7 +10,7 @@
 #include "RCC_private.h"
 #include "RCC_config.h"
 
-void RCC_InitSystemClock(void)
+void RCC_voidInitSystemClock(void)
 {
 	#if   RCC_CLOCK_TYPE == RCC_HSE_CRYSTAL
 		RCC_CR 		= 0x00010000;

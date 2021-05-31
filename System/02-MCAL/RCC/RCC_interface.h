@@ -6,7 +6,7 @@
 #ifndef RCC_INTERFACE_H
 #define RCC_INTERFACE_H
 
-void RCC_InitSystemClock(void);
+void RCC_voidInitSystemClock(void);
 void RCC_voidEnableClock(u8 Copy_u8BusId, u8 Copy_u8PerId);
 void RCC_voidDisableClock(u8 Copy_u8BusId, u8 Copy_u8PerId);
 
