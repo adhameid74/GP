@@ -10,5 +10,9 @@
  */
  #ifndef UDS_READDATABYID_PRIVATE_H
  #define UDS_READDATABYID_PRIVATE_H
+ #define SPEED_ID         0x01
+ #define FRONTDISTANCE_ID 0x02
+ #define BACKDISTANCE_ID  0x03
+ #define VOLT_ID          0x04
  #endif
  

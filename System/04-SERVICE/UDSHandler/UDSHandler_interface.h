@@ -32,7 +32,10 @@
 #define voltageTooHigh										0x92
 #define voltageTooLow										0x93
 
+#define READ_DATA_BY_ID   0x22
+#define WRITE_DATA_BY_ID  0x2E
 
+ 
 void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage);
 void UDSHandler_voidSendNegResponse(u8 Copy_u8SID, u8 Copy_u8NRC);
 void UDSHandler_voidSendPosResponse(u8* Copy_pu8Message, u8 Copy_u8Length);

@@ -10,7 +10,11 @@
  */
  #ifndef UDS_READDATABYID_INTERFACE_H
  #define UDS_READDATABYID_INTERFACE_H
- 
+
+ void UDS_ReadDataById_voidSetCallBackSpeed(u16 (*Fptr)(void));
+ void UDS_ReadDataById_voidSetCallBackFrontDistance( u32 (*Fptr)(void));
+ void UDS_ReadDataById_voidSetCallBackBackDistance(u32 (*Fptr)(void) );
+ void UDS_ReadDataById_voidSetCallBackVolt (u16 (*Fptr)(void));
  void UDS_voidReadDataById();
  #endif
  
