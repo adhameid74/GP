@@ -18,7 +18,7 @@
 #include "I2C_config.h"
 
 
-void MI2C_voidInti(){
+void MI2C_voidInit(){
 	// Setting peripheral freq 
 	I2C1->CR2 = PERIPHERAL_FREQ ;
 	// Setting SCL freq
