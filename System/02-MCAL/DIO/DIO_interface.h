@@ -35,7 +35,7 @@
 
 #define PORTAID                0
 #define PORTBID                1
-#define PORTCID              ` 2
+#define PORTCID                2
 
 #define PA0                    0
 #define PA1                    1
