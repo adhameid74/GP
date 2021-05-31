@@ -10,15 +10,16 @@ void RCC_InitSystemClock(void);
 void RCC_voidEnableClock(u8 Copy_u8BusId, u8 Copy_u8PerId);
 void RCC_voidDisableClock(u8 Copy_u8BusId, u8 Copy_u8PerId);
 
-#define RCC_AHB 			0
-#define RCC_APB1			1
-#define RCC_APB2			2
+#define RCC_AHB 			    0
+#define RCC_APB1			    1
+#define RCC_APB2			    2
 
-#define RCC_AHB_DMA1		0
-#define RCC_AHB_DMA2		1
-#define RCC_AHB_CRC			6
-#define RCC_AHB_FSMC		8
-#define RCC_AHB_SDIO		10
+#define RCC_AHB_DMA1		    0
+#define RCC_AHB_DMA2		    1
+#define RCC_AHB_FPEC		    4
+#define RCC_AHB_CRC			    6
+#define RCC_AHB_FSMC		    8
+#define RCC_AHB_SDIO		    10
 
 #define RCC_APB2_AF				0
 #define RCC_APB2_GPIOA			2
