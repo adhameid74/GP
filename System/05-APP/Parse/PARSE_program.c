@@ -40,6 +40,10 @@ static u8 AsciiToDecimal(u8 Copy_u8Asci)
     {
         return (Copy_u8Asci - 55);
     }
+    else if( (Copy_u8Asci >= 97) && (Copy_u8Asci <= 102) )
+    {
+        return (Copy_u8Asci - 87);
+    }
     else
     {
         return ASCII_ERROR;
