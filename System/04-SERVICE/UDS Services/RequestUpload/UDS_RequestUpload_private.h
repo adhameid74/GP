@@ -1,5 +1,5 @@
 /**
- * @file UDS_RequestDownload_private.h
+ * @file UDS_RequestUpload_private.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
  * @version 1.0
@@ -9,10 +9,9 @@
  * 
  */
 
-#ifndef UDS_REQUESTDOWNLOAD_PRIVATE_H_
-#define UDS_REQUESTDOWNLOAD_PRIVATE_H_
+#ifndef UDS_REQUESTUPLOAD_PRIVATE_H_
+#define UDS_REQUESTUPLOAD_PRIVATE_H_
 
-#define SID											0x34
 #define POS_RESPONSE_SID							0x74
 
 #define lengthFormatIdentifier						1

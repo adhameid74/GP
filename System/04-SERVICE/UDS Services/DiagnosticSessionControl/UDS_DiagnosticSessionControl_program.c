@@ -21,12 +21,12 @@
 
 void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage.Length != 2)
+	if (ReceivedMessage->Length != 2)
 	{
 		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
-	if (UDS_DEFAULT_SESSION == ReceivedMessage.MessageData[1])
+	if (UDS_DEFAULT_SESSION == ReceivedMessage->MessageData[1])
 	{
 		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_DEFAULT_SESSION};
 		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
@@ -34,7 +34,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 		UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
 		return;
 	}
-	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage.MessageData[1])
+	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage->MessageData[1])
 	{
 		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_PROGRAMMING_SESSION};
 		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
@@ -42,7 +42,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 		UDS_u8ActiveSession = UDS_PROGRAMMING_SESSION;
 		return;
 	}
-	else if (UDS_EXTENDED_SESSION == ReceivedMessage.MessageData[1])
+	else if (UDS_EXTENDED_SESSION == ReceivedMessage->MessageData[1])
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
@@ -55,7 +55,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 		UDS_u8ActiveSession = UDS_EXTENDED_SESSION;
 		return;
 	}
-	else if (UDS_SAFETY_SESSION == ReceivedMessage.MessageData[1])
+	else if (UDS_SAFETY_SESSION == ReceivedMessage->MessageData[1])
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
