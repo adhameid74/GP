@@ -1,9 +1,9 @@
 /**
- * @file UDS_TesterPresent_interface.h
- * @author Adham Eid (adhameid0@gmail.com)
- * @brief 
- * @version 1.0
- * @date 09-05-2021
+ * @file UDS_InputOutputControlByIdentifier_program.c
+ * @author Eslam Khaled (eslam.kh.kamal@gmail.com)
+ * @brief UDS_InputOutputControlByIdentifier service implementation
+ * @version 0.1
+ * @date 2021-06-05
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -17,7 +17,10 @@
 #define freezeCurrentState                          0x02
 #define shortTermAdjustment                         0x03
 
-
+/**
+ * @brief extern variables should be used in their related drivers 
+ * 
+ */
 extern u16 USONIC1_valueToUse;
 extern u16 USONIC2_valueToUse;
 extern u8  USONIC1_whatShouldIdo ;
@@ -31,9 +34,11 @@ extern u16 CAR_DIRECTION_valueToUse;
 extern u8  CAR_SPEED_whatShouldIdo ;
 extern u8  CAR_DIRECTION_whatShouldIdo;
 
-
-
-
+/**
+ * @brief Eexecute the logic of InputOutputControlByIdentifier service
+ * 
+ * @param ReceivedMessage 
+ */
 void UDS_voidInputOutputControlByID(INDICATION_SDU* ReceivedMessage);
 
 #endif
