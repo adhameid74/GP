@@ -10,6 +10,8 @@
  */
   #ifndef EEPROM_INTERFACE_H
   #define EEPROM_INTERFACE_H
+
+  #define EEPROM_ADDRESS            0x0A
   
   void HEEPROM_voidWriteByte(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress ,u8 Copy_u8Data);
   u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress);
