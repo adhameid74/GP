@@ -19,8 +19,7 @@ void NVIC_voidSetPendingFlag    (u8 Copy_u8IntNumber);
 void NVIC_voidClearPendingFlag  (u8 Copy_u8IntNumber);
 u8   NVIC_u8GetActiveFlag       (u8 Copy_u8IntNumber);
 void NVIC_voidSetPriority       (u8 Copy_u8IntNumber ,u8 Copy_u8GroupPriority ,u8 Copy_u8SupPriority ,u32 Copy_u32Channel);
-void NVIC_voidSystemReset  (void);
-
+void NVIC_voidSystemReset (void);
 
 /* NVIC Group and Supgroup config */
 #define NVIC_4GROUP_0SUB         0x05FA0300      //4 bits for groups 0 bits for sub groups
