@@ -12,9 +12,11 @@
 #ifndef UDS_REQUESTUPLOAD_PRIVATE_H_
 #define UDS_REQUESTUPLOAD_PRIVATE_H_
 
-#define POS_RESPONSE_SID							0x74
+#define POS_RESPONSE_SID							0x75
 
-#define lengthFormatIdentifier						1
-#define maxNumberOfBlockLength						1
+#define lengthFormatIdentifier						0x10
+#define maxNumberOfBlockLength						8
+
+#define EEPROM_LAST_BYTE_ADDRESS                    0xFF
 
 #endif

@@ -12,6 +12,6 @@
 #ifndef UDS_REQUESTUPLOAD_CONFIG_H_
 #define UDS_REQUESTUPLOAD_CONFIG_H_
 
-
+#define FLASH_APP_ADDRESS           0x08001000
 
 #endif
