@@ -1,5 +1,5 @@
 /**
- * @file UDS_RequestUpload_program.c
+ * @file UDS_RequestDownload_program.c
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
  * @version 1.0
@@ -15,33 +15,33 @@
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
 
-#include "UDS_RequestUpload_interface.h"
-#include "UDS_RequestUpload_private.h"
-#include "UDS_RequestUpload_config.h"
+#include "UDS_RequestDownload_interface.h"
+#include "UDS_RequestDownload_private.h"
+#include "UDS_RequestDownload_config.h"
 
-void UDS_voidRequestUpload(INDICATION_SDU* ReceivedMessage)
+void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 {
 	u8 Local_u8AddressFormat, Local_u8LengthFormat;
 	if (ReceivedMessage->Length < 3)
 	{
-		UDSHandler_voidSendNegResponse(RequestUpload, incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
 	Local_u8AddressFormat = (ReceivedMessage->MessageData[2]) & (0b00001111);
 	Local_u8LengthFormat = (((ReceivedMessage->MessageData[2]) & (0b11110000)) >> 4);
 	if ( (Local_u8AddressFormat != 1) || (Local_u8LengthFormat == 0) || (ReceivedMessage->MessageData[1] != 0))
 	{
-		UDSHandler_voidSendNegResponse(RequestUpload, requestOutOfRange);
+		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
 		return;
 	}
 	if ( ReceivedMessage->Length != (Local_u8AddressFormat+Local_u8LengthFormat+3) )
 	{
-		UDSHandler_voidSendNegResponse(RequestUpload, incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
 	if ( (ReceivedMessage->MessageData[3] != FLASH_APP_ADDRESS) || (ReceivedMessage->MessageData[4] == 0) )
 	{
-		UDSHandler_voidSendNegResponse(RequestUpload, requestOutOfRange);
+		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
 		return;
 	}
 	u8 Local_au8PosResponse[3] = {POS_RESPONSE_SID, lengthFormatIdentifier, maxNumberOfBlockLength};

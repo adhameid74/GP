@@ -1,5 +1,5 @@
 /**
- * @file UDS_RequestUpload_config.h
+ * @file UDS_RequestDownload_config.h
  * @author Adham Eid (adhameid0@gmail.com)
  * @brief 
  * @version 1.0
@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef UDS_REQUESTUPLOAD_CONFIG_H_
-#define UDS_REQUESTUPLOAD_CONFIG_H_
+#ifndef UDS_REQUESTDOWNLOAD_CONFIG_H_
+#define UDS_REQUESTDOWNLOAD_CONFIG_H_
 
 #define FLASH_APP_ADDRESS           0x08001000
 
