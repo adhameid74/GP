@@ -13,14 +13,14 @@
 #define PARSE_PRIVATE_H_
 
 #define ASCII_ERROR                 255
-#define RECORD_TYPE_INDEX           8
-#define DATA_RECORD                 48
-#define UPPER_ADDRESS_RECORD        52
+#define RECORD_TYPE_INDEX           3
+#define DATA_RECORD                 0
+#define UPPER_ADDRESS_RECORD        4
 
 static u32 Address;
 static u16 Data[20];
 
-static u8 AsciiToDecimal(u8 Copy_u8Asci);
+//static u8 AsciiToDecimal(u8 Copy_u8Asci);
 static void SetUpperAddress(u8* Copy_au8Record);
 static void FlashData(u8* Copy_au8Record);
 

@@ -21,7 +21,7 @@
 
 void UDS_voidRequestTransferExit(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage.Length != 1)
+	if (ReceivedMessage->Length != 1)
 	{
 		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;

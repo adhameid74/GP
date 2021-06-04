@@ -14,9 +14,9 @@
 
 void SYSTICK_voidInit (void);
 /* copy_u32CounterValue Must be 24 bit only */
-void SYSTICK_voidSetInternalPeriodic (u32 copy_u32CounterValue,void (*Copy_ptr)(void));
+void SYSTICK_voidSetIntervalPeriodic (u32 copy_u32CounterValue,void (*Copy_ptr)(void));
 /* copy_u32CounterValue Must be 24 bit only */
-void SYSTICK_voidSetInternalSingle (u32 copy_u32CounterValue,void (*Copy_ptr)(void));
+void SYSTICK_voidSetIntervalSingle (u32 copy_u32CounterValue,void (*Copy_ptr)(void));
 /* Stop the timer from counting */
 void SYSTICK_voidStopTimer (void);
 /* copy_u32CounterValue Must be 24 bit only */

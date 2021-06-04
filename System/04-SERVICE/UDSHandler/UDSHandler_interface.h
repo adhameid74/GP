@@ -17,7 +17,7 @@
 #define ReadDTCInformation                                  0x19
 #define ReadDataByIdentifier                                0x22
 #define WriteDataByIdentifier                               0x2E
-#define RequestDownload                                     0x34
+#define RequestUpload                                       0x35
 #define TransferData                                        0x36
 #define RequestTransferExit                                 0x37
 #define TesterPresent                                       0x3E

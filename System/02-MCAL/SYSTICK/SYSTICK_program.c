@@ -32,7 +32,7 @@ void SYSTICK_voidInit (void)
 }
 
 
-void SYSTICK_voidSetInternalPeriodic (u32 copy_u32CounterValue,void (*Copy_ptr)(void) )
+void SYSTICK_voidSetIntervalPeriodic (u32 copy_u32CounterValue,void (*Copy_ptr)(void) )
 {
     CLR_BIT(SYSTICK-> CTRL,0);
 	SYSTICK->LOAD =0;
@@ -44,7 +44,7 @@ void SYSTICK_voidSetInternalPeriodic (u32 copy_u32CounterValue,void (*Copy_ptr)(
     SET_BIT(SYSTICK -> CTRL,1);
 }
 
-void SYSTICK_voidSetInternalSingle (u32 copy_u32CounterValue,void (*Copy_ptr)(void))
+void SYSTICK_voidSetIntervalSingle (u32 copy_u32CounterValue,void (*Copy_ptr)(void))
 {
 	CLR_BIT(SYSTICK-> CTRL,0);
 	SYSTICK->LOAD =0;
