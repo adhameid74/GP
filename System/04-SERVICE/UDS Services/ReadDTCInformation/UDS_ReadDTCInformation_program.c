@@ -14,6 +14,7 @@
 
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
+#include "DTC_interface.h"
 
 #include "UDS_ReadDTCInformation_interface.h"
 #include "UDS_ReadDTCInformation_private.h"
