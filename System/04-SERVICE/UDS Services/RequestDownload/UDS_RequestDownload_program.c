@@ -22,16 +22,28 @@
 void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 {
 	u8 Local_u8AddressFormat, Local_u8LengthFormat;
-	if (ReceivedMessage.Length < 3)
+	if (ReceivedMessage->Length < 3)
 	{
-		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
-	if ( (ReceivedMessage.MessageData[1] != 0) || (ReceivedMessage.MessageData[2] == 0))
+	Local_u8AddressFormat = (ReceivedMessage->MessageData[2]) & (0b00001111);
+	Local_u8LengthFormat = (((ReceivedMessage->MessageData[2]) & (0b11110000)) >> 4);
+	if ( (Local_u8AddressFormat != 1) || (Local_u8LengthFormat == 0) || (ReceivedMessage->MessageData[1] != 0))
 	{
-		UDSHandler_voidSendNegResponse(SID, requestOutOfRange);
+		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
 		return;
 	}
-	Local_u8AddressFormat = (ReceivedMessage.MessageData[2]) & (0b00001111);
-	Local_u8LengthFormat = (((ReceivedMessage.MessageData[2]) & (0b11110000)) >> 4);
+	if ( ReceivedMessage->Length != (Local_u8AddressFormat+Local_u8LengthFormat+3) )
+	{
+		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
+		return;
+	}
+	if ( (ReceivedMessage->MessageData[3] != FLASH_APP_ADDRESS) || (ReceivedMessage->MessageData[4] == 0) )
+	{
+		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
+		return;
+	}
+	u8 Local_au8PosResponse[3] = {POS_RESPONSE_SID, lengthFormatIdentifier, maxNumberOfBlockLength};
+	UDSHandler_voidSendPosResponse(Local_au8PosResponse, 3);
 }

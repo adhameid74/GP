@@ -13,10 +13,8 @@
 #include "BIT_MATH.h"
 
 #include "RCC_interface.h"
-#include "SYSTICK_interface.h"
 #include "DIO_interface.h"
 #include "I2C_interface.h"
-#include "CAN_interface.h"
 #include "FPEC_interface.h"
 #include "EEPROM_interface.h"
 #include "PARSE_interface.h"
@@ -24,28 +22,19 @@
 #define APP_ADDRESS             0x08001004
 
 typedef void (*Function_t)(void);
-Function_t APP = 0;
-APP = *(Function_t*)(APP_ADDRESS);
-APP();
-
-void CAN_ReceiveCallBack(CAN_msg_t ImageInfo);
-
-volatile static u8 BL_au8Record[20];
-volatile static u8 BL_ImageAddress = 0;
-volatile static u8 BL_ImageSize = 0;
-volatile static u16 BL_ImageNumOfLines = 0;
 
 void main()
 {
-    CAN_msg_t BL_ImageInfoReqMsg = {CAN_ID_IMAGE_INFO, {0}, 0, CAN_REMOTE_FRAME};
-    CAN_filter_t BL_ImageInfoFilter = {CAN_ID_IMAGE_INFO, CAN_DATA_FRAME, CAN_FIFO0};
-//    u8 Local_u8CC;
+    volatile u8 BL_au8Record[20];
+    volatile u8 BL_ImageAddress = EEPROM_APP_START_ADDRESS;
+    volatile u16 BL_ImageNumOfLines;
+    u8 Local_u8HighNibble, Local_u8LowNibble;
+    Function_t APP = 0;
+    APP = *(Function_t*)(APP_ADDRESS);
 
     RCC_voidInitSystemClock();
-    RCC_voidEnableClock(RCC_APB2, RCC_APB2_GPIOA);
     RCC_voidEnableClock(RCC_APB2, RCC_APB2_GPIOB);
     RCC_voidEnableClock(RCC_APB1, RCC_APB1_I2C1);
-    RCC_voidEnableClock(RCC_APB1, RCC_APB1_CAN);
     RCC_voidEnableClock(RCC_AHB, RCC_AHB_FPEC);
 
     /* SCL Pin Configuration */
@@ -56,16 +45,15 @@ void main()
     Port_SetPinMode(PB7, AF_OUTPUT_OPEN_DRAIN);
 
     MI2C_voidInit();
-    SYSTICK_voidInit();
     
-    CAN_voidInit();
-    CAN_voidStart();
-    CAN_u8SetCallBack(CAN_ReceiveCallBack);
-    CAN_u8WriteFilter(&BL_ImageInfoFilter);
-    CAN_u8WriteMsg(&BL_ImageInfoReqMsg);
+    Local_u8HighNibble = HEEPROM_u8ReadByte(EEPROM_ADDRESS, EEPROM_NUM_OF_LINES_ADDRESS);
+    Local_u8LowNibble = HEEPROM_u8ReadByte(EEPROM_ADDRESS, EEPROM_NUM_OF_LINES_ADDRESS-1);
+    BL_ImageNumOfLines = (u16)(((u16)Local_u8HighNibble<<8) | (u16)Local_u8LowNibble);
+    if ( BL_ImageNumOfLines == 0xFFFF )
+    {
+        APP();
+    }
 
-    SYSTICK_voidSetIntervalSingle(2000000, APP);
-    while(BL_ImageSize = 0);
     FPEC_voidEraseAppArea();
     for(u8 Local_u8LinesCounter = 0; Local_u8LinesCounter < BL_ImageNumOfLines; Local_u8LinesCounter++)
     {
@@ -76,12 +64,7 @@ void main()
         }
         PARSE_voidFlashRecord(BL_au8Record);
     }
-
-}
-
-void CAN_ReceiveCallBack(CAN_msg_t ImageInfo)
-{
-    BL_ImageAddress = ImageInfo.DATA[0];
-    BL_ImageSize = ImageInfo.DATA[1];
-    BL_ImageNumOfLines = (u16)((u16)(ImageInfo.DATA[2]<<8) | (u16)(ImageInfo.DATA[3]));
+    HEEPROM_voidWriteByte(EEPROM_ADDRESS, EEPROM_NUM_OF_LINES_ADDRESS, 0xFF);
+    HEEPROM_voidWriteByte(EEPROM_ADDRESS, EEPROM_NUM_OF_LINES_ADDRESS-1, 0xFF);
+    APP();
 }

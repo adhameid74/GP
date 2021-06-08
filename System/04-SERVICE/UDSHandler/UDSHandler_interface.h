@@ -42,6 +42,21 @@
 #define voltageTooHigh										0x92
 #define voltageTooLow										0x93
 
+#define DID_SPEED                                           0x01
+#define DID_FRONTDISTANCE                                   0x02
+#define DID_BACKDISTANCE                                    0x03
+#define DID_VOLT                                            0x04
+#define DID_ZONE_1                                          0x05
+#define DID_ZONE_2                                          0x06
+#define DID_UART1                                           0x07
+#define DID_UART2                                           0x08                                          
+#define DID_TIMER2                                          0x09
+#define DID_TIMER3                                          0x0A 
+#define DID_TIMER4                                          0x0B 
+#define DID_ADC                                             0x0C
+#define DID_CAR_DIRECTION                                   0x0D
+#define DID_CAR_SPEED                                       0x0E
+
 
 void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage);
 void UDSHandler_voidSendNegResponse(u8 Copy_u8SID, u8 Copy_u8NRC);

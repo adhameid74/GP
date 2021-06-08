@@ -36,7 +36,7 @@
 	 for (i = 1 , j=0;i < Received_Data.Length ; i++ ,j++){
 		 if(Received_Data.Length < 2 && Received_Data.Length > 255){
 			 switch (Received_Data.MessageData[i]){
-			    case ZONE_1:
+			    case DID_ZONE_1:
 				      MessageData[j++] = Received_Data.MessageData[i] ;
 			 	      Data = (u32)(Received_Data.MessageData[++i]);
 			 	      Data = Data |(u32)(Received_Data.MessageData[++i] << 8);
@@ -45,7 +45,7 @@
 			 		  SetZone1(Data);
 			 	      break ;
 			   
-			    case ZONE_2:
+			    case DID_ZONE_2:
 				      MessageData[j++] = Received_Data.MessageData[i] ;
 			 	      Data = (u32)(Received_Data.MessageData[++i]);
 			          Data = Data |(u32)(Received_Data.MessageData[++i] << 8);			

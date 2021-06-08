@@ -23,12 +23,12 @@
 
 void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage.Length != 2)
+	if (ReceivedMessage->Length != 2)
 	{
 		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
-	if(ReceivedMessage.MessageData[1] == zeroSubFunction)
+	if(ReceivedMessage->MessageData[1] == zeroSubFunction)
 	{
 		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, zeroSubFunction};
 		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);

@@ -133,3 +133,8 @@ void NVIC_voidSetPriority  (u8 Copy_u8IntNumber ,u8 Copy_u8GroupPriority ,u8 Cop
     NVIC_IPR[Copy_u8IntNumber] = Local_u8Priority << 4;
     SCB_AIRCR = Copy_u32Channel;    
 }
+
+void NVIC_voidSystemReset (void)
+{
+    SCB_AIRCR = 0x05FA0004;
+}
