@@ -7,6 +7,12 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const methoOverride = require('method-override');
+const Grid = require("gridfs-stream");
 
 // var jsdom = require("jsdom");
 // const { JSDOM } = jsdom;
@@ -25,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(session({secret : 'library'}));
+app.use(methoOverride('_method'));
 
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use('/css', express.static(path.join(__dirname, '/css')));
@@ -67,6 +74,7 @@ app.get('/', function (req, res) {
     res.render('index');
     //res.render('signup');
 });
+
 // const express = require('express');
 // const app = express();
 // const sockectio = require('socket.io');
@@ -87,7 +95,6 @@ app.get('/', function (req, res) {
 //         // console.log(x,typeof(x));
 //      })
 //  });
-
 var x = 0;
 var y;
 var socket1 ;
