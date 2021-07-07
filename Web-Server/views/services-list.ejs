@@ -96,7 +96,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:void(0)">Table List</a>
+            <a class="navbar-brand" href="javascript:void(0)">Services list</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
             <span class="sr-only">Toggle navigation</span>
@@ -129,131 +129,445 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                       <thead class=" text-primary">
-                        <th>
+                        <th class="text-primary">
                           SID
                         </th>
-                        <th>
+                        <th class="text-primary">
                           Name
                         </th>
-                        <th>
-                          Country
+                        <th class="text-primary">
+                          State
                         </th>
-                        <th>
-                          City
-                        </th>
-                        <th>
-                          Salary
+                        <th class="text-primary">
+                          Discription
                         </th>
                       </thead>
                       <tbody>
                         <tr>
                           <td>
-                            1
+                            0x10
                           </td>
                           <td>
-                            Dakota Rice
+                            DiagnosticSessionControl
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Niger
+                            The DiagnosticSessionControl service is used to enable different diagnostic sessions in the server(s)
                           </td>
-                          <td>
-                            Oud-Turnhout
-                          </td>
-                          <td class="text-primary">
-                            $36,738
-                          </td>
+                          
                         </tr>
                         <tr>
                           <td>
-                            2
+                            0x11
                           </td>
                           <td>
-                            Minerva Hooper
+                            ECUReset
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Curaçao
+                            The ECUReset service is used by the client to request a server reset.
                           </td>
-                          <td>
-                            Sinaai-Waas
-                          </td>
-                          <td class="text-primary">
-                            $23,789
-                          </td>
+                        
                         </tr>
                         <tr>
                           <td>
-                            3
+                            0x27
                           </td>
                           <td>
-                            Sage Rodriguez
+                            SecurityAccess
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Netherlands
+                            The purpose of this service is to provide a means to access data and/or diagnostic services which <br> have
+                            restricted access for security.
                           </td>
-                          <td>
-                            Baileux
-                          </td>
-                          <td class="text-primary">
-                            $56,142
-                          </td>
+                     
                         </tr>
                         <tr>
                           <td>
-                            4
+                            0x28
                           </td>
                           <td>
-                            Philip Chaney
+                            CommunicationControl
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Korea, South
+                            The purpose of this service is to switch on/off the transmission and/or the reception of certain <br> messages of (a)
+                            server(s).
                           </td>
-                          <td>
-                            Overland Park
-                          </td>
-                          <td class="text-primary">
-                            $38,735
-                          </td>
+          
                         </tr>
                         <tr>
                           <td>
-                            5
+                            0x3E
                           </td>
                           <td>
-                            Doris Greene
+                            TesterPresent 
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Malawi
+                            This service is used to indicate to a server (or servers) that a client is still connected to the <br> vehicle and that
+                            certain diagnostic services and/or communications that have been previously <br> activated are to remain active.
                           </td>
-                          <td>
-                            Feldkirchen in Kärnten
-                          </td>
-                          <td class="text-primary">
-                            $63,542
-                          </td>
+                          
                         </tr>
                         <tr>
                           <td>
-                            6
+                            0x83
                           </td>
                           <td>
-                            Mason Porter
+                            AccessTimingParameter
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
                           </td>
                           <td>
-                            Chile
+                            The AccessTimingParameter service is used to read and change the default timing parameters <br> of a 
+                            communication link for the duration that this communication link is active.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x84
                           </td>
                           <td>
-                            Gloucester
+                            SecuredDataTransmission
                           </td>
-                          <td class="text-primary">
-                            $78,615
+                          <td class="text-danger">
+                            Not implemented
                           </td>
+                          <td>
+                            The purpose of this service is to transmit data that is protected against attacks from <br> third parties, which could
+                            endanger data security
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x85
+                          </td>
+                          <td>
+                            ControlDTCSetting
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ControlDTCSetting service shall be used by a client to stop or resume the setting <br>of diagnostic trouble
+                            codes (DTCs) in the server(s).
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td >
+                            0x86
+                          </td>
+                          <td>
+                            ResponseOnEvent
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ResponseOnEvent service requests a server to start or stop transmission of responses <br> on a specified
+                            event.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x87
+                          </td>
+                          <td>
+                            LinkControl
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The LinkControl service is used to control the communication link baud rate between the <br> client and the
+                            server(s) for the exchange of diagnostic data. 
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x22
+                          </td>
+                          <td>
+                            ReadDataByIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ReadDataByIdentifier service allows the client to request data record values from <br> the server identified by
+                            one or more dataIdentifiers.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x23
+                          </td>
+                          <td>
+                            ReadMemoryByAddress
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ReadMemoryByAddress service allows the client to request memory data from the server <br> via a provided
+                            starting address and to specify the size of memory to be read.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x24
+                          </td>
+                          <td>
+                            ReadScalingDataByIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ReadScalingDataByIdentifier service allows the client to request scaling data record <br> information from the
+                            server identified by a dataIdentifier.
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x2A
+                          </td>
+                          <td>
+                            ReadDataByPeriodicIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ReadDataByPeriodicIdentifier service allows the client to request the periodic transmission<br> of data record
+                            values from the server identified by one or more periodicDataIdentifiers.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x2C
+                          </td>
+                          <td>
+                            DynamicallyDefineDataIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The DynamicallyDefineDataIdentifier service allows the client to dynamically define in a server<br> a data identifier
+                            that can be read via the ReadDataByIdentifier service at a later time.
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x2E
+                          </td>
+                          <td>
+                            WriteDataByIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The WriteDataByIdentifier service allows the client to write information into the server at an<br> internal location
+                            specified by the provided data identifier.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x3D
+                          </td>
+                          <td>
+                            WriteMemoryByAddress 
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The WriteMemoryByAddress service allows the client to write information into the server at one<br> or more
+                            contiguous memory locations.
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x14
+                          </td>
+                          <td>
+                            ClearDiagnosticInformation
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The ClearDiagnosticInformation service is used by the client to clear diagnostic information<br> in one server's or
+                            multiple servers’ memory.
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x19
+                          </td>
+                          <td>
+                            ReadDTCInformation
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            This service allows a client to read the status of server-resident Diagnostic Trouble Code (DTC)<br> information
+                            from any server or group of servers within a vehicle.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x2F
+                          </td>
+                          <td>
+                            InputOutputControlByIdentifier
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The InputOutputControlByIdentifier service is used by the client to substitute a value for an <br> input signal,
+                            internal server function and/or control an output (actuator) of an electronic system.
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x31
+                          </td>
+                          <td>
+                            RoutineControl 
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The RoutineControl service is used by the client to<br>
+                            ⎯ start a routine,<br>
+                            ⎯ stop a routine, and<br>
+                            ⎯ request routine results.
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x34
+                          </td>
+                          <td>
+                            RequestDownload 
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The requestDownload service is used by the client to initiate a data transfer from the <br> client to the server
+                            (download).
+                          </td>
+                         
+                        </tr>
+                        <tr>
+                          <td>
+                            0x35
+                          </td>
+                          <td>
+                            RequestUpload
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The RequestUpload service is used by the client to initiate a data transfer from the <br>server to the client (upload).
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x36
+                          </td>
+                          <td>
+                            TransferData
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            The TransferData service is used by the client to transfer data either from the <br>client to the server (download)
+                            or from the server to the client (upload).
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          <td>
+                            0x37
+                          </td>
+                          <td>
+                            RequestTransferExit
+                          </td>
+                          <td class="text-danger">
+                            Not implemented
+                          </td>
+                          <td>
+                            This service is used by the client to terminate a data transfer between client <br>and server (upload or download)
+                          </td>
+                         
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">content_copy</i>
+              </div>
+              <p class="card-category">Used Space</p>
+              <h3 class="card-title">49/50
+                <small>GB</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="material-icons text-warning">warning</i>
+                <a href="#pablo" class="warning-link">Get More Space...</a>
               </div>
             </div>
           </div>

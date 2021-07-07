@@ -17,7 +17,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <script src='//192.168.1.5:8080/socket.io/socket.io.js'></script>
+  <script src='//192.168.1.2:8080/socket.io/socket.io.js'></script>
   <link rel="apple-touch-icon" sizes="76x76" href="/assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets2/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -31,7 +31,7 @@
   <!-- CSS Files -->
   <link href="/assets2/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="/assets2/demo/demo.css" rel="stylesheet" />
+  <!-- <link href="/assets2/demo/demo.css" rel="stylesheet" /> -->
 </head>
 
 <body class="dark-edition">
@@ -128,91 +128,76 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                <div class="card-title">
-                  <h2>Typography</h2>
-                </div>
-                <div class="row">
-                  <div class="tim-typo">
-                    <h1>
-                      <span class="tim-note">Header 1</span>The Life of Material Dashboard </h1>
-                  </div>
-                  <div class="tim-typo">
-                    <h2>
-                      <span class="tim-note">Header 2</span>The Life of Material Dashboard</h2>
-                  </div>
-                  <div class="tim-typo">
-                    <h3>
-                      <span class="tim-note">Header 3</span>The Life of Material Dashboard</h3>
-                  </div>
-                  <div class="tim-typo">
-                    <h4>
-                      <span class="tim-note">Header 4</span>The Life of Material Dashboard</h4>
-                  </div>
-                  <div class="tim-typo">
-                    <h5>
-                      <span class="tim-note">Header 5</span>The Life of Material Dashboard</h5>
-                  </div>
-                  <div class="tim-typo">
-                    <h6>
-                      <span class="tim-note">Header 6</span>The Life of Material Dashboard</h6>
-                  </div>
-                  <div class="tim-typo"> 
-                    <p>
-                      <span class="tim-note" id = "hello">Paragraph</span>
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Quote</span>
-                    <blockquote class="blockquote">
-                      <p>
-                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.
+                <!-- <div class="card-title" id = "hello"> -->
+                <form class="message-form">
+                  <!-- Dropdown menu for Service selction -->
+                  <div class="row">
+                    <div class = "col-sm-3" ,id='pantsLanding'>
+                      <p class="lead">Select UDS Service :</p>
+                      <p class="lead">
+                        <!-- Split button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Service</button>
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul id="dropPants" class="dropdown-menu scrollable-menu" role="menu">
+                          </ul>
+                        </div>
                       </p>
-                      <small>
-                        Kanye West, Musician
-                      </small>
-                    </blockquote>
+                    </div>
+                    <div class="col-sm-6" id = "#service">
+                      <h4 class="text-primary" id = "service"></h4>
+                    </div>
                   </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Muted Text</span>
-                    <p class="text-muted">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                    </p>
+
+                  <!-- Dropdown menu for Subfucntion selection -->
+                  <div class="row">
+                    <div class = "col-sm-3",id='pantStyleDiv'>
+                      <p class="lead">Select Subfuction :</p>
+                      <p class="lead">
+                        <!-- Split button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Subfunction</button>
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul id="dropPantStyle" class="dropdown-menu scrollable-menu" role="menu">
+                          </ul>
+                        </div>
+                      </p>
+                    </div>  
+                    <div class="col-sm-6" id = "#subfunction">
+                      <h4 class="text-primary" id = "subfunction"></h4>
+                    </div>
                   </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Primary Text</span>
-                    <p class="text-primary">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Paramters</label>
+                      <input id= "parameters" type="text" class="form-control">
+                    </div>
+                  <!-- Terminal  -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <h3>Terminal</h3>
+                        <div class="form-group">
+                          <div class="col-sm-12" id = "#terminal">
+                            <h4 class="text-success" id = "terminal"> response is .... </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Info Text</span>
-                    <p class="text-info">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
+                  <button type="button" id = "myBtn" class="btn btn-primary pull-right">
+                    <i class="material-icons">send</i> Send</button>
+                  <div class="clearfix"></div> 
+                  
+                </form>
                   </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Success Text</span>
-                    <p class="text-success">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Warning Text</span>
-                    <p class="text-warning">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                    </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Danger Text</span>
-                    <p class="text-danger">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <h2>
-                      <span class="tim-note">Small Tag</span>
-                      Header with small subtitle
-                      <br>
-                      <small>Use "small" tag for the headers</small>
-                    </h2>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -344,6 +329,8 @@
   <script src="/assets2/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
+      var Service;
+      var Subfucntion;
       $().ready(function() {
         $sidebar = $('.sidebar');
 
@@ -501,14 +488,58 @@
           }, 1000);
 
         });
+        // Dropdowns for function and subfunction Selection
+        var Services = ['Service1','Service2','Service3','Service4','Service5'
+                        ,'Service6','Service7','Service8','Service9'];
+        var Subfunctions = { 'Service1': ['sub1_1','sub1_2'],
+                            'Service2': ['sub2_1','sub2_2'],
+                            'Service3': ['sub3_1','sub3_2'],
+                            'Service4': ['sub4_1','sub4_2'],
+                            'Service5': ['sub5_1','sub5_2'],
+                            'Service6': ['sub6_1','sub6_2'],
+                            'Service7': ['sub7_1','sub7_2'],
+                            'Service8': ['sub8_1','sub8_2'],
+                            'Service9': ['sub9_1','sub9_2'],
+                          };
+
+        $.each(Services, function(i) {
+          $('#dropPants').append('<li><a href="#">'+Services[i]+'</a></li>');
+        });
+
+        $('#dropPants').on('click', 'li a', function() {
+          $('#dropPantStyle').html('');
+          Service = $(this).text();
+          $('#service').text(Service);
+          console.log(Service);
+          var showStyles = Subfunctions[$(this).text()];
+          $.each(showStyles, function(i) {
+            $('#dropPantStyle').append('<li><a href="#">'+showStyles[i]+'</a></li>');
+          });   
+        });
+        $('#dropPantStyle').on('click', 'li a', function() {
+          Subfucntion = $(this).text();
+          $("#subfunction").text(Subfucntion);
+          console.log(Subfucntion);
+        });
       });
-      var socket = io.connect('//192.168.1.5:8080');
+      // websocket handling
+      var socket = io.connect('//192.168.1.2:8080');
       socket.on('arduino', function(data) {
                 console.log(data);
                 // $('#hello').append('<li>' + data.message + '</li>');
                 $("#hello").text(data.message);
                 console.log($("#hello"));
             });
+      $("#myBtn").click(function(){
+        var parameters = $('#parameters').val();
+        console.log("service selected is : ",Service);
+        console.log("subfunction selected is : ",Subfucntion);
+        console.log("parameters :",parameters)
+        // var str = $("#user-message").val();
+        // console.log(str);
+        // socket.emit('diagnose' ,{message: str});
+    });
+
     });
   </script>
 </body>

@@ -54,6 +54,7 @@ const nav = [{link : '/books', title : 'Books'},
 const bookRouter = require('./routes/bookRoutes')(nav);
 const authRouter = require('./routes/authRoutes')(nav);
 const socketRouter = require('./routes/socketRouter');
+const { data } = require('jquery');
 
 require('./public/config/Passportx.js')(app);
 
@@ -75,27 +76,21 @@ app.get('/', function (req, res) {
 // const expressServer = app.listen(4000);
 // const io = sockectio(expressServer);
 
- io.on('connection',(socket)=>{
-        console.log('app.js');
-        socket.on("arduino",(data)=>{
-        console.log("message is",data.message);
-        console.log("type of message is",typeof(data.message));
-        // // const newmsg = buildHTML(data.message);
-        // let x = document.querySelector('#messages');
-        // console.log(x,typeof(x));
-     })
- });
-//  function buildHTML(msg) {
-//     // console.log(msg)
-//     const convertedDate = new Date(msg.time).toLocaleString();
-//     const newHTML = `
-//     <li>
-//         <div class="user-message">
-//             <div class="message-text">${msg}</div>
-//         </div>
-//     </li>`
-//     return newHTML;
-// }
+
+//  io.on('connection',(socket)=>{
+//         console.log('app.js');
+//         socket.on("arduino",(data)=>{
+//         console.log("message is",data.message);
+//         console.log("type of message is",typeof(data.message));
+//         // // const newmsg = buildHTML(data.message);
+//         // let x = document.querySelector('#messages');
+//         // console.log(x,typeof(x));
+//      })
+//  });
+
+var x = 0;
+var y;
+var socket1 ;
 function ParseJson(jsondata) {
     try {
         return JSON.parse(jsondata);
@@ -103,20 +98,28 @@ function ParseJson(jsondata) {
         return null;
     }
 }
-function sendTime() {
-    io.sockets.emit('atime', { time: new Date().toJSON() });
+function sendTime(data) {
+    io.sockets.emit('atime', { messages: data.message });
 }
 io.on('connection', function (socket , data) {
-  socket.emit('welcome', { message: 'Connected !!!!' });
+    socket1 = socket;
+    socket.on("diagnose",function(data){
+        socket.join("diagnostics");
+        console.log("got it from html : ", {message: data.message});
+        io.sockets.emit('diagnose', { message: data.message });
+    })
+   
+    
   socket.on("he5a",data=>{
       console.log(data.message);
       
   })
-  socket.emit("he5a2",{ message: 'Message from server!' });
+  
+//   socket.emit("he5a2",{ message: 'Message from server!' });
   socket.on('connection', function (data) {
     console.log(data);   });
   socket.on('atime', function (data) {
-	  sendTime();
+	  sendTime(data);
     console.log(data);
     });
 socket.on('JSON', function (data) {
@@ -127,7 +130,7 @@ console.log(parsed);
 	console.log(parsed.sensor);
   });
     socket.on('arduino', function (data) {
-	  io.sockets.emit('arduino', { message: 'R0' });
+	  io.sockets.emit('arduino', { message: data.message });
     console.log(data);
   });
 });
