@@ -7,8 +7,8 @@
 #define UART_INTERFACE_H
 
 
-#define MUSRT1		1
-#define MUSRT2		2
+#define MUART1		1
+#define MUART2		2
 
 void MUART_voidInit(u8 Copy_u8TimerNumber);
 void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[]);

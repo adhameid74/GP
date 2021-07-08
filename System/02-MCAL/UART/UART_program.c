@@ -10,9 +10,9 @@
 #include  "UART_config.h"
 #include  "UART_private.h"
 
-void MUART_voidInit(u8 Copy_u8TimerNumber)
+void MUART_voidInit(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
+	if(Copy_u8UartNumber==MUART1){
 		#if MUART_BAUD_RATE == 9600
 			MUART->BRR = 0x341;
 		#elif MUART_BAUD_RATE == 115200
@@ -39,9 +39,9 @@ void MUART_voidInit(u8 Copy_u8TimerNumber)
 	}
 
 }
-void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[])
+void MUART_voidTransmit(u8 Copy_u8UartNumber,u8 arr[])
 {
-	if (Copy_u8TimerNumber==MUSRT1) {
+	if (Copy_u8UartNumber==MUART1) {
 		u8 i = 0;
 		while(arr[i] != '\0'){
 			MUART -> DR = arr[i];
@@ -58,9 +58,9 @@ void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[])
 		}
 	}
 }
-u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber)
+u8 MUART_u8ReceiveNormal(u8 Copy_u8UartNumber)
 {
-	if (Copy_u8TimerNumber==MUSRT1) {
+	if (Copy_u8UartNumber==MUART1) {
 		u8 Local_u8Received = 0;
 		while(GET_BIT(MUART->SR,5) == 0);
 		CLR_BIT(MUART->SR,5);
@@ -75,9 +75,9 @@ u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber)
 		return Local_u8Received;
 	}
 }
-u8 MUART_u8ReceiveTimeOut(u8 Copy_u8TimerNumber)
+u8 MUART_u8ReceiveTimeOut(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
+	if(Copy_u8UartNumber==MUART1){
 		u8 Local_u8Received = 0;
 		u16 timeout = 0;
 		while(GET_BIT(MUART->SR,5) == 0)
@@ -114,9 +114,9 @@ u8 MUART_u8ReceiveTimeOut(u8 Copy_u8TimerNumber)
 		return Local_u8Received;
 	}
 }
-u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8TimerNumber)
+u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
+	if(Copy_u8UartNumber==MUART1){
 		u8 Local_u8Received = 0;
 		u16 timeout = 0;
 		while(GET_BIT(MUART->SR,5) == 0)

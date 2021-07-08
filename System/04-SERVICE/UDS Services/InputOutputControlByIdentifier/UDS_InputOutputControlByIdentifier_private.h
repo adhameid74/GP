@@ -22,7 +22,7 @@ typedef struct
        u16 ValueToUse;
     }ControlOptionRecord;
 
-u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the return size to be confirmed
+u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord);   // the return size to be confirmed
 u8 IsNotID( u8 Copy_u8DataId );
 u8 IsNotSubFunction (u8 Copy_u8SubFunction);
 
