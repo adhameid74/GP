@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "uds_requestdownload_interface.h": "c",
+        "udshandler_interface.h": "c"
+    }
+}

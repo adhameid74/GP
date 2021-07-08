@@ -14,6 +14,8 @@
 
 #define NULL 		(void *)0
 
+typedef void (*Function_t)(void);
+
 #define NO_ERROR                    30
 #define NULL_POINTER_ERROR          40
 #define TIMEOUT_ERROR               50

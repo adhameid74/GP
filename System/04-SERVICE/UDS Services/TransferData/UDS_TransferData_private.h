@@ -12,7 +12,6 @@
 #ifndef UDS_TRANSFERDATA_PRIVATE_H_
 #define UDS_TRANSFERDATA_PRIVATE_H_
 
-#define SID											0x36
 #define POS_RESPONSE_SID							0x76
 
 #endif

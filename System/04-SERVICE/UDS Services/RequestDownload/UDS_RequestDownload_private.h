@@ -15,6 +15,5 @@
 #define POS_RESPONSE_SID							0x74
 
 #define lengthFormatIdentifier						0x10
-#define maxNumberOfBlockLength						8
 
 #endif

@@ -21,16 +21,13 @@
 
 #define APP_ADDRESS             0x08001004
 
-typedef void (*Function_t)(void);
-
 void main()
 {
     volatile u8 BL_au8Record[20];
     volatile u8 BL_ImageAddress = EEPROM_APP_START_ADDRESS;
     volatile u16 BL_ImageNumOfLines;
     u8 Local_u8HighNibble, Local_u8LowNibble;
-    Function_t APP = 0;
-    APP = *(Function_t*)(APP_ADDRESS);
+    Function_t APP = *(Function_t*)(APP_ADDRESS);
 
     RCC_voidInitSystemClock();
     RCC_voidEnableClock(RCC_APB2, RCC_APB2_GPIOB);

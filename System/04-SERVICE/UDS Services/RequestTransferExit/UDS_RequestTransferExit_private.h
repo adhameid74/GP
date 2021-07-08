@@ -13,5 +13,6 @@
 #define UDS_REQUESTTRANSFEREXIT_PRIVATE_H_
 
 #define POS_RESPONSE_SID							0x77
+#define BOOTLOADER_ADDRESS                          0x08000004
 
 #endif
