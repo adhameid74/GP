@@ -18,7 +18,7 @@
 #include "I2C_config.h"
 
 
-void MI2C_voidInit(){
+void MI2C_voidInti(){
 	// Setting peripheral freq 
 	I2C1->CR2 = PERIPHERAL_FREQ ;
 	// Setting SCL freq
@@ -119,7 +119,7 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit,u8 Copy_u8Num
 	
 	 
  }
-  void MI2C_voidReceiveFromAddress(u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberOfData,u8 Copy_u8AddressOfLocation){
+  void MI2C_voidReceiveFromAddress(u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberOfData,u16 Copy_u16AddressOfLocation){
 	u8 i;
 	volatile u32 x ;
 	SET_BIT(I2C1->CR1,0);
@@ -137,7 +137,11 @@ void MI2C_voidTransmit(u8 Copy_u8SlaveAddress , u8 *DataToTransmit,u8 Copy_u8Num
 	//I2C1->DR = (Copy_u16AddressOfLocation >>8) & 0xFF;
 	//while(GET_BIT(I2C1->SR1,7) ==0);
 	//Write LS Byte on bus
-	I2C1->DR = Copy_u8AddressOfLocation ;
+	u8 MSB = (u8)(Copy_u16AddressOfLocation>>8);
+	I2C1->DR = MSB ;
+	while(GET_BIT(I2C1->SR1,7) ==0);
+	u8 LSB = (u8)(Copy_u16AddressOfLocation);
+	I2C1->DR = LSB ;
 	while(GET_BIT(I2C1->SR1,7) ==0);
 
 	//Generate  start condition 
