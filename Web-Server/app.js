@@ -110,21 +110,43 @@ function sendTime(data) {
 }
 io.on('connection', function (socket , data) {
     socket1 = socket;
-    socket.on("diagnose",function(data){
+    socket.on("diagnoses",function(data){
         socket.join("diagnostics");
         console.log("got it from html : ", {message: data.message});
         io.sockets.emit('diagnose', { message: data.message });
     })
    
     
-  socket.on("he5a",data=>{
-      console.log(data.message);
-      
+//   socket.on("he5a",data=>{
+//       console.log(data);
+//       io.sockets.emit('he5a', { message: data.Name });
+//   })
+
+  socket.on("diagnose",data=>{
+      console.log(data);
+      io.sockets.emit('diagnose', { message: data.Name });
   })
   
 //   socket.emit("he5a2",{ message: 'Message from server!' });
   socket.on('connection', function (data) {
-    console.log(data);   });
+    console.log(data);
+    io.sockets.emit('connected', { message: data.Name });
+   });
+
+let timeout = setTimeout(client_disconnected , 4000);
+
+  socket.on('stillConnected', function (data) {
+    console.log(data);
+    clearInterval(timeout);
+    timeout = setTimeout(client_disconnected , 4000);
+    io.sockets.emit('connected', { message: data.Name });
+   });
+
+function client_disconnected(){
+    console.log("disconnected");
+    io.sockets.emit('notConnected');
+}
+
   socket.on('atime', function (data) {
 	  sendTime(data);
     console.log(data);
@@ -137,7 +159,7 @@ console.log(parsed);
 	console.log(parsed.sensor);
   });
     socket.on('arduino', function (data) {
-	  io.sockets.emit('arduino', { message: data.message });
+	  io.sockets.emit('arduino', { message: data.Name });
     console.log(data);
   });
 });

@@ -17,7 +17,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <script src='//192.168.1.4:8080/socket.io/socket.io.js'></script>
+  <script src='//192.168.1.7:8080/socket.io/socket.io.js'></script>
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/live-car-diagnostics.png">
   <link rel="icon" type="image/png" href="/assets/img/live-car-diagnostics.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -124,6 +124,16 @@
                 <form class="message-form">
                   <!-- Dropdown menu for Service selction -->
                   <div class="row">
+                    <div class="col-sm-3">
+                      <p class="lead">     Connection status :</p>
+                    </div>
+                    <div class="col-sm-6" id = "#status">
+                     <h4 class="text-warning" id = "status">Connecting ....</h4>
+                    </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
                     <div class = "col-sm-3" ,id='pantsLanding'>
                       <p class="lead">Select UDS Service :</p>
                       <p class="lead">
@@ -178,7 +188,7 @@
                         <h3>Terminal</h3>
                         <div class="form-group">
                           <div class="col-sm-12" id = "#terminal">
-                            <h4 class="text-success" id = "terminal"> response is .... </h4>
+                            <h4 class="text-success" id = "terminal"> ..... </h4>
                           </div>
                         </div>
                       </div>
@@ -417,13 +427,21 @@
         });
       });
       // websocket handling
-      var socket = io.connect('//192.168.1.4:8080');
-      socket.on('arduino', function(data) {
+      var socket = io.connect('//192.168.1.7:8080');
+      socket.on('he5a', function(data) {
                 console.log(data);
                 // $('#hello').append('<li>' + data.message + '</li>');
-                $("#hello").text(data.message);
-                console.log($("#hello"));
+                $("#terminal").text(data.message);
+                console.log($("#terminal"));
             });
+      socket.on("connected",function(data){
+        $("#status").html('');
+        $("#status").append('<h4 class="text-success" id = "status">Connected</h4>');
+      });
+      socket.on("notConnected",function(data){
+        $("#status").html('');
+        $("#status").append('<h4 class="text-danger" id = "status">Not Connected</h4>');
+      });
       $("#myBtn").click(function(){
         var parameters = $('#parameters').val();
         console.log("service selected is : ",Service);
@@ -431,7 +449,7 @@
         console.log("parameters :",parameters)
         // var str = $("#user-message").val();
         // console.log(str);
-        // socket.emit('diagnose' ,{message: str});
+         socket.emit('diagnose' ,{message: Service.concat(' ',Subfucntion,' ',parameters)});
     });
 
     });
