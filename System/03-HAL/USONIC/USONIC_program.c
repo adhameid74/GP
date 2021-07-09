@@ -106,48 +106,48 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber,u8 *DTC_CODE){
     ptr=&dtc_usonic[0];
     if (Local_u8Counter==0xFF )       //ECHO PIN DISCONNECTED OR NOT RECEIVED
     {
-        dtcFaultDetection(ptr,   1);
+    	DTC_u8DetectFault(ptr,1);
     }
     else{                                                        //READ ANY DISTANCE
-        dtcFaultDetection(ptr,   0);
+    	DTC_u8DetectFault(ptr,0);
         ptr=&dtc_usonic[1];
-        if (Local_u8Counter2==15000 )    //ECHO  NOT RECEIVED
+        if (Local_u8Counter2==15000)    //ECHO  NOT RECEIVED
         {
-            dtcFaultDetection(ptr,   1);
+        	DTC_u8DetectFault(ptr,   1);
         }
         else{
-            dtcFaultDetection(ptr,   0);
+        	DTC_u8DetectFault(ptr,0);
 
             ptr=&dtc_usonic[2];
             if (Local_u16TimerCount<1766 )    //less than 30 cm   
             {
-                dtcFaultDetection(ptr,   1);        
+            	DTC_u8DetectFault(ptr,1);
             }
             else if (Local_u16TimerCount>=1766)
             {
-                dtcFaultDetection(ptr,   0);         
+            	DTC_u8DetectFault(ptr,0);
                 *DTC_CODE=RED_LIGHT;                //RED LED
             }
 
             ptr=&dtc_usonic[3];
             if (   Local_u16TimerCount>=1766 && Local_u16TimerCount<5900)    //less than 100 cm
             {
-                dtcFaultDetection(ptr,   1);        
+            	DTC_u8DetectFault(ptr,1);
             }
             else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
             {
-                dtcFaultDetection(ptr,   0);        
+            	DTC_u8DetectFault(ptr,0);
                 *DTC_CODE=YELLOW_LIGHT;                    //YELLOW LED
             }
 
             ptr=&dtc_usonic[4];
             if (Local_u16TimerCount>=14750)   //less than 250 cm
             {
-                dtcFaultDetection(ptr,   1);    
+            	DTC_u8DetectFault(ptr,1);
             }
             else if (Local_u16TimerCount<14750)
             {
-                dtcFaultDetection(ptr,   0);
+            	DTC_u8DetectFault(ptr,0);
                 *DTC_CODE=GREEN_LIGHT;                   //GREEN LED
             }
         }
