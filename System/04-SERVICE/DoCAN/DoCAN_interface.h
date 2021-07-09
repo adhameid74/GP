@@ -35,7 +35,7 @@
 	 //AE
 	 u8* MessageData ;
 	 u12 Length ;
-	 RESULT_t Result ;
+	 //RESULT_t Result ;
 	 
  }INDICATION_SDU ;
  typedef struct {
@@ -48,7 +48,7 @@
  REQUEST_SDU RequestMassage ;
  void DoCAN_voidRequestUsData(REQUEST_SDU SDU);
  void DoCAN_voidIndicateUsData();
- void DoCAN_voidSetCallBackForMassage(void (*FPtr)(void));
+ void DoCAN_voidSetCallBackForMassage(void (*FPtr)(INDICATION_SDU SDU));
  void DoCAN_voidSetCallBackForFlowControl(void (*FPtr)(void));
  
  

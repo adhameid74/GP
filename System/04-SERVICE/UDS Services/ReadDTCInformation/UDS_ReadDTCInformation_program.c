@@ -11,6 +11,7 @@
 
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
+#include <string.h>
 
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
@@ -23,18 +24,17 @@
 
 u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 {
-    if (message.Length != 3)
+    if (message.Length.u12 != 3)
 	{
-		UDSHandler_voidSendNegResponse(SID,incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(ReadDTCInformation,incorrectMessageLengthOrInvalidFormat);
 		return 0;
 	}
     u8 Local_Au8dtc[DTC_NUMBER];
 	u8 Local_u8temp,Local_u8counter=0;
-    switch (message.MessageData[1])
+
+    if(message.MessageData[1] == reportMirrorMemoryDTCByStatusMask) //reportMirrorMemoryDTCByStatusMask
     {
-    case reportMirrorMemoryDTCByStatusMask:                  //reportMirrorMemoryDTCByStatusMask
-        
-		//Function of EEPROM (Local_Au8dtc,offset,DTC_NUMBER);
+	//Function of EEPROM (Local_Au8dtc,offset,DTC_NUMBER);
 		for(u8 i = 0; i < DTC_NUMBER; i++)
 		{
 			if(Local_Au8dtc[i] == 0xFF){
@@ -51,7 +51,11 @@ u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 				Local_Au8dtc[i]=0;
 			}
 		}
-		u8 Local_Au8PositiveResponce[(2*Local_u8counter)+3]={POS_RESPONSE_SID,reportMirrorMemoryDTCByStatusMask,DTCStatusAvailabilityMask};
+
+		u8 Local_Au8PositiveResponce[(2*Local_u8counter)+3];
+		memset(Local_Au8PositiveResponce,POS_RESPONSE_SID,((2*Local_u8counter)+3)*sizeof(u8));
+		Local_Au8PositiveResponce[1] = reportMirrorMemoryDTCByStatusMask;
+		Local_Au8PositiveResponce[2] = DTCStatusAvailabilityMask;
 		Local_u8temp=3;
 		for (u8 i = 0; i < DTC_NUMBER; i++)
 		{
@@ -65,9 +69,9 @@ u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 		}
 		UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce,(2*Local_u8counter)+3);
 		return 1;
-        break;
-
-    case reportNumberOfMirrorMemoryDTCByStatusMask:          //reportNumberOfMirrorMemoryDTCByStatusMask
+    }
+    else if(message.MessageData[1] == reportNumberOfMirrorMemoryDTCByStatusMask) //reportNumberOfMirrorMemoryDTCByStatusMask
+    {
         //Function of EEPROM (Local_Au8dtc,offset,DTC_NUMBER);
 		for(u8 i = 0; i < DTC_NUMBER; i++)
 		{
@@ -84,15 +88,14 @@ u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 				Local_Au8dtc[i]=0;
 			}
 		}
-		u8 Local_Au8PositiveResponce[4]={POS_RESPONSE_SID,reportNumberOfMirrorMemoryDTCByStatusMask,DTCStatusAvailabilityMask,Local_u8counter};
-		UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce,4);
+		u8 Local_Au8PositiveResponce2[4]={POS_RESPONSE_SID,reportNumberOfMirrorMemoryDTCByStatusMask,DTCStatusAvailabilityMask,Local_u8counter};
+		UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce2,4);
 		return 1;
-        break;
-    
-    default:
-		UDSHandler_voidSendNegResponse(SID,subFunctionNotSupported);
-		return 0;
-        break;
     }
-
-
+    
+    else
+    {
+		UDSHandler_voidSendNegResponse(ReadDTCInformation,subFunctionNotSupported);
+		return 0;
+    }
+}

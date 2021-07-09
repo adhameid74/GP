@@ -22,7 +22,7 @@
 u8 UDS_u8ClearDiagnosticInformation(INDICATION_SDU message)
 {
 
-    if (message.Length != 1)
+    if (message.Length.u12 != 1)
 	{
 		UDSHandler_voidSendNegResponse(SID,incorrectMessageLengthOrInvalidFormat);
 		return 0;

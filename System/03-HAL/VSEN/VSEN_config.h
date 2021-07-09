@@ -12,7 +12,7 @@
 #define VSEN_CONFIG_H
 
 
-#define VREF		VREF_3_3
+#define VREF		VREF_5
 #define ADC_RES		4096UL
 
 #endif

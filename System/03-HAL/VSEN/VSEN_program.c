@@ -29,6 +29,8 @@ u16 VSEN_u8ReadVoltage()
 	Local_u16Value= ADC_u16ReadRegularSync();
 	Local_u16Value = (u32)Local_u16Vref*(u32)Local_u16Value/ADC_RES;
 	Local_u16Value = Local_u16Value*5;
+	Local_u16Value = 0.6659*Local_u16Value + 86.18;
+
 	return Local_u16Value;
 }
 

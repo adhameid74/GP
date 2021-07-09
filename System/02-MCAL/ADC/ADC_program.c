@@ -144,7 +144,7 @@ void ADC_voidStartRegularConversion()
 	SET_BIT(MADC->CR2,SWSTART_BIT);
 }
 
-void ADC1_2IRQHandler()
+void ADC1_2_IRQHandler()
 {
 	ADC_ISR(MADC->DR);
 }

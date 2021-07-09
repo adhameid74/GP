@@ -13,6 +13,7 @@
 #include "BIT_MATH.h"
 
 #include "DoCAN_interface.h"
+#include "EEPROM_interface.h"
 
 #include "DTC_interface.h"
 #include "DTC_private.h"

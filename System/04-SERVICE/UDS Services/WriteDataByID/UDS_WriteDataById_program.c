@@ -14,18 +14,20 @@
  
  #include "CAN_interface.h"
  #include "DoCAN_interface.h"
- 
- #include "UDS_ReadDataById_interface.h"
- #include "UDS_ReadDataById_private.h"
- #include "UDS_ReadDataById_config.h"
+ #include "UDSHandler_interface.h"
+
+ #include "UDS_WriteDataById_interface.h"
+ #include "UDS_WriteDataById_private.h"
+ #include "UDS_WriteDataById_config.h"
+ void (*SetZone1)(u32 Data);
+ void (*SetZone2)(u32 Data);
   void UDS_WRITEDATABYID_voidSetCallBackZone1(void (*Fptr)(u32 Data)){
 	  SetZone1 = Fptr ;
   }
  void UDS_WRITEDATABYID_voidSetCallBackZone2(void (*Fptr)(u32 Data)){
 	 SetZone2 = Fptr ;
   }
- void (*SetZone1)(u32 Data);
- void (*SetZone2)(u32 Data);
+
  
  void UDS_voidWriteDataById(){
 	 u32 Data ;
@@ -33,8 +35,8 @@
 	 u8 j = 1 ; 
 	 u8 NRC = 0; 
 	 u8 MessageData[20];
-	 for (i = 1 , j=0;i < Received_Data.Length ; i++ ,j++){
-		 if(Received_Data.Length < 2 && Received_Data.Length > 255){
+	 for (i = 1 , j=0;i < Received_Data.Length.u12 ; i++ ,j++){
+		 if(Received_Data.Length.u12 < 2 && Received_Data.Length.u12 > 255){
 			 switch (Received_Data.MessageData[i]){
 			    case DID_ZONE_1:
 				      MessageData[j++] = Received_Data.MessageData[i] ;
@@ -58,18 +60,18 @@
 			 	      break;
 			 	
 		 }
-		 else {
-			 	NRC = incorrectMessageLengthOrInvalidFormat ; 
-			 
+		 }
+		 else
+		 {
+			NRC = incorrectMessageLengthOrInvalidFormat ;
 		 }
 		 if(NRC !=0)
 			 break;
   
 	 }
 	 
- }
      if(NRC != 0){
-		 UDSHandler_voidSendNegResponse(WRITE_DATA_BY_ID,NRC);
+		 UDSHandler_voidSendNegResponse(WriteDataByIdentifier,NRC);
 	 }
 	 else {
 		 MessageData[0] = 0x6E ;

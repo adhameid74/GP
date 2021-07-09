@@ -11,11 +11,13 @@
 #ifndef SPEED_INTERFACE_H
 #define SPEED_INTERFACE_H
 
-u16 SPEED_u16Reading = 0;
+extern u16 SPEED_u16Reading;
 
 /**
  * @brief Evaluate the speed in Asynch function
  */
 void SPEED_voidGetReadingAsynch();
+
+
 
 #endif

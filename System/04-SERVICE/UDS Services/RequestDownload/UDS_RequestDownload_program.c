@@ -22,6 +22,9 @@
 #include "UDS_RequestDownload_private.h"
 #include "UDS_RequestDownload_config.h"
 
+u32 RequestDownload_u32Size;
+u8 RequestDownload_u8ActiveFlag = 0;
+
 void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 {
 	u8 Local_u8AddressFormat, Local_u8LengthFormat;
@@ -33,7 +36,7 @@ void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 		return;
 	}
 	
-	if (ReceivedMessage->Length < 3)
+	if (ReceivedMessage->Length.u12 < 3)
 	{
 		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
 		return;
@@ -46,7 +49,7 @@ void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
 		return;
 	}
-	if ( ReceivedMessage->Length != (Local_u8AddressFormat+Local_u8LengthFormat+3) )
+	if ( ReceivedMessage->Length.u12 != (Local_u8AddressFormat+Local_u8LengthFormat+3) )
 	{
 		UDSHandler_voidSendNegResponse(RequestDownload, incorrectMessageLengthOrInvalidFormat);
 		return;
@@ -55,7 +58,7 @@ void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage)
 	{
 		RequestDownload_u32Size |= (ReceivedMessage->MessageData[3+Local_u8AddressFormat+Local_u8Counter]) << ((Local_u8LengthFormat*8)- (8*(Local_u8Counter+1)));
 	}
-	if ( (ReceivedMessage->MessageData[3] != 0x08) || (ReceivedMessage->MessageData[4] != 0) || (ReceivedMessage->MessageData[5] != 0x10) || (ReceivedMessage->MessageData[6] != 0) || (TransferData_u32Size == 0) )
+	if ( (ReceivedMessage->MessageData[3] != 0x08) || (ReceivedMessage->MessageData[4] != 0) || (ReceivedMessage->MessageData[5] != 0x10) || (ReceivedMessage->MessageData[6] != 0) || (RequestDownload_u32Size == 0) )
 	{
 		UDSHandler_voidSendNegResponse(RequestDownload, requestOutOfRange);
 		return;

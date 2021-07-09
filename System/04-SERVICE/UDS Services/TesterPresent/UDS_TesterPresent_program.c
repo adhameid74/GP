@@ -23,7 +23,7 @@
 
 void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage->Length != 2)
+	if (ReceivedMessage->Length.u12 != 2)
 	{
 		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;

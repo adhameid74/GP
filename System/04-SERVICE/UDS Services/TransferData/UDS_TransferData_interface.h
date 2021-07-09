@@ -12,10 +12,10 @@
 #ifndef UDS_TRANSFERDATA_INTERFACE_H_
 #define UDS_TRANSFERDATA_INTERFACE_H_
 
-u8 TransferData_u8ExpectedBSC = 1;
-u32 TransferData_u32ReceivedBytes = 0;
-u16 TransferData_u16NumOfLines = 0;
-u8 TransferData_u8NextAddress = EEPROM_APP_START_ADDRESS;
+extern u8 TransferData_u8ExpectedBSC;
+extern u32 TransferData_u32ReceivedBytes;
+extern u16 TransferData_u16NumOfLines;
+extern u16 TransferData_u8NextAddress;
 
 void UDS_voidTransferData(INDICATION_SDU* ReceivedMessage);
 

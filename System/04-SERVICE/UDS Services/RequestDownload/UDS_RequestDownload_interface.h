@@ -14,8 +14,8 @@
 
 #define maxNumberOfBlockLength						50
 
-u32 RequestDownload_u32Size;
-u8 RequestDownload_u8ActiveFlag = 0;
+extern u32 RequestDownload_u32Size;
+extern u8 RequestDownload_u8ActiveFlag;
 
 void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage);
 

@@ -33,7 +33,7 @@ void UDS_voidRequestTransferExit(INDICATION_SDU* ReceivedMessage)
 		UDSHandler_voidSendNegResponse(RequestTransferExit, requestSequenceError);
 		return;
 	}
-	if (ReceivedMessage->Length != 1)
+	if (ReceivedMessage->Length.u12 != 1)
 	{
 		UDSHandler_voidSendNegResponse(RequestTransferExit, incorrectMessageLengthOrInvalidFormat);
 		return;

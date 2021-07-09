@@ -19,9 +19,12 @@
 #include "UDS_DiagnosticSessionControl_private.h"
 #include "UDS_DiagnosticSessionControl_config.h"
 
+u8 UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
+u8 UDS_u8SessionTimer = 0;
+
 void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage->Length != 2)
+	if (ReceivedMessage->Length.u12 != 2)
 	{
 		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
 		return;

@@ -16,11 +16,14 @@
 #include "SPEED_interface.h"
 #include "SPEED_private.h"
 #include "SPEED_config.h"
+u16 SPEED_u16Reading = 0;
 
 void SPEED_voidGetReadingAsynch()
 {
 	SPEED_u16Reading = TIMER_u16GetElapsedTime(TIMER_ID);
 	SPEED_u16Reading = ( (SPEED_u16Reading * 1000) / (NUM_OF_HOLES * EVALUATION_TIME) );
 	TIMER_voidSetResetTimer(TIMER_ID, TIMER_RESET, 0);
-	TIMER_voidEnableExternalClockSource(TIMER_ID, ((TIMER_ID*10)+21));
+	TIMER_voidEnableExternalClockSource(TIMER_ID, ((TIMER_ID*10)+22));
 }
+
+
