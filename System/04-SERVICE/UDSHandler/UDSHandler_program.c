@@ -23,6 +23,8 @@
 #include "UDS_RequestTransferExit_interface.h"
 #include "UDS_TesterPresent_interface.h"
 #include "UDS_TransferData_interface.h"
+#include "UDS_ECUReset_interface.h"
+#include "UDS_InputOutputControlByIdentifier_interface.h"
 
 #include "UDSHandler_interface.h"
 #include "UDSHandler_private.h"

@@ -14,13 +14,13 @@
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
 
-#include "UDS_InputOutputControlByIdentifier_interface.h"
-#include "UDS_InputOutputControlByIdentifier_private.h"
-#include "UDS_InputOutputControlByIdentifier_config.h"
-
 #include "USONIC_interface.h"
 #include "CAR_interface.h"
 #include "VSEN_interface.h"
+
+#include "UDS_InputOutputControlByIdentifier_interface.h"
+#include "UDS_InputOutputControlByIdentifier_private.h"
+#include "UDS_InputOutputControlByIdentifier_config.h"
 
 u16 USONIC1_valueToUse;
 u16 USONIC2_valueToUse;
@@ -38,32 +38,32 @@ u8  CAR_DIRECTION_whatShouldIdo = returnControlToECU;
 void UDS_voidInputOutputControlByID(INDICATION_SDU* ReceivedMessage)
 {
 	// check for errors and send negative response
-	if (ReceivedMessage.Length > 4 || ReceivedMessage.Length < 3)
+	if (ReceivedMessage->Length.u12 > 4 || ReceivedMessage->Length.u12 < 3)
 	{
 		UDSHandler_voidSendNegResponse(InputOutputControlByIdentifier, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
-	if(IsNotID(ReceivedMessage.MessageData[1]))
+	if(IsNotID(ReceivedMessage->MessageData[1]))
 	{
 		UDSHandler_voidSendNegResponse(InputOutputControlByIdentifier, requestOutOfRange);
 		return;
 	}
-	if(IsNotSubFunction(ReceivedMessage.MessageData[2]))
+	if(IsNotSubFunction(ReceivedMessage->MessageData[2]))
 	{
 		UDSHandler_voidSendNegResponse(InputOutputControlByIdentifier, subFunctionNotSupported);
 		return;
 	}
 
 	ControlOptionRecord ControlRecord;	
-	ControlRecord.DID = ReceivedMessage.MessageData[1];
-	ControlRecord.subFunction = ReceivedMessage.MessageData[2];
-	if(ReceivedMessage.Length == 4)
+	ControlRecord.DID = ReceivedMessage->MessageData[1];
+	ControlRecord.subFunction = ReceivedMessage->MessageData[2];
+	if(ReceivedMessage->Length.u12 == 4)
 	{
-		ControlRecord.ValueToUse = ReceivedMessage.MessageData[3];
+		ControlRecord.ValueToUse = ReceivedMessage->MessageData[3];
 	}
 	u16 ControlStatusRecord = ExecutecontrolOptionRecord(ControlRecord);   // the size to be confirmed
 	
-	u8 Local_u8PosResponse[5] = {POS_RESPONSE_SID, DataID , ControlOptionRecord.subFunction , ControlStatusRecord>>8 , ControlStatusRecord};    // the size to be confirmed
+	u8 Local_u8PosResponse[5] = {POS_RESPONSE_SID, ControlRecord.DID , ControlRecord.subFunction , ControlStatusRecord>>8 , ControlStatusRecord};    // the size to be confirmed
 	UDSHandler_voidSendPosResponse(Local_u8PosResponse, 5);
 }
 
@@ -71,7 +71,7 @@ u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the retur
 {
 	u8 dumb;
 	u16 Local_u16ControlStatusRecord;
-	switch (Copy_u8DataID)
+	switch (ControlRecord.DID)
 	{
 	case DID_SPEED:
 		/* code */
@@ -80,7 +80,7 @@ u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the retur
 	case DID_FRONTDISTANCE:
 		if (ControlRecord.subFunction == shortTermAdjustment)
 		{
-			USONIC1_valueToUse; =  ControlRecord.ValueToUse;
+			USONIC1_valueToUse =  ControlRecord.ValueToUse;
 		}
 		USONIC1_whatShouldIdo = ControlRecord.subFunction;
 		Local_u16ControlStatusRecord = USONIC_f32GetDistance(USONIC1,dumb);
@@ -89,7 +89,7 @@ u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the retur
 	case DID_BACKDISTANCE:
 		if (ControlRecord.subFunction == shortTermAdjustment)
 		{
-			USONIC2_valueToUse; =  ControlRecord.ValueToUse;
+			USONIC2_valueToUse =  ControlRecord.ValueToUse;
 		}
 		USONIC2_whatShouldIdo = ControlRecord.subFunction;
 		Local_u16ControlStatusRecord = USONIC_f32GetDistance(USONIC2,dumb);
@@ -98,7 +98,7 @@ u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the retur
 	case DID_VOLT:
 		if (ControlRecord.subFunction == shortTermAdjustment)
 		{
-			VOLT_valueToUse; =  ControlRecord.ValueToUse;
+			VOLT_valueToUse =  ControlRecord.ValueToUse;
 		}
 		VOLT_whatShouldIdo = ControlRecord.subFunction;
 		Local_u16ControlStatusRecord = VSEN_u8ReadVoltage();

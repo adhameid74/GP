@@ -23,12 +23,12 @@
 
 void UDS_voidECUReset(INDICATION_SDU* ReceivedMessage)
 {
-	if (ReceivedMessage.Length != 2)
+	if (ReceivedMessage->Length.u12 != 2)
 	{
 		UDSHandler_voidSendNegResponse(ECUReset, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
-	else if(ReceivedMessage.MessageData[1] == softReset)
+	else if(ReceivedMessage->MessageData[1] == softReset)
 	{
 		u8 Local_u8PosResponse[2] = {POS_RESPONSE_SID, softReset};
 		UDSHandler_voidSendPosResponse(Local_u8PosResponse, 2);

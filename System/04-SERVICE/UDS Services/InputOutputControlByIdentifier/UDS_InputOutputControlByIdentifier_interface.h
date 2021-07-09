@@ -12,6 +12,8 @@
 #ifndef UDS_IOCONTROLBYID_INTERFACE_H_
 #define UDS_IOCONTROLBYID_INTERFACE_H_
 
+#include "DoCAN_interface.h"
+
 #define returnControlToECU                          0x00
 #define resetToDefault                              0x01
 #define freezeCurrentState                          0x02
