@@ -12,20 +12,12 @@
 #define USONIC_private_H
 
 #define DTCNUM                     5
-#define FAILED_THRESHOLD           127
-#define PASSED_THRESHOLD           -128
+#define FAILED_THRESHOLD           25
+#define PASSED_THRESHOLD           -25
 #define AGING_THRESHOLD            255
-
-
-#define RED_LIGHT                   1
-#define YELLOW_LIGHT                2
-#define GREEN_LIGHT                 3
 
 //static void voidTimeOut (void);
 
-
-
 static dtcItem_t dtc_usonic[DTCNUM];
-
 
 #endif
