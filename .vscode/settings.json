@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "uds_requestdownload_interface.h": "c",
-        "udshandler_interface.h": "c"
+        "udshandler_interface.h": "c",
+        "vsen_config.h": "c",
+        "adc_interface.h": "c"
     }
 }

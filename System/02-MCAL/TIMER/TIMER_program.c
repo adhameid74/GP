@@ -18,7 +18,6 @@
 static void (*TIMER_Callback[6]) (void) ;
 static u8 TIMER_u8IntervalType[6] ;
 
-
 void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u16PrescalerValue)
 {
     switch (Copy_u8TimerNumber)
@@ -43,6 +42,7 @@ void TIMER_voidSetPrescaler(u8 Copy_u8TimerNumber, u16 Copy_u16PrescalerValue)
         break;
     }
 }
+
 void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
 {
     switch (Copy_u8TimerNumber)
@@ -103,6 +103,7 @@ void TIMER_voidSetBusyWait(u8 Copy_u8TimerNumber , u16 Copy_u16Value)
         break;
     }
 }
+
 void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , void (*Copy_ptr)(void))
 {
     switch (Copy_u8TimerNumber)
@@ -164,6 +165,7 @@ void TIMER_voidSetIntervalSingle(u8 Copy_u8TimerNumber , u16 Copy_u16Value , voi
     }   
 
 }
+
 void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , void (*Copy_ptr)(void))
 {
     switch (Copy_u8TimerNumber)
@@ -224,54 +226,7 @@ void TIMER_voidSetIntervalPeriodic(u8 Copy_u8TimerNumber , u16 Copy_u16Value , v
         break;
     }   
 }
-void TIM2_IRQHandler(void)
-{
-    if(TIMER_u8IntervalType[2] == SINGLE_SHOT)
-    {
-        SET_BIT(TIM2_CR1 , 1);     // UEV disabled
-        TIM2_ARR = 0;
-        CLR_BIT(TIM2_DIER , 0);    // Update interrupt disabled.
-    }
-    TIMER_Callback[2]();
-    CLR_BIT(TIM2_SR , 0) ;    // Clear Update Interrupt flag (UIF)
-    
-}
-void TIM3_IRQHandler(void)
-{
-    if(TIMER_u8IntervalType[3] == SINGLE_SHOT)
-    {
-        SET_BIT(TIM3_CR1 , 1);     // UEV disabled
-        TIM3_ARR = 0;
-        CLR_BIT(TIM3_DIER , 0);    // Update interrupt disabled.
-    }
-    TIMER_Callback[3]();
-    CLR_BIT(TIM3_SR , 0) ;    // Clear Update Interrupt flag (UIF)
-    
-}
-void TIM4_IRQHandler(void)
-{
-    if(TIMER_u8IntervalType[4] == SINGLE_SHOT)
-    {
-        SET_BIT(TIM4_CR1 , 1);     // UEV disabled
-        TIM4_ARR = 0;
-        CLR_BIT(TIM4_DIER , 0);    // Update interrupt disabled.
-    }
-    TIMER_Callback[4]();
-    CLR_BIT(TIM4_SR , 0) ;    // Clear Update Interrupt flag (UIF)
-    
-}
-void TIM5_IRQHandler(void)
-{
-    if(TIMER_u8IntervalType[5] == SINGLE_SHOT)
-    {
-        SET_BIT(TIM5_CR1 , 1);     // UEV disabled
-        TIM5_ARR = 0;
-        CLR_BIT(TIM5_DIER , 0);    // Update interrupt disabled.
-    }
-    TIMER_Callback[5]();
-    CLR_BIT(TIM5_SR , 0) ;    // Clear Update Interrupt flag (UIF)
-    
-}
+
 u16 TIMER_u16GetElapsedTime(u8 Copy_u8TimerNumber)
 {
     u16 Local_u16Time = 0;
@@ -316,6 +271,7 @@ u16 TIMER_u16GetRemainingTime(u8 Copy_u8TimerNumber)
     }
     return Local_u16Time ;
 }
+
 void TIMER_voidSetResetTimer(u8 Copy_u8TimerNumber,u8 Copy_u8Statue,u16 Copy_u16Value)
 {
     if (Copy_u8Statue==TIMER_SET)
@@ -366,6 +322,7 @@ void TIMER_voidSetResetTimer(u8 Copy_u8TimerNumber,u8 Copy_u8Statue,u16 Copy_u16
         }
     }
 }
+
 void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime , u16 Copy_u16TimeON)
 {
     switch (Copy_u8TimerChannelNumber)
@@ -507,7 +464,6 @@ void TIMER_voidGeneratePWM(u8 Copy_u8TimerChannelNumber , u16 Copy_u16PeriodTime
     }
 }
 
-
 void TIMER_voidStartStopCount(u8 Copy_u8TimerNumber ,u8 Copy_u8Statue){
     if (Copy_u8Statue==TIMER_START)
     {
@@ -581,6 +537,7 @@ void TIMER_voidSetTimerValue(u8 Copy_u8TimerNumber  , u16 Copy_u16Value)
         break;
     }
 }
+
 void TIMER_voidEnableExternalClockSource(u8 Copy_u8TimerNumber, u8 Copy_u8TimerChannelNumber)
 {
 	switch (Copy_u8TimerNumber)
@@ -749,3 +706,54 @@ void TIMER_voidEnableExternalClockSource(u8 Copy_u8TimerNumber, u8 Copy_u8TimerC
 	    // resynchronization circuit on TI2 input.
 }
 
+void TIM2_IRQHandler(void)
+{
+    if(TIMER_u8IntervalType[2] == SINGLE_SHOT)
+    {
+        SET_BIT(TIM2_CR1 , 1);     // UEV disabled
+        TIM2_ARR = 0;
+        CLR_BIT(TIM2_DIER , 0);    // Update interrupt disabled.
+    }
+    TIMER_Callback[2]();
+    CLR_BIT(TIM2_SR , 0) ;    // Clear Update Interrupt flag (UIF)
+    
+}
+
+void TIM3_IRQHandler(void)
+{
+    if(TIMER_u8IntervalType[3] == SINGLE_SHOT)
+    {
+        SET_BIT(TIM3_CR1 , 1);     // UEV disabled
+        TIM3_ARR = 0;
+        CLR_BIT(TIM3_DIER , 0);    // Update interrupt disabled.
+    }
+    TIMER_Callback[3]();
+    CLR_BIT(TIM3_SR , 0) ;    // Clear Update Interrupt flag (UIF)
+    
+}
+
+void TIM4_IRQHandler(void)
+{
+    if(TIMER_u8IntervalType[4] == SINGLE_SHOT)
+    {
+        SET_BIT(TIM4_CR1 , 1);     // UEV disabled
+        TIM4_ARR = 0;
+        CLR_BIT(TIM4_DIER , 0);    // Update interrupt disabled.
+    }
+    TIMER_Callback[4]();
+    CLR_BIT(TIM4_SR , 0) ;    // Clear Update Interrupt flag (UIF)
+    
+}
+
+void TIM5_IRQHandler(void)
+{
+    if(TIMER_u8IntervalType[5] == SINGLE_SHOT)
+    {
+        SET_BIT(TIM5_CR1 , 1);     // UEV disabled
+        TIM5_ARR = 0;
+        CLR_BIT(TIM5_DIER , 0);    // Update interrupt disabled.
+    }
+    TIMER_Callback[5]();
+    CLR_BIT(TIM5_SR , 0) ;    // Clear Update Interrupt flag (UIF)
+    
+}
