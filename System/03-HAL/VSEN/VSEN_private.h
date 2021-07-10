@@ -11,7 +11,20 @@
 #ifndef VSEN_PRIVATE_H
 #define VSEN_PRIVATE_H
 
-#define VREF_3_3	1
-#define VREF_5		2
+#define VREF_3_3	               1
+#define VREF_5		               2
+
+static u8 Flag = 0;
+
+#define DTCNUM                     3
+
+#define FAILED_THRESHOLD           5
+#define PASSED_THRESHOLD           -5
+#define AGING_THRESHOLD            255
+
+#define HIGH_THRESHOLD             5
+#define LOW_THRESHOLD              1
+
+static dtcItem_t VSEN_DTC[DTCNUM];
 
 #endif
