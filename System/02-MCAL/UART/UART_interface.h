@@ -11,9 +11,9 @@
 #define MUART2		2
 
 void MUART_voidInit(u8 Copy_u8TimerNumber);
-void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[]);
-u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber);
-u8 MUART_u8ReceiveTimeOut(u8 Copy_u8TimerNumber);
-u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8TimerNumber);
-void MUART_voidClearRxne();
+u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[]);
+//u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber);
+u8 MUART_u8Receive(u8 Copy_u8TimerNumber);
+//void MUART_voidClearRxne();
+
 #endif
