@@ -139,7 +139,7 @@ u16 ADC_u16ReadRegularSync()
 
 	if ( Local_u16Timer == ADC_TIMEOUT )
 	{
-		return 0;
+		return 0xFFFF;
 	}
 	
 	ADC_Reading = 0xFFFF & MADC->DR;
