@@ -18,28 +18,30 @@
 #include "EEPROM_private.h"
 #include "EEPROM_config.h"
 
-  void HEEPROM_voidWriteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress ,u8 Copy_u8Data){
+  void HEEPROM_voidWriteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress ,u8 Copy_u8Data)
+  {
 
 	  u8 MSB = (u8)(Copy_u16DataAddress>>8);
 	  u8 LSB = (u8)(Copy_u16DataAddress);
 	  u8 Data[3]={MSB,LSB,Copy_u8Data};
-	  MI2C_voidTransmit(Copy_u8EepromAddress ,Data,3);
-	  
+	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
   }
-  u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress){
+
+  u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress)
+  {
 	  u8 Data ;
-	  MI2C_voidReceiveFromAddress(Copy_u8EepromAddress ,&Data,1,Copy_u16DataAddress);
+	  MI2C_u8ReceiveFromAddress(Copy_u8EepromAddress ,&Data,1,Copy_u16DataAddress);
 	  return Data;
-	  
-	  
   }
+
   void HEEPROM_u8DeleteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DeleteAddress)
   {
 	  u8 MSB = (u8)(Copy_u16DeleteAddress>>8);
 	  u8 LSB = (u8)(Copy_u16DeleteAddress);
 	  u8 Data[3]={MSB,LSB,0xff};
-	  MI2C_voidTransmit(Copy_u8EepromAddress ,Data,3);
+	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
   }
+
   void HEEPROM_voidWriteMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData)
   {
   	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)
@@ -51,6 +53,7 @@
 		   }
   	  }
   }
+
   void HEEPROM_voidReadMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData)
     {
   	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)

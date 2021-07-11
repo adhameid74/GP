@@ -188,7 +188,7 @@ u8 MI2C_u8Receive (u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberO
 	return NO_ERROR;
 }
 
-void MI2C_voidReceiveFromAddress(u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberOfData,u16 Copy_u16AddressOfLocation)
+u8 MI2C_u8ReceiveFromAddress(u8 Copy_u8SlaveAddress , u8 *DataToReceive ,u8 Copy_u8NumberOfData,u16 Copy_u16AddressOfLocation)
 {
 	u16 Local_u16Timer = 0;
 	u8 i;
