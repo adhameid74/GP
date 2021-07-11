@@ -25,6 +25,6 @@
 /**
  * The time of the evaluation process (in milliseconds)
  */
-#define EVALUATION_TIME             1000
+#define EVALUATION_TIME             300
 
 #endif

@@ -22,8 +22,8 @@ static u8 Flag = 0;
 #define PASSED_THRESHOLD           -5
 #define AGING_THRESHOLD            255
 
-#define HIGH_THRESHOLD             5
-#define LOW_THRESHOLD              1
+#define HIGH_THRESHOLD             5000
+#define LOW_THRESHOLD              3300
 
 static dtcItem_t VSEN_DTC[DTCNUM];
 
