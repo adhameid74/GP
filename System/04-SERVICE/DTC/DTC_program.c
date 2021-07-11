@@ -12,14 +12,11 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
-#include "DoCAN_interface.h"
 #include "EEPROM_interface.h"
 
 #include "DTC_interface.h"
 #include "DTC_private.h"
 #include "DTC_config.h"
-
-
 
 void dtcSetFault(dtcItem_t* it)
 {
