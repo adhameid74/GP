@@ -58,7 +58,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 				dtcSetFault(it);
 				StatusBits=0x07;
 				StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-				HEEPROM_voidWriteByte(0xA0,it->Property->Code,StatusBits);
+				HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 				return DTC_TEST_RESULT_FAILED;
 			}
 		}
@@ -85,7 +85,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 						dtcSetPassed(it);
 						StatusBits=0x02;
 						StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-						HEEPROM_voidWriteByte(0xA0,it->Property->Code,StatusBits);
+						HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 						return DTC_TEST_RESULT_PASSED;
 					}
 					else if(it->Property->Bits.IsCritical)                  
@@ -98,7 +98,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 					dtcSetPassed(it);
 					StatusBits=0x02;
 					StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-					HEEPROM_voidWriteByte(0xA0,it->Property->Code,StatusBits);
+					HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 					return DTC_TEST_RESULT_PASSED;
 				}
 			}
@@ -107,7 +107,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 				StatusBits=0x02;
 				StatusBits|=( it->Status.TestFailedThisOperationCycle<<(2));
 				StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-				HEEPROM_voidWriteByte(0xA0,it->Property->Code,StatusBits);
+				HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 				return DTC_TEST_RESULT_PASSED;
 			}
 		}
