@@ -31,6 +31,9 @@ extern u8  USONIC2_whatShouldIdo ;
 extern u16 VOLT_valueToUse;
 extern u8  VOLT_whatShouldIdo ;
 
+extern u16 SPEED_valueToUse;
+extern u8  SPEED_whatShouldIdo ;
+
 extern u16 CAR_SPEED_valueToUse;
 extern u16 CAR_DIRECTION_valueToUse;
 extern u8  CAR_SPEED_whatShouldIdo ;
