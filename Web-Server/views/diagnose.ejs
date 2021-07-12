@@ -17,7 +17,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <script src='//192.168.1.7:8080/socket.io/socket.io.js'></script>
+  <script src='//192.168.1.2:8080/socket.io/socket.io.js'></script>
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/live-car-diagnostics.png">
   <link rel="icon" type="image/png" href="/assets/img/live-car-diagnostics.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -393,17 +393,21 @@
 
         });
         // Dropdowns for function and subfunction Selection
-        var Services = ['Service1','Service2','Service3','Service4','Service5'
-                        ,'Service6','Service7','Service8','Service9'];
-        var Subfunctions = { 'Service1': ['sub1_1','sub1_2'],
-                            'Service2': ['sub2_1','sub2_2'],
-                            'Service3': ['sub3_1','sub3_2'],
-                            'Service4': ['sub4_1','sub4_2'],
-                            'Service5': ['sub5_1','sub5_2'],
-                            'Service6': ['sub6_1','sub6_2'],
-                            'Service7': ['sub7_1','sub7_2'],
-                            'Service8': ['sub8_1','sub8_2'],
-                            'Service9': ['sub9_1','sub9_2'],
+        var Services = ['DiagnosticSessionControl','ECUReset','SecurityAccess','TesterPresent','ReadDataByIdentifier'
+                        ,'WriteDataByIdentifier','ClearDiagnosticInformation','ReadDTCInformation','InputOutputControlByIdentifier',
+                        'RequestDownload','TransferData','RequestTransferExit'];
+        var Subfunctions = { 'DiagnosticSessionControl': ['sub1_1','sub1_2'],
+                            'ECUReset': ['sub2_1','sub2_2'],
+                            'SecurityAccess': ['sub3_1','sub3_2'],
+                            'TesterPresent': ['sub4_1','sub4_2'],
+                            'ReadDataByIdentifier': ['sub5_1','sub5_2'],
+                            'WriteDataByIdentifier': ['sub6_1','sub6_2'],
+                            'ClearDiagnosticInformation': ['sub7_1','sub7_2'],
+                            'ReadDTCInformation': ['sub8_1','sub8_2'],
+                            'InputOutputControlByIdentifier': ['sub9_1','sub9_2'],
+                            'RequestDownload': ['sub9_1','sub9_2'],
+                            'TransferData': ['sub9_1','sub9_2'],
+                            'RequestTransferExit': ['sub9_1','sub9_2']
                           };
 
         $.each(Services, function(i) {
@@ -427,7 +431,7 @@
         });
       });
       // websocket handling
-      var socket = io.connect('//192.168.1.7:8080');
+      var socket = io.connect('//192.168.1.2:8080');
       socket.on('he5a', function(data) {
                 console.log(data);
                 // $('#hello').append('<li>' + data.message + '</li>');
@@ -448,8 +452,9 @@
         console.log("subfunction selected is : ",Subfucntion);
         console.log("parameters :",parameters)
         // var str = $("#user-message").val();
-        // console.log(str);
-         socket.emit('diagnose' ,{message: Service.concat(' ',Subfucntion,' ',parameters)});
+        var message = Service.concat(' ',Subfucntion,' ',parameters);
+        //console.log(message);
+        socket.emit('diagnose' ,{message: message});
     });
 
     });

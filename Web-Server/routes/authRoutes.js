@@ -19,9 +19,20 @@ let gfs;
 function router(nav){
     authRouter.route('/signUp')
     .post((req,res)=>{
-        console.log('--------request---------');
+        console.log('--------request header---------');
+        console.log(req.header);
+        console.log('--------request body---------');
         console.log(req.body);
-        const { username , password } = req.body;
+        let { username , password } = req.body;
+        if(!username)
+        {
+            const myJSON = JSON.stringify(req.body);
+            console.log(myJSON); 
+            console.log(myJSON.slice(13,21));
+            console.log(myJSON.slice(35,39));
+            username = myJSON.slice(13,18);
+            password = myJSON.slice(32,36);
+        }
         console.log("-------- signup params -------")
         console.log(username , password);
         const url = 'mongodb://localhost:27017';
@@ -103,15 +114,15 @@ function router(nav){
     });
 // --------------------------------------------------------------------------------
     authRouter.route('/upload')
-    .all((req, res , next)=>{
-        if (req.user)
-        {
-            next();
-        }
-        else{
-            res.redirect('/auth/signUp');
-        }
-    })
+    // .all((req, res , next)=>{
+    //     if (req.user)
+    //     {
+    //         next();
+    //     }
+    //     else{
+    //         res.redirect('/auth/signUp');
+    //     }
+   // })
     .get((req,res)=>{
         //res.json(req.user);
         const dbName = 'code_uploads';
@@ -154,29 +165,29 @@ function router(nav){
             }
             });
             authRouter.route('/upload/uploading')
-            .all((req, res , next)=>{
-            if (req.user)
-                {
-                    next();
-                }
-            else{
-                    res.redirect('/auth/signUp');
-                }
-            })
+            // .all((req, res , next)=>{
+            // if (req.user)
+            //     {
+            //         next();
+            //     }
+            // else{
+            //         res.redirect('/auth/signUp');
+            //     }
+            // })
             .post(upload.single('file'),(req,res)=>{
                 res.redirect('/auth/upload');
             });
 
             authRouter.route('/upload/files')
-            .all((req, res , next)=>{
-            if (req.user)
-                {
-                    next();
-                }
-            else{
-                    res.redirect('/auth/signUp');
-                }
-            })
+            // .all((req, res , next)=>{
+            // if (req.user)
+            //     {
+            //         next();
+            //     }
+            // else{
+            //         res.redirect('/auth/signUp');
+            //     }
+            // })
             .get((req, res) => {
                 gfs.files.find().toArray((err, files) => {
                   // Check if files
@@ -193,15 +204,15 @@ function router(nav){
               });
 
             authRouter.route('/upload/files/:filename')
-            .all((req, res , next)=>{
-            if (req.user)
-                {
-                    next();
-                }
-            else{
-                    res.redirect('/auth/signUp');
-                }
-            })
+            // .all((req, res , next)=>{
+            // if (req.user)
+            //     {
+            //         next();
+            //     }
+            // else{
+            //         res.redirect('/auth/signUp');
+            //     }
+            // })
             .get((req, res) => {
             gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
             // Check if file
@@ -220,15 +231,15 @@ function router(nav){
         });
 
             authRouter.route('/upload/files/:id')
-            .all((req, res , next)=>{
-            if (req.user)
-                {
-                    next();
-                }
-            else{
-                    res.redirect('/auth/signUp');
-                }
-            })
+            // .all((req, res , next)=>{
+            // if (req.user)
+            //     {
+            //         next();
+            //     }
+            // else{
+            //         res.redirect('/auth/signUp');
+            //     }
+            // })
             .delete((req, res) => {
             gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
             if (err) {
