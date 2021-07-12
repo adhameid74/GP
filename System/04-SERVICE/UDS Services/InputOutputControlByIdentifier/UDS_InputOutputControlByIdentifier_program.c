@@ -17,6 +17,7 @@
 #include "USONIC_interface.h"
 #include "CAR_interface.h"
 #include "VSEN_interface.h"
+#include "SPEED_interface.h"
 
 #include "UDS_InputOutputControlByIdentifier_interface.h"
 #include "UDS_InputOutputControlByIdentifier_private.h"
@@ -29,6 +30,9 @@ u8  USONIC2_whatShouldIdo = returnControlToECU;
 
 u16 VOLT_valueToUse;
 u8  VOLT_whatShouldIdo = returnControlToECU;
+
+u16 SPEED_valueToUse;
+u8  SPEED_whatShouldIdo = returnControlToECU;
 
 u16 CAR_SPEED_valueToUse;
 u16 CAR_DIRECTION_valueToUse;
@@ -74,7 +78,12 @@ u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the retur
 	switch (ControlRecord.DID)
 	{
 	case DID_SPEED:
-		/* code */
+		if (ControlRecord.subFunction == shortTermAdjustment)
+		{
+			SPEED_valueToUse =  ControlRecord.ValueToUse;
+		}
+		SPEED_whatShouldIdo = ControlRecord.subFunction;
+		Local_u16ControlStatusRecord = SPEED_u16Reading;
 		break;
 		
 	case DID_FRONTDISTANCE:
@@ -185,7 +194,8 @@ u8 IsNotID( u8 Copy_u8DataId )
 		break;
 	case DID_ADC:
 		break;
-	
+	case DID_CAR_SPEED:
+		break;
 	default:
 		return 1;
 	}
