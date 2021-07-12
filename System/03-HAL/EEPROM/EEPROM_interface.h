@@ -25,5 +25,6 @@
   void HEEPROM_u8DeleteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DeleteAddress);
   void HEEPROM_voidWriteMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData);
   void HEEPROM_voidReadMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData);
+  void HEEPROM_voidDeletePages(u8 Copy_u8EepromAddress, u16 Copy_u16StartPageNo, u16 Copy_u16NumberOfPages);
   void HEEPROM_voidDeleteMultipleBytes(u8 Copy_u8EepromAddress, u16 Copy_u16StartAddress,u16 Copy_u8NumberOfBytes);
   #endif

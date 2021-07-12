@@ -25,6 +25,7 @@
 	  u8 LSB = (u8)(Copy_u16DataAddress);
 	  u8 Data[3]={MSB,LSB,Copy_u8Data};
 	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
+    delay();
   }
 
   u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress)
@@ -40,17 +41,14 @@
 	  u8 LSB = (u8)(Copy_u16DeleteAddress);
 	  u8 Data[3]={MSB,LSB,0xff};
 	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
+    delay();
   }
 
   void HEEPROM_voidWriteMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData)
   {
   	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)
   	  {
-  		HEEPROM_voidWriteByte(Copy_u8EepromAddress,Copy_u16DataAddress+i,Copy_u8PtrData[i]);
-		   for (u16 c = 1; c <= 33000; c++)
-		   {
-			   asm("NOP");
-		   }
+  		  HEEPROM_voidWriteByte(Copy_u8EepromAddress,Copy_u16DataAddress+i,Copy_u8PtrData[i]);
   	  }
   }
 
@@ -68,4 +66,21 @@
   	  {
   		  HEEPROM_u8DeleteByte(Copy_u8EepromAddress,Copy_u16StartAddress+i);
   	  }
+  }
+  void HEEPROM_voidDeletePages(u8 Copy_u8EepromAddress, u16 Copy_u16StartPageNo, u16 Copy_u16NumberOfPages)
+  {
+    for(u16 i = 0; i<Copy_u16NumberOfPages; i++)
+    {
+      u16 Local_u16DataAddress = Copy_u16StartPageNo*128;
+       
+      u8 MSB = (u8)(Local_u16DataAddress>>8);
+      u8 LSB = (u8)(Local_u16DataAddress);
+      u8 Data[130]={MSB,LSB};
+      for(u8 j = 0; j< 128; j++)
+      {
+        Data[2+j] =  0xff;
+      }
+      MI2C_u8Transmit(Copy_u8EepromAddress ,Data,130);
+      delay();
+    }
   }

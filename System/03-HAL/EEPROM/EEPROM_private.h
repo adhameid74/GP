@@ -11,6 +11,12 @@
  
   #ifndef EEPROM_PRIVATE_H
   #define EEPROM_PRIVATE_H
-  
+  void delay(void)
+	{
+		for (u16 c = 1; c <= 33000; c++)
+		{
+			asm("NOP");
+		}
+	}
   
   #endif
