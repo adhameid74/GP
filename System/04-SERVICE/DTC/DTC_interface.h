@@ -16,29 +16,34 @@
 #define DTC_TEST_RESULT_UNCOMPLITED			0
 #define DTC_TEST_RESULT_PASSED				1
 #define DTC_TEST_RESULT_FAILED				2
-#define DTC_NUMBER							19
+#define DTC_NUMBER							24
 
 typedef enum
 {
-    DTC_UsonicEchoDisconnect = 0x00,
-    DTC_UsonicEchoNoReceive = 0x01,
-    DTC_UsonicCloseDistance = 0x02,
-    DTC_UsonicNormalDistance = 0x03,
-    DTC_UsonicLongDistance = 0x04,
-    DTC_CANTxFailure = 0x05,
-    DTC_CANNonEmptyFilter = 0x06,
-    DTC_VSenVoltageHigh = 0x07,
-    DTC_VSenVoltageLOW = 0x08,
-	DTC_VSenNotReading = 0x09,
-	DTC_SpeedNotMatched = 0x0A,
-	DTC_SpeedExceededLimit = 0x0B,
-	DTC_SpeedNotReading = 0x0C,
-	DTC_I2CStartBitNotGenerated = 0x0D,
-	DTC_I2CAddressNotTransmitted = 0x0E,
-	DTC_I2CTxFailure = 0x0F,
-	DTC_I2CRxFailure = 0x10,
-	DTC_UARTTxFailure = 0x11,
-	DTC_UARTRxFailure = 0x12,
+    DTC_Usonic1EchoDisconnect = 0x00,
+    DTC_Usonic1EchoNoReceive = 0x01,
+    DTC_Usonic1CloseDistance = 0x02,
+    DTC_Usonic1NormalDistance = 0x03,
+    DTC_Usonic1LongDistance = 0x04,
+	DTC_Usonic2EchoDisconnect = 0x05,
+    DTC_Usonic2EchoNoReceive = 0x06,
+    DTC_Usonic2CloseDistance = 0x07,
+    DTC_Usonic2NormalDistance = 0x08,
+    DTC_Usonic2LongDistance = 0x09,
+    DTC_CANTxFailure = 0x0A,
+    DTC_CANNonEmptyFilter = 0x0B,
+    DTC_VSenVoltageHigh = 0x0C,
+    DTC_VSenVoltageLOW = 0x0D,
+	DTC_VSenNotReading = 0x0E,
+	DTC_SpeedNotMatched = 0x0F,
+	DTC_SpeedExceededLimit = 0x10,
+	DTC_SpeedNotReading = 0x11,
+	DTC_I2CStartBitNotGenerated = 0x12,
+	DTC_I2CAddressNotTransmitted = 0x13,
+	DTC_I2CTxFailure = 0x14,
+	DTC_I2CRxFailure = 0x15,
+	DTC_UARTTxFailure = 0x16,
+	DTC_UARTRxFailure = 0x17,
 } dtcCategory_e;
 
 
