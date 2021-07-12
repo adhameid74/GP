@@ -16,11 +16,13 @@
 #include "DTC_interface.h"
 
 #include "CAR_interface.h"
+#include "UDS_InputOutputControlByIdentifier_interface.h"
 
 #include "SPEED_interface.h"
 #include "SPEED_private.h"
 #include "SPEED_config.h"
 
+u16 SPEED_u16DefaultValue = 2500;
 u16 SPEED_u16Reading = 0;
 
 void SPEED_voidGetReadingAsynch()
@@ -43,6 +45,25 @@ void SPEED_voidGetReadingAsynch()
 	TIMER_voidSetResetTimer(TIMER_ID, TIMER_RESET, 0);
 	TIMER_voidEnableExternalClockSource(TIMER_ID, ((TIMER_ID*10)+22));
 
+	switch(SPEED_whatShouldIdo)
+	{
+		case returnControlToECU:
+			SPEED_u16PVT = SPEED_u16Reading;
+			break;
+		case resetToDefault:
+			SPEED_u16PVT = SPEED_u16Reading;
+			SPEED_u16Reading = SPEED_u16DefaultValue;
+			break;
+		case freezeCurrentState:
+			SPEED_u16Reading = SPEED_u16PVT;
+			break;
+		case shortTermAdjustment:
+			SPEED_u16Reading =  SPEED_valueToUse;
+			break;
+		default:
+    		break;
+	}
+
 	if( (CAR_SPEED_CurrentValue > SPEED_LOW_THRESHOLD) && (SPEED_u16Reading == 0) )
 	{
 		DTC_u8DetectFault(&SPEED_DTC[2], 1);
@@ -62,4 +83,6 @@ void SPEED_voidGetReadingAsynch()
 		DTC_u8DetectFault(&SPEED_DTC[1], 1);
 	}
 	DTC_u8DetectFault(&SPEED_DTC[1], 0);
+
+
 }

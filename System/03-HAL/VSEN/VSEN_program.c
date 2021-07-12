@@ -60,22 +60,6 @@ u16 VSEN_u16ReadVoltage()
 	Local_u16Value = Local_u16Value*5;
 	Local_u16Value = 0.6659*Local_u16Value + 86.18;
 
-	if ( Local_u16Value > HIGH_THRESHOLD )
-	{
-		DTC_u8DetectFault(&VSEN_DTC[0], 1);
-		DTC_u8DetectFault(&VSEN_DTC[1], 0);
-	}
-	else if ( Local_u16Value < LOW_THRESHOLD )
-	{
-		DTC_u8DetectFault(&VSEN_DTC[0], 0);
-		DTC_u8DetectFault(&VSEN_DTC[1], 1);
-	}
-	else
-	{
-		DTC_u8DetectFault(&VSEN_DTC[0], 0);
-		DTC_u8DetectFault(&VSEN_DTC[1], 0);
-	}
-
 	switch(VOLT_whatShouldIdo)
 	{
 		case returnControlToECU:
@@ -94,5 +78,21 @@ u16 VSEN_u16ReadVoltage()
 			break;
 		default:
     		break;
+	}
+
+	if ( Local_u16Value > HIGH_THRESHOLD )
+	{
+		DTC_u8DetectFault(&VSEN_DTC[0], 1);
+		DTC_u8DetectFault(&VSEN_DTC[1], 0);
+	}
+	else if ( Local_u16Value < LOW_THRESHOLD )
+	{
+		DTC_u8DetectFault(&VSEN_DTC[0], 0);
+		DTC_u8DetectFault(&VSEN_DTC[1], 1);
+	}
+	else
+	{
+		DTC_u8DetectFault(&VSEN_DTC[0], 0);
+		DTC_u8DetectFault(&VSEN_DTC[1], 0);
 	}
 }
