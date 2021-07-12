@@ -188,7 +188,7 @@
                         <h3>Terminal</h3>
                         <div class="form-group">
                           <div class="col-sm-12" id = "#terminal">
-                            <h4 class="text-success" id = "terminal"> ..... </h4>
+                            <h4 class="text-success" id = "terminal"> </h4>
                           </div>
                         </div>
                       </div>
@@ -396,18 +396,18 @@
         var Services = ['DiagnosticSessionControl','ECUReset','SecurityAccess','TesterPresent','ReadDataByIdentifier'
                         ,'WriteDataByIdentifier','ClearDiagnosticInformation','ReadDTCInformation','InputOutputControlByIdentifier',
                         'RequestDownload','TransferData','RequestTransferExit'];
-        var Subfunctions = { 'DiagnosticSessionControl': ['sub1_1','sub1_2'],
-                            'ECUReset': ['sub2_1','sub2_2'],
-                            'SecurityAccess': ['sub3_1','sub3_2'],
-                            'TesterPresent': ['sub4_1','sub4_2'],
-                            'ReadDataByIdentifier': ['sub5_1','sub5_2'],
-                            'WriteDataByIdentifier': ['sub6_1','sub6_2'],
-                            'ClearDiagnosticInformation': ['sub7_1','sub7_2'],
-                            'ReadDTCInformation': ['sub8_1','sub8_2'],
-                            'InputOutputControlByIdentifier': ['sub9_1','sub9_2'],
-                            'RequestDownload': ['sub9_1','sub9_2'],
-                            'TransferData': ['sub9_1','sub9_2'],
-                            'RequestTransferExit': ['sub9_1','sub9_2']
+        var Subfunctions = { 'DiagnosticSessionControl': ['defaultSession','programmingSession','extendedDiagnosticSession','safetySystemDiagnosticSession'],
+                            'ECUReset': ['softReset'],
+                            'SecurityAccess': [],
+                            'TesterPresent': ['zeroSubFunction'],
+                            'ReadDataByIdentifier': [],
+                            'WriteDataByIdentifier': [],
+                            'ClearDiagnosticInformation': [],
+                            'ReadDTCInformation': ['reportMirrorMemoryDTCByStatusMask','reportNumberOfMirrorMemoryDTCByStatusMask'],
+                            'InputOutputControlByIdentifier': ['returnControlToECU','resetToDefault','freezeCurrentState','shortTermAdjustment'],
+                            'RequestDownload': [],
+                            'TransferData': [],
+                            'RequestTransferExit': []
                           };
 
         $.each(Services, function(i) {
