@@ -21,6 +21,6 @@
 #define MUART_BAUD_RATE		9600
 #define MUART2_BAUD_RATE	9600
 
-
+#define MUART_TIMEOUT       1000
 
 #endif

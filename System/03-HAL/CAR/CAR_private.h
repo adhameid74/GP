@@ -11,4 +11,5 @@
 #ifndef CAR_PRIVATE_H
 #define CAR_PRIVATE_H
 
+void setPinsForDirection(u8 Copy_u8CarDirection);
 #endif

@@ -23,6 +23,8 @@
 #include "UDS_RequestTransferExit_interface.h"
 #include "UDS_TesterPresent_interface.h"
 #include "UDS_TransferData_interface.h"
+#include "UDS_ECUReset_interface.h"
+#include "UDS_InputOutputControlByIdentifier_interface.h"
 
 #include "UDSHandler_interface.h"
 #include "UDSHandler_private.h"
@@ -36,11 +38,11 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	}
 	else if (ReceivedMessage.MessageData[0] == ClearDiagnosticInformation)
 	{
-		UDS_voidClearDiagnosticInformation(&ReceivedMessage);
+		UDS_u8ClearDiagnosticInformation(ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDTCInformation)
 	{
-		UDS_voidReadDTCInformation(&ReceivedMessage);
+		UDS_u8ReadDTCInformation(ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDataByIdentifier)
 	{
@@ -77,7 +79,7 @@ void UDSHandler_voidSendNegResponse(u8 Copy_u8SID, u8 Copy_u8NRC)
 	REQUEST_SDU NegativeResponse;
 	NegativeResponse.SA = SOURCE_ADDRESS;
 	NegativeResponse.TA = TARGET_ADDRESS;
-	NegativeResponse.Length = NRC_LENGTH;
+	NegativeResponse.Length.u12 = NRC_LENGTH;
 	u8 Local_au8Data[NRC_LENGTH] = {NRC_ID , Copy_u8SID , Copy_u8NRC};
 	NegativeResponse.MessageData = Local_au8Data;
 	DoCAN_voidRequestUsData(NegativeResponse);
@@ -88,7 +90,7 @@ void UDSHandler_voidSendPosResponse(u8* Copy_pu8Message, u8 Copy_u8Length)
 	REQUEST_SDU PositiveResponse;
 	PositiveResponse.SA = SOURCE_ADDRESS;
 	PositiveResponse.TA = TARGET_ADDRESS;
-	PositiveResponse.Length = Copy_u8Length;
+	PositiveResponse.Length.u12 = Copy_u8Length;
 	PositiveResponse.MessageData = Copy_pu8Message;
 	DoCAN_voidRequestUsData(PositiveResponse);
 }

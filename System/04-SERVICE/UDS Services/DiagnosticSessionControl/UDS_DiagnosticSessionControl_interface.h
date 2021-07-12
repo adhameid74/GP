@@ -19,8 +19,8 @@
 #define UDS_EXTENDED_SESSION				0x03
 #define UDS_SAFETY_SESSION					0x04
 
-u8 UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
-u8 UDS_u8SessionTimer = 0;
+extern u8 UDS_u8ActiveSession;
+extern u8 UDS_u8SessionTimer;
 
 void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage);
 

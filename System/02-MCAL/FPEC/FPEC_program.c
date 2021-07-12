@@ -32,9 +32,9 @@ void FPEC_voidErasePage(u8 Copy_u8PageNumber)
 	CLR_BIT(FPEC_CR, CR_PER);
 }
 
-void FPEC_voidEraseArea(u8 Copy_u8FirstPageNumber, u8 Copy_u8LastPageNumber)
+void FPEC_voidEraseAppArea()
 {
-	for (u8 Local_u8Counter = Copy_u8FirstPageNumber; Local_u8Counter <= Copy_u8LastPageNumber; Local_u8Counter++)
+	for (u8 Local_u8Counter = FPEC_APP_FIRST_PAGE; Local_u8Counter <= FPEC_APP_LAST_PAGE; Local_u8Counter++)
 	{
 		FPEC_voidErasePage(Local_u8Counter);
 	}

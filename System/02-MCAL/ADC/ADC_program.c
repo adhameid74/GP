@@ -19,8 +19,6 @@ void (*ADC_ISR)(u16) = NULL;
 
 void ADC_voidInit(void)
 {
-
-
 	MADC->CR1 = 0;
 	MADC->CR2 = 0;
 	MADC->SQR[0] = 0;
@@ -131,9 +129,19 @@ void ADC_voidSetCallBackRegular(void (*Copy_Notification)(u16))
 
 u16 ADC_u16ReadRegularSync()
 {
-	u16 ADC_Reading;
+	u16 ADC_Reading, Local_u16Timer = 0;
+
 	SET_BIT(MADC->CR2,SWSTART_BIT);
-	while(GET_BIT(MADC->SR,EOC) == 0);
+	while( (GET_BIT(MADC->SR,EOC) == 0) && ( Local_u16Timer < ADC_TIMEOUT ) )
+	{
+		Local_u16Timer++;
+	}
+
+	if ( Local_u16Timer == ADC_TIMEOUT )
+	{
+		return 0xFFFF;
+	}
+	
 	ADC_Reading = 0xFFFF & MADC->DR;
 	//CLR_BIT(MADC->SR,EOC);
 	return ADC_Reading;
@@ -144,7 +152,7 @@ void ADC_voidStartRegularConversion()
 	SET_BIT(MADC->CR2,SWSTART_BIT);
 }
 
-void ADC1_2IRQHandler()
+void ADC1_2_IRQHandler()
 {
 	ADC_ISR(MADC->DR);
 }

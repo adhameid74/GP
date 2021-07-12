@@ -6,13 +6,15 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
+#include "DTC_interface.h"
+
 #include  "UART_interface.h"
 #include  "UART_config.h"
 #include  "UART_private.h"
 
-void MUART_voidInit(u8 Copy_u8TimerNumber)
+void MUART_voidInit(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
+	if(Copy_u8UartNumber==MUART1){
 		#if MUART_BAUD_RATE == 9600
 			MUART->BRR = 0x341;
 		#elif MUART_BAUD_RATE == 115200
@@ -37,86 +39,133 @@ void MUART_voidInit(u8 Copy_u8TimerNumber)
 		/*CLR STATUS REGISTER*/
 		MUART2->SR = 0;
 	}
+    for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
+    {
+        UART_DTC[Local_u8Counter].Property->Code = DTC_UARTTxFailure + Local_u8Counter;
+        UART_DTC[Local_u8Counter].Property->TestFailedThreshold = FAILED_THRESHOLD;
+        UART_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;
+        UART_DTC[Local_u8Counter].Property->AgingThreshold = AGING_THRESHOLD;
+    }
+}
 
-}
-void MUART_voidTransmit(u8 Copy_u8TimerNumber,u8 arr[])
+u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[])
 {
-	if (Copy_u8TimerNumber==MUSRT1) {
+	u16 Local_u16Timer;
+	if (Copy_u8UartNumber==MUART1)
+	{
 		u8 i = 0;
-		while(arr[i] != '\0'){
+		while(arr[i] != '\0')
+		{
+			Local_u16Timer = 0;
 			MUART -> DR = arr[i];
-			while((GET_BIT((MUART -> SR), 6)) == 0);
+			while( ((GET_BIT((MUART -> SR), 6)) == 0) && (Local_u16Timer < MUART_TIMEOUT) )
+			{
+				Local_u16Timer++;
+			}
+			if ( Local_u16Timer == MUART_TIMEOUT )
+			{
+				DTC_u8DetectFault(&UART_DTC[0], 1);
+				return TIMEOUT_ERROR;
+			}
+			DTC_u8DetectFault(&UART_DTC[0], 0);
 			i++;
 		}
 	}
-	else{
+	else
+	{
 		u8 i = 0;
-		while(arr[i] != '\0'){
+		while(arr[i] != '\0')
+		{
+			Local_u16Timer = 0;
 			MUART2 -> DR = arr[i];
-			while((GET_BIT((MUART2 -> SR), 6)) == 0);
+			while( ((GET_BIT((MUART2 -> SR), 6)) == 0) && (Local_u16Timer < MUART_TIMEOUT) )
+			{
+				Local_u16Timer++;
+			}
+			if ( Local_u16Timer == MUART_TIMEOUT )
+			{
+				DTC_u8DetectFault(&UART_DTC[0], 1);
+				return TIMEOUT_ERROR;
+			}
+			DTC_u8DetectFault(&UART_DTC[0], 0);
 			i++;
 		}
 	}
+	return NO_ERROR;
 }
-u8 MUART_u8ReceiveNormal(u8 Copy_u8TimerNumber)
+/*
+u8 MUART_u8ReceiveNormal(u8 Copy_u8UartNumber)
 {
-	if (Copy_u8TimerNumber==MUSRT1) {
-		u8 Local_u8Received = 0;
-		while(GET_BIT(MUART->SR,5) == 0);
+	u8 Local_u8Received = 0;
+	u16 Local_u16Timer = 0;
+	if (Copy_u8UartNumber==MUART1)
+	{
+		while( (GET_BIT(MUART->SR,5) == 0) && (Local_u16Timer < MUART_TIMEOUT) )
+		{
+			Local_u16Timer++;
+		}
+		if ( Local_u16Timer == MUART_TIMEOUT )
+		{
+			return TIMEOUT_ERROR;
+		}
 		CLR_BIT(MUART->SR,5);
 		Local_u8Received = MUART->DR;
 		return Local_u8Received;
 	}
-	else{
-		u8 Local_u8Received = 0;
-		while(GET_BIT(MUART2->SR,5) == 0);
+	else
+	{
+		while( (GET_BIT(MUART2->SR,5) == 0) && (Local_u16Timer < MUART_TIMEOUT) )
+		{
+			Local_u16Timer++;
+		}
+		if ( Local_u16Timer == MUART_TIMEOUT )
+		{
+			return TIMEOUT_ERROR;
+		}
 		CLR_BIT(MUART2->SR,5);
 		Local_u8Received = MUART2->DR;
 		return Local_u8Received;
 	}
 }
-u8 MUART_u8ReceiveTimeOut(u8 Copy_u8TimerNumber)
+*/
+
+u8 MUART_u8Receive(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
-		u8 Local_u8Received = 0;
-		u16 timeout = 0;
-		while(GET_BIT(MUART->SR,5) == 0)
+	u16 timeout = 0;
+	if(Copy_u8UartNumber==MUART1)
+	{
+		while( (GET_BIT(MUART->SR,5) == 0) && (timeout < MUART_TIMEOUT) )
 		{
 			timeout++;
-			if(timeout == 1000)
-			{
-				Local_u8Received=255;
-				break;
-			}
 		}
-		if(Local_u8Received == 0)
+		if(timeout == MUART_TIMEOUT)
 		{
-			Local_u8Received = MUART->DR;
+			DTC_u8DetectFault(&UART_DTC[1], 1);
+			return 255;
 		}
-		return Local_u8Received;
+		DTC_u8DetectFault(&UART_DTC[1], 0);
+		return MUART->DR;
 	}
-	else{
-		u8 Local_u8Received = 0;
-		u16 timeout = 0;
-		while(GET_BIT(MUART2->SR,5) == 0)
+	else
+	{
+		while( (GET_BIT(MUART2->SR,5) == 0) && (timeout < MUART_TIMEOUT) )
 		{
 			timeout++;
-			if(timeout == 1000)
-			{
-				Local_u8Received=255;
-				break;
-			}
 		}
-		if(Local_u8Received == 0)
+		if(timeout == MUART_TIMEOUT)
 		{
-			Local_u8Received = MUART2->DR;
+			DTC_u8DetectFault(&UART_DTC[1], 1);
+			return 255;
 		}
-		return Local_u8Received;
+		DTC_u8DetectFault(&UART_DTC[1], 0);
+		return MUART2->DR;
 	}
 }
-u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8TimerNumber)
+
+/*
+u8 MUART_u8Receive2(u8 Copy_u8UartNumber)
 {
-	if(Copy_u8TimerNumber==MUSRT1){
+	if(Copy_u8UartNumber==MUART1){
 		u8 Local_u8Received = 0;
 		u16 timeout = 0;
 		while(GET_BIT(MUART->SR,5) == 0)
@@ -155,4 +204,4 @@ u8 MUART_u8ReceiveTimeOut2(u8 Copy_u8TimerNumber)
 }
 void MUART_voidClearRxne(){
 	CLR_BIT(MUART->SR,5);
-}
+}*/

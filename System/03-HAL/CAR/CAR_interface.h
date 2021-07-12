@@ -21,4 +21,10 @@ void CAR_voidInit();
 void CAR_voidSetCarDirection(u8 Copy_u8CarDirection);
 void CAR_voidSetCarSpeed(u8 Copy_u8CarSpeed);
 
+extern u8 CAR_SPEED_DefaultValue ;
+extern u8 CAR_SPEED_CurrentValue;
+
+extern u8 CAR_DIRECTION_DefaultValue ;
+extern u8 CAR_DIRECTION_CurrentValue;
+
 #endif

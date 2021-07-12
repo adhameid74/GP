@@ -123,5 +123,8 @@ From 1 to 8
 #define ADC_EOC_INJECTED_INTERRUPT	                     DISABLE
 /**************************************************************/
 
+/*choose ADC_u16ReadRegularSync timeout value*/
+#define ADC_TIMEOUT             	                     5000
+/**************************************************************/
 
 #endif

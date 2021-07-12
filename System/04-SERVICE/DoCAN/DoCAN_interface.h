@@ -35,7 +35,7 @@
 	 //AE
 	 u8* MessageData ;
 	 u12 Length ;
-	 RESULT_t Result ;
+	 //RESULT_t Result ;
 	 
  }INDICATION_SDU ;
  typedef struct {

@@ -38,17 +38,17 @@ void main (){
 	
 
 
-	MI2C_voidInti();
+	MI2C_voidInit();
 	
 	u8 Data[]={0x50,0x88,0x1D,0x19};
 	u8 Data1[2]={0};
 	/*
-    MI2C_voidTransmit(0xA0,Data,4);
+    MI2C_u8Transmit(0xA0,Data,4);
 	Dio_ChannelGroupType Datax={0xF,0,0};
 
-	MI2C_voidReceiveFromAddress(0xA0,Data1,2,0x050);
+	MI2C_u8ReceiveFromAddress(0xA0,Data1,2,0x050);
 
-	MI2C_voidReceive(0xA0,Data1,1);
+	MI2C_u8Receive(0xA0,Data1,1);
 	Dio_WriteChannelGroup(&Datax ,Data1[0]);*/
 	Dio_ChannelGroupType Datax={0xF,0,0};
 	HEEPROM_voidWriteByte(0xA0,0x50,0X3A);

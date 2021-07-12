@@ -16,7 +16,6 @@
 #define reportNumberOfMirrorMemoryDTCByStatusMask       0x11
 
 
-#define SID											0x19
 #define POS_RESPONSE_SID							0x59
 
 #define DTCStatusAvailabilityMask                   0x1F

@@ -18,43 +18,54 @@
 #include "EEPROM_private.h"
 #include "EEPROM_config.h"
 
-  void HEEPROM_voidWriteByte(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress ,u8 Copy_u8Data){
-	  u8 Data[2]={Copy_u8DataAddress,Copy_u8Data};
-	  MI2C_voidTransmit(Copy_u8EepromAddress ,Data,2);
-	  
+  void HEEPROM_voidWriteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress ,u8 Copy_u8Data)
+  {
+
+	  u8 MSB = (u8)(Copy_u16DataAddress>>8);
+	  u8 LSB = (u8)(Copy_u16DataAddress);
+	  u8 Data[3]={MSB,LSB,Copy_u8Data};
+	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
   }
-  u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress){
+
+  u8 HEEPROM_u8ReadByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DataAddress)
+  {
 	  u8 Data ;
-	  MI2C_voidReceiveFromAddress(Copy_u8EepromAddress ,&Data,1,Copy_u8DataAddress);
+	  MI2C_u8ReceiveFromAddress(Copy_u8EepromAddress ,&Data,1,Copy_u16DataAddress);
 	  return Data;
-	  
-	  
   }
-  void HEEPROM_voidWriteWord(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress ,u32 Copy_u32Data){
-	  u8 Data[5];
-	  Data[0]=Copy_u8DataAddress;
-	  Data[1]=(u8)(Copy_u32Data &0xFF);
-	  Data[2]=(u8)(Copy_u32Data >> 8 &0xFF);
-	  Data[3]=(u8)(Copy_u32Data >> 16 &0xFF);
-	  Data[4]=(u8)(Copy_u32Data >> 24 &0xFF);
-	  MI2C_voidTransmit(Copy_u8EepromAddress,Data,5);
-	  
-		
-	}
-  u32 HEEPROM_u32ReadWord(u8 Copy_u8EepromAddress ,u8 Copy_u8DataAddress){
-	  u8 Data[4];
-	  u32 Temp;
 
-	  /*
-	   * read wrong data
-	   * MI2C_voidReceiveFromAddress(Copy_u8EepromAddress ,Data,4,Copy_u8DataAddress);
-	  Temp =Data[0] | Data[1] << 8 |Data[2] << 16 |Data[3] << 24 ;
-	  return Temp ;*/
-	  for(Temp=0;Temp<4;Temp++){
+  void HEEPROM_u8DeleteByte(u8 Copy_u8EepromAddress ,u16 Copy_u16DeleteAddress)
+  {
+	  u8 MSB = (u8)(Copy_u16DeleteAddress>>8);
+	  u8 LSB = (u8)(Copy_u16DeleteAddress);
+	  u8 Data[3]={MSB,LSB,0xff};
+	  MI2C_u8Transmit(Copy_u8EepromAddress ,Data,3);
+  }
 
-		  Data[Temp]=HEEPROM_u8ReadByte(Copy_u8EepromAddress,Copy_u8DataAddress+Temp);
-	  }
-	  Temp =Data[0] | Data[1] << 8 |Data[2] << 16 |Data[3] << 24 ;
-	  return Temp ;
-	  
+  void HEEPROM_voidWriteMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData)
+  {
+  	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)
+  	  {
+  		HEEPROM_voidWriteByte(Copy_u8EepromAddress,Copy_u16DataAddress+i,Copy_u8PtrData[i]);
+		   for (u16 c = 1; c <= 33000; c++)
+		   {
+			   asm("NOP");
+		   }
+  	  }
+  }
+
+  void HEEPROM_voidReadMultipleBytes(u8 Copy_u8EepromAddress,u16 Copy_u16DataAddress, u16 Copy_u8NumberOfBytes,u8* Copy_u8PtrData)
+    {
+  	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)
+  	  {
+  		  Copy_u8PtrData[i] = HEEPROM_u8ReadByte(Copy_u8EepromAddress,Copy_u16DataAddress+i);
+  	  }
+    }
+
+  void HEEPROM_voidDeleteMultipleBytes(u8 Copy_u8EepromAddress, u16 Copy_u16StartAddress,u16 Copy_u8NumberOfBytes)
+  {
+  	  for(u16 i = 0; i<Copy_u8NumberOfBytes; i++)
+  	  {
+  		  HEEPROM_u8DeleteByte(Copy_u8EepromAddress,Copy_u16StartAddress+i);
+  	  }
   }

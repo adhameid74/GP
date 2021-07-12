@@ -7,6 +7,12 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const methoOverride = require('method-override');
+const Grid = require("gridfs-stream");
 
 // var jsdom = require("jsdom");
 // const { JSDOM } = jsdom;
@@ -25,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(session({secret : 'library'}));
+app.use(methoOverride('_method'));
 
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use('/css', express.static(path.join(__dirname, '/css')));
@@ -54,6 +61,7 @@ const nav = [{link : '/books', title : 'Books'},
 const bookRouter = require('./routes/bookRoutes')(nav);
 const authRouter = require('./routes/authRoutes')(nav);
 const socketRouter = require('./routes/socketRouter');
+const { data } = require('jquery');
 
 require('./public/config/Passportx.js')(app);
 
@@ -66,6 +74,7 @@ app.get('/', function (req, res) {
     res.render('index');
     //res.render('signup');
 });
+
 // const express = require('express');
 // const app = express();
 // const sockectio = require('socket.io');
@@ -75,27 +84,20 @@ app.get('/', function (req, res) {
 // const expressServer = app.listen(4000);
 // const io = sockectio(expressServer);
 
- io.on('connection',(socket)=>{
-        console.log('app.js');
-        socket.on("arduino",(data)=>{
-        console.log("message is",data.message);
-        console.log("type of message is",typeof(data.message));
-        // // const newmsg = buildHTML(data.message);
-        // let x = document.querySelector('#messages');
-        // console.log(x,typeof(x));
-     })
- });
-//  function buildHTML(msg) {
-//     // console.log(msg)
-//     const convertedDate = new Date(msg.time).toLocaleString();
-//     const newHTML = `
-//     <li>
-//         <div class="user-message">
-//             <div class="message-text">${msg}</div>
-//         </div>
-//     </li>`
-//     return newHTML;
-// }
+
+//  io.on('connection',(socket)=>{
+//         console.log('app.js');
+//         socket.on("arduino",(data)=>{
+//         console.log("message is",data.message);
+//         console.log("type of message is",typeof(data.message));
+//         // // const newmsg = buildHTML(data.message);
+//         // let x = document.querySelector('#messages');
+//         // console.log(x,typeof(x));
+//      })
+//  });
+var x = 0;
+var y;
+var socket1 ;
 function ParseJson(jsondata) {
     try {
         return JSON.parse(jsondata);
@@ -103,20 +105,50 @@ function ParseJson(jsondata) {
         return null;
     }
 }
-function sendTime() {
-    io.sockets.emit('atime', { time: new Date().toJSON() });
+function sendTime(data) {
+    io.sockets.emit('atime', { messages: data.message });
 }
 io.on('connection', function (socket , data) {
-  socket.emit('welcome', { message: 'Connected !!!!' });
-  socket.on("he5a",data=>{
-      console.log(data.message);
-      
+    socket1 = socket;
+    socket.on("diagnoses",function(data){
+        socket.join("diagnostics");
+        console.log("got it from html : ", {message: data.message});
+        io.sockets.emit('diagnose', { message: data.message });
+    })
+   
+    
+//   socket.on("he5a",data=>{
+//       console.log(data);
+//       io.sockets.emit('he5a', { message: data.Name });
+//   })
+
+  socket.on("diagnose",data=>{
+      console.log(data);
+      io.sockets.emit('diagnose', { message: data.Name });
   })
-  socket.emit("he5a2",{ message: 'Message from server!' });
+  
+//   socket.emit("he5a2",{ message: 'Message from server!' });
   socket.on('connection', function (data) {
-    console.log(data);   });
+    console.log(data);
+    io.sockets.emit('connected', { message: data.Name });
+   });
+
+let timeout = setTimeout(client_disconnected , 4000);
+
+  socket.on('stillConnected', function (data) {
+    console.log(data);
+    clearInterval(timeout);
+    timeout = setTimeout(client_disconnected , 4000);
+    io.sockets.emit('connected', { message: data.Name });
+   });
+
+function client_disconnected(){
+    console.log("disconnected");
+    io.sockets.emit('notConnected');
+}
+
   socket.on('atime', function (data) {
-	  sendTime();
+	  sendTime(data);
     console.log(data);
     });
 socket.on('JSON', function (data) {
@@ -127,7 +159,7 @@ console.log(parsed);
 	console.log(parsed.sensor);
   });
     socket.on('arduino', function (data) {
-	  io.sockets.emit('arduino', { message: 'R0' });
+	  io.sockets.emit('arduino', { message: data.Name });
     console.log(data);
   });
 });

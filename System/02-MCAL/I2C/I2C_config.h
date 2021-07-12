@@ -37,6 +37,6 @@
  
  #define DUAL_ADDRESS        DISABLE
  
- 
+ #define I2C_TIMEOUT        5000
  
 #endif 

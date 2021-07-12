@@ -12,6 +12,7 @@
 #ifndef FPEC_CONFIG_H_
 #define FPEC_CONFIG_H_
 
-
+#define FPEC_APP_FIRST_PAGE             4
+#define FPEC_APP_LAST_PAGE              63
 
 #endif

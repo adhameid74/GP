@@ -12,6 +12,11 @@
 #ifndef UDS_REQUESTDOWNLOAD_INTERFACE_H_
 #define UDS_REQUESTDOWNLOAD_INTERFACE_H_
 
+#define maxNumberOfBlockLength						50
+
+extern u32 RequestDownload_u32Size;
+extern u8 RequestDownload_u8ActiveFlag;
+
 void UDS_voidRequestDownload(INDICATION_SDU* ReceivedMessage);
 
 #endif

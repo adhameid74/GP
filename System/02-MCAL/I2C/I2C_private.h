@@ -38,5 +38,12 @@ typedef struct{
  
 #define ADDDRESS_7BIT    0
  
+ #define DTCNUM                     4
+
+#define FAILED_THRESHOLD           10
+#define PASSED_THRESHOLD           -10
+#define AGING_THRESHOLD            255
+
+static dtcItem_t I2C_DTC[DTCNUM];
  
 #endif 

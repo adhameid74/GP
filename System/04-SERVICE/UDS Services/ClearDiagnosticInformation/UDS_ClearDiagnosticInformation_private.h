@@ -16,5 +16,4 @@
 #define POS_RESPONSE_SID							0x54
 
 
-
 #endif

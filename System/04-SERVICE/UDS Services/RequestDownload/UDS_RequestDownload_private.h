@@ -12,10 +12,8 @@
 #ifndef UDS_REQUESTDOWNLOAD_PRIVATE_H_
 #define UDS_REQUESTDOWNLOAD_PRIVATE_H_
 
-#define SID											0x34
 #define POS_RESPONSE_SID							0x74
 
-#define lengthFormatIdentifier						1
-#define maxNumberOfBlockLength						1
+#define lengthFormatIdentifier						0x10
 
 #endif

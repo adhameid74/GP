@@ -43,24 +43,24 @@
 	 u8  DataSize ;
 	 u8 NRC = 0; 
 	 u8 MessageData[20];
-	 for(i = 1 ; i <= Received_Data.Length ; i++ ){
-		 if(Received_Data.Length < 2 && Received_Data.Length > 255 ){
+	 for(i = 1 ; i <= Received_Data.Length.u12 ; i++ ){
+		 if(Received_Data.Length.u12 < 2 && Received_Data.Length.u12 > 255 ){
 			 switch(Received_Data.MessageData[i]){
-				 case SPEED_ID: 
+				 case DID_SPEED: 
 				        MessageData[j++] = Received_Data.MessageData[i] ;
 				        Datau16 = GetSpeedValue() ;
 				        MessageData[j++] = (u8)(Datau16) ;
 				        MessageData[j++] = (u8)(Datau16 >> 8) ;
 				        break;	 
-			     case FRONTDISTANCE_ID: 
+			     case DID_FRONTDISTANCE: 
 				        MessageData[j++] = Received_Data.MessageData[i] ;
 				        Datau32 = GetFrontDistanceValue();
-				        MessageData[j++] = (u8)() ;
+				        MessageData[j++] = (u8)(Datau32) ;
 				        MessageData[j++] = (u8)(Datau32 >> 8  ) ;
 						MessageData[j++] = (u8)(Datau32 >> 16 ) ;
 						MessageData[j++] = (u8)(Datau32 >> 24 ) ;
 				        break;
-				 case BACKDISTANCE_ID: 
+				 case DID_BACKDISTANCE: 
 				        MessageData[j++] = Received_Data.MessageData[i] ;
 				        Datau32 = GetBackDistanceValue();
 				        MessageData[j++] = (u8)(Datau32) ;
@@ -69,7 +69,7 @@
 				        MessageData[j++] = (u8)(Datau32 >> 24 ) ;
 				 
 				        break;	 
-			     case VOLT_ID: 
+			     case DID_VOLT: 
 				        MessageData[j++] = Received_Data.MessageData[i] ;
 				        Datau16 = GetVoltValue() ;
 				        MessageData[j++] = (u8)(Datau16) ;
@@ -81,7 +81,7 @@
 			 }
 		 }
 		 else{
-			 if(Received_Data.Length < 2)
+			 if(Received_Data.Length.u12 < 2)
 				 NRC = incorrectMessageLengthOrInvalidFormat ;
 		 }
 		 if(NRC != 0)
@@ -89,7 +89,7 @@
 	 	 
 }
      if(NRC != 0){
-		 UDSHandler_voidSendNegResponse(READ_DATA_BY_ID,NRC);
+		 UDSHandler_voidSendNegResponse(ReadDataByIdentifier,NRC);
 	 }
 	 else {
 		 MessageData[0] = 0x62 ;

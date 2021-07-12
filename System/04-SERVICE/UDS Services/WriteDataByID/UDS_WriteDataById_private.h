@@ -10,7 +10,7 @@
  */
  #ifndef UDS_WRITEDATABYID_PRIVATE_H
  #define UDS_WRITEDATABYID_PRIVATE_H
- #define ZONE_1 0x05
- #define ZONE_2 0x06
+ #define DID_ZONE_1 0x05
+ #define DID_ZONE_2 0x06
  #endif
  
