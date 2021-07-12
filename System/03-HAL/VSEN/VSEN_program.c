@@ -14,14 +14,16 @@
 #include "ADC_interface.h"
 
 #include "DTC_interface.h"
+#include "UDS_InputOutputControlByIdentifier_interface.h"
 
 #include "VSEN_interface.h"
 #include "VSEN_config.h"
 #include "VSEN_private.h"
 
 
+u16 VSEN_u16DefaultValue = 4500;
 
-u16 VSEN_u8ReadVoltage()
+u16 VSEN_u16ReadVoltage()
 {
 	u16 Local_u16Value = 0;
 	u16 Local_u16Vref = 0;
@@ -74,5 +76,23 @@ u16 VSEN_u8ReadVoltage()
 		DTC_u8DetectFault(&VSEN_DTC[1], 0);
 	}
 
-	return Local_u16Value;
+	switch(VOLT_whatShouldIdo)
+	{
+		case returnControlToECU:
+			VSEN_u16PVT = Local_u16Value;
+			return Local_u16Value;
+			break;
+		case resetToDefault:
+			VSEN_u16PVT = Local_u16Value;
+			return VSEN_u16DefaultValue;
+			break;
+		case freezeCurrentState:
+			return VSEN_u16PVT;
+			break;
+		case shortTermAdjustment:
+			return VOLT_valueToUse;
+			break;
+		default:
+    		break;
+	}
 }

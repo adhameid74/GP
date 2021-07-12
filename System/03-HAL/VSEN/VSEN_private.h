@@ -26,5 +26,6 @@ static u8 Flag = 0;
 #define LOW_THRESHOLD              3300
 
 static dtcItem_t VSEN_DTC[DTCNUM];
+static u16 VSEN_u16PVT;
 
 #endif

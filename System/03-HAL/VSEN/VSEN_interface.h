@@ -16,6 +16,6 @@
  * 
  * @return u16 voltage measured in mv
  */
-u16 VSEN_u8ReadVoltage();
+u16 VSEN_u16ReadVoltage();
 
 #endif
