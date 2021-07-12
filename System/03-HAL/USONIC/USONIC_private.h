@@ -11,7 +11,7 @@
 #ifndef USONIC_private_H
 #define USONIC_private_H
 
-#define DTCNUM                     5
+#define DTCNUM                     10
 #define FAILED_THRESHOLD           25
 #define PASSED_THRESHOLD           -25
 #define AGING_THRESHOLD            255
@@ -19,5 +19,11 @@
 //static void voidTimeOut (void);
 
 static dtcItem_t dtc_usonic[DTCNUM];
+
+static f32 USONIC1_f32LastValue;
+static f32 USONIC2_f32LastValue;
+
+f32 USONIC1_f32DefaultValue =200;
+f32 USONIC2_f32DefaultValue =200;
 
 #endif
