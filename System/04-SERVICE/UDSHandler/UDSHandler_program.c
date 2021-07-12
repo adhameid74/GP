@@ -16,15 +16,16 @@
 
 #include "UDS_ClearDiagnosticInformation_interface.h"
 #include "UDS_DiagnosticSessionControl_interface.h"
+#include "UDS_ECUReset_interface.h"
+#include "UDS_InputOutputControlByIdentifier_interface.h"
 #include "UDS_ReadDataById_interface.h"
-#include "UDS_WriteDataById_interface.h"
 #include "UDS_ReadDTCInformation_interface.h"
 #include "UDS_RequestDownload_interface.h"
 #include "UDS_RequestTransferExit_interface.h"
 #include "UDS_TesterPresent_interface.h"
 #include "UDS_TransferData_interface.h"
-#include "UDS_ECUReset_interface.h"
-#include "UDS_InputOutputControlByIdentifier_interface.h"
+#include "UDS_WriteDataById_interface.h"
+#include "UDS_ServerSecurityAccess_interface.h"
 
 #include "UDSHandler_interface.h"
 #include "UDSHandler_private.h"
@@ -67,6 +68,10 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	else if (ReceivedMessage.MessageData[0] == WriteDataByIdentifier)
 	{
 		UDS_voidWriteDataById(&ReceivedMessage);
+	}
+	else if (ReceivedMessage.MessageData[0] == SecurityAccess)
+	{
+		SA_voidExecuteSecurityAccess(&ReceivedMessage);
 	}
 	else
 	{
