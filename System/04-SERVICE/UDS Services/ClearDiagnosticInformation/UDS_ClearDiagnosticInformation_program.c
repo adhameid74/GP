@@ -22,18 +22,17 @@
 #include "UDS_ClearDiagnosticInformation_private.h"
 #include "UDS_ClearDiagnosticInformation_config.h"
 
-u8 UDS_u8ClearDiagnosticInformation(INDICATION_SDU message)
+void UDS_voidClearDiagnosticInformation(INDICATION_SDU message)
 {
 
     if (message.Length.u12 != 1)
 	{
-		UDSHandler_voidSendNegResponse(SID,incorrectMessageLengthOrInvalidFormat);
-		return 0;
+		UDSHandler_voidSendNegResponse(ClearDiagnosticInformation,incorrectMessageLengthOrInvalidFormat);
+		return ;
 	}
     HEEPROM_voidDeleteMultipleBytes(EEPROM_ADDRESS, DTC_EEPROM_START_ADDRESS, DTC_NUMBER);
 	u8 Local_Au8PositiveResponce[1]={POS_RESPONSE_SID};
 	UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce,1);
-	return 1;
 }
 
 
