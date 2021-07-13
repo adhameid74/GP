@@ -22,7 +22,7 @@
 #include "UDS_ClearDiagnosticInformation_private.h"
 #include "UDS_ClearDiagnosticInformation_config.h"
 
-void UDS_voidClearDiagnosticInformation(INDICATION_SDU message)
+void UDS_voidClearDiagnosticInformation(INDICATION_SDU *message)
 {
 
     if (message.Length.u12 != 1)

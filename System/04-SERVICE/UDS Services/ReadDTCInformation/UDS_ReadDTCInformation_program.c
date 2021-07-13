@@ -24,7 +24,7 @@
 #include "UDS_ReadDTCInformation_config.h"
 
 
-void UDS_voidReadDTCInformation( INDICATION_SDU message)
+void UDS_voidReadDTCInformation( INDICATION_SDU *message)
 {
     if (message.Length.u12 != 3)
 	{

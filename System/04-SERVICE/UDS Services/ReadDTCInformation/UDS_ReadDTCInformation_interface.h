@@ -11,7 +11,7 @@
 #ifndef UDS_ReadDTCInformation_INTERFACE_H
 #define UDS_ReadDTCInformation_INTERFACE_H
 
-void UDS_voidReadDTCInformation( INDICATION_SDU message);
+void UDS_voidReadDTCInformation( INDICATION_SDU *message);
 
 
 #endif

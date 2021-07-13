@@ -11,6 +11,6 @@
 #ifndef UDS_ClearDiagnosticInformation_INTERFACE_H
 #define UDS_ClearDiagnosticInformation_INTERFACE_H
 
-void UDS_voidClearDiagnosticInformation(INDICATION_SDU message);
+void UDS_voidClearDiagnosticInformation(INDICATION_SDU *message);
 
 #endif
