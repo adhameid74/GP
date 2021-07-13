@@ -12,6 +12,11 @@
 #ifndef UDS_ControlDTCSetting_INTERFACE_H
 #define UDS_ControlDTCSetting_INTERFACE_H
 
-void UDS_voidControlDTCSetting(INDICATION_SDU* message);
+extern u8 UDS_u8DTCSetting;
+
+#define DTC_SETTING_ON                      0x01
+#define DTC_SETTING_OFF                     0x02
+
+void UDS_voidControlDTCSetting(INDICATION_SDU* ReceivedMessage);
 
 #endif

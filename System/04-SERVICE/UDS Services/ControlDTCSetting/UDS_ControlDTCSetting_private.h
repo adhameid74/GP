@@ -12,6 +12,6 @@
 #ifndef UDS_ControlDTCSetting_PRIVATE_H
 #define UDS_ControlDTCSetting_PRIVATE_H
 
-#define POS_RESPONSE_SID							0xC5
+#define POS_RESPONSE_SID	    0xC5
 
 #endif
