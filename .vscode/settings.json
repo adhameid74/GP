@@ -3,6 +3,11 @@
         "uds_requestdownload_interface.h": "c",
         "udshandler_interface.h": "c",
         "vsen_config.h": "c",
-        "adc_interface.h": "c"
+        "adc_interface.h": "c",
+        "i2c_interface.h": "c",
+        "uart_private.h": "c",
+        "uart_interface.h": "c",
+        "fpec_interface.h": "c",
+        "uds_inputoutputcontrolbyidentifier_interface.h": "c"
     }
 }

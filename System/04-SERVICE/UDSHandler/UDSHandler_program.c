@@ -26,6 +26,7 @@
 #include "UDS_TransferData_interface.h"
 #include "UDS_WriteDataById_interface.h"
 #include "UDS_ServerSecurityAccess_interface.h"
+#include "UDS_ControlDTCSetting_interface.h"
 
 #include "UDSHandler_interface.h"
 #include "UDSHandler_private.h"
@@ -37,17 +38,33 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	{
 		UDS_voidDiagnosticSessionControl(&ReceivedMessage);
 	}
+	else if (ReceivedMessage.MessageData[0] == ECUReset)
+	{
+		UDS_voidECUReset(&ReceivedMessage);
+	}
 	else if (ReceivedMessage.MessageData[0] == ClearDiagnosticInformation)
 	{
-		UDS_u8ClearDiagnosticInformation(ReceivedMessage);
+		UDS_voidClearDiagnosticInformation(ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDTCInformation)
 	{
-		UDS_u8ReadDTCInformation(ReceivedMessage);
+		UDS_voidReadDTCInformation(ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDataByIdentifier)
 	{
 		UDS_voidReadDataById(&ReceivedMessage);
+	}
+	else if (ReceivedMessage.MessageData[0] == SecurityAccess)
+	{
+		SA_voidExecuteSecurityAccess(&ReceivedMessage);
+	}
+	else if (ReceivedMessage.MessageData[0] == WriteDataByIdentifier)
+	{
+		UDS_voidWriteDataById(&ReceivedMessage);
+	}
+	else if (ReceivedMessage.MessageData[0] == InputOutputControlByIdentifier)
+	{
+		UDS_voidInputOutputControlByID(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == RequestDownload)
 	{
@@ -65,13 +82,9 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	{
 		UDS_voidTesterPresent(&ReceivedMessage);
 	}
-	else if (ReceivedMessage.MessageData[0] == WriteDataByIdentifier)
+	else if (ReceivedMessage.MessageData[0] == ControlDTCSetting)
 	{
-		UDS_voidWriteDataById(&ReceivedMessage);
-	}
-	else if (ReceivedMessage.MessageData[0] == SecurityAccess)
-	{
-		SA_voidExecuteSecurityAccess(&ReceivedMessage);
+		UDS_voidControlDTCSetting(&ReceivedMessage);
 	}
 	else
 	{
