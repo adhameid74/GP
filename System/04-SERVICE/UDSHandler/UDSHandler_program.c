@@ -44,11 +44,11 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	}
 	else if (ReceivedMessage.MessageData[0] == ClearDiagnosticInformation)
 	{
-		UDS_voidClearDiagnosticInformation(ReceivedMessage);
+		UDS_voidClearDiagnosticInformation(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDTCInformation)
 	{
-		UDS_voidReadDTCInformation(ReceivedMessage);
+		UDS_voidReadDTCInformation(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == ReadDataByIdentifier)
 	{
@@ -56,6 +56,10 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	}
 	else if (ReceivedMessage.MessageData[0] == SecurityAccess)
 	{
+		if(UDS_u8ActiveSession != UDS_EXTENDED_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		SA_voidExecuteSecurityAccess(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == WriteDataByIdentifier)
@@ -64,18 +68,34 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	}
 	else if (ReceivedMessage.MessageData[0] == InputOutputControlByIdentifier)
 	{
+		if(UDS_u8ActiveSession != UDS_EXTENDED_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		UDS_voidInputOutputControlByID(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == RequestDownload)
 	{
+		if(UDS_u8ActiveSession != UDS_PROGRAMMING_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		UDS_voidRequestDownload(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == TransferData)
 	{
+		if(UDS_u8ActiveSession != UDS_PROGRAMMING_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		UDS_voidTransferData(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == RequestTransferExit)
 	{
+		if(UDS_u8ActiveSession != UDS_PROGRAMMING_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		UDS_voidRequestTransferExit(&ReceivedMessage);
 	}
 	else if (ReceivedMessage.MessageData[0] == TesterPresent)
@@ -84,6 +104,10 @@ void UDSHandler_voidCallService(INDICATION_SDU ReceivedMessage)
 	}
 	else if (ReceivedMessage.MessageData[0] == ControlDTCSetting)
 	{
+		if(UDS_u8ActiveSession != UDS_EXTENDED_SESSION)
+		{
+			UDSHandler_voidSendNegResponse(ReceivedMessage.MessageData[0], serviceNotSupportedInActiveSession);
+		}
 		UDS_voidControlDTCSetting(&ReceivedMessage);
 	}
 	else
