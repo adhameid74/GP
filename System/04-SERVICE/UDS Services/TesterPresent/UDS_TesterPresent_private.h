@@ -13,7 +13,7 @@
 #define UDS_TESTERPRESENT_PRIVATE_H_
 
 #define zeroSubFunction								0
-#define SID											0x3E
+
 #define POS_RESPONSE_SID							0x7E
 
 #endif
