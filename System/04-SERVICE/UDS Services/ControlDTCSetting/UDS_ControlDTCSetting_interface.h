@@ -12,6 +12,6 @@
 #ifndef UDS_ControlDTCSetting_INTERFACE_H
 #define UDS_ControlDTCSetting_INTERFACE_H
 
-void UDS_voidControlDTCSetting(INDICATION_SDU message);
+void UDS_voidControlDTCSetting(INDICATION_SDU* message);
 
 #endif

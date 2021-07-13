@@ -19,7 +19,7 @@
 #include "UDS_ControlDTCSetting_private.h"
 #include "UDS_ControlDTCSetting_config.h"
 
-void UDS_voidControlDTCSetting(INDICATION_SDU message)
+void UDS_voidControlDTCSetting(INDICATION_SDU* message)
 {
-	
+
 }
