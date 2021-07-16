@@ -45,5 +45,6 @@ extern u8  CAR_DIRECTION_whatShouldIdo;
  * @param ReceivedMessage 
  */
 void UDS_voidInputOutputControlByID(INDICATION_SDU* ReceivedMessage);
+void UDS_voidResetInputOutputControlByID();
 
 #endif

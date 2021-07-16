@@ -15,6 +15,8 @@
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
 
+#include "UDS_ControlDTCSetting_interface.h"
+
 #include "UDS_DiagnosticSessionControl_interface.h"
 #include "UDS_DiagnosticSessionControl_private.h"
 #include "UDS_DiagnosticSessionControl_config.h"
@@ -35,6 +37,8 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
+		UDS_u8DTCSetting = DTC_SETTING_ON;
+		UDS_voidResetInputOutputControlByID();
 		return;
 	}
 	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage->MessageData[1])
