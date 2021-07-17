@@ -23,4 +23,6 @@
 
 #define MUART_TIMEOUT       1000
 
+#define UART1_RX_INTERRUPT		1
+
 #endif

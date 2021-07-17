@@ -26,6 +26,6 @@ typedef struct
 #define PASSED_THRESHOLD           -10
 #define AGING_THRESHOLD            255
 
-static dtcItem_t UART_DTC[DTCNUM];
+//static dtcItem_t UART_DTC[DTCNUM];
 
 #endif

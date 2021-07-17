@@ -6,15 +6,20 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
-#include "DTC_interface.h"
+//#include "DTC_interface.h"
 
 #include  "UART_interface.h"
 #include  "UART_config.h"
 #include  "UART_private.h"
 
+static void (*UART_CallBack[2]) (void) = {NULL};
+
 void MUART_voidInit(u8 Copy_u8UartNumber)
 {
 	if(Copy_u8UartNumber==MUART1){
+		#if UART1_RX_INTERRUPT == 1
+			SET_BIT(MUART->CR1,5);
+		#endif
 		#if MUART_BAUD_RATE == 9600
 			MUART->BRR = 0x341;
 		#elif MUART_BAUD_RATE == 115200
@@ -39,6 +44,7 @@ void MUART_voidInit(u8 Copy_u8UartNumber)
 		/*CLR STATUS REGISTER*/
 		MUART2->SR = 0;
 	}
+	/*
     for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
     {
         UART_DTC[Local_u8Counter].Property->Code = DTC_UARTTxFailure + Local_u8Counter;
@@ -46,6 +52,7 @@ void MUART_voidInit(u8 Copy_u8UartNumber)
         UART_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;
         UART_DTC[Local_u8Counter].Property->AgingThreshold = AGING_THRESHOLD;
     }
+    */
 }
 
 u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[])
@@ -64,10 +71,10 @@ u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[])
 			}
 			if ( Local_u16Timer == MUART_TIMEOUT )
 			{
-				DTC_u8DetectFault(&UART_DTC[0], 1);
+				//DTC_u8DetectFault(&UART_DTC[0], 1);
 				return TIMEOUT_ERROR;
 			}
-			DTC_u8DetectFault(&UART_DTC[0], 0);
+			//DTC_u8DetectFault(&UART_DTC[0], 0);
 			i++;
 		}
 	}
@@ -84,10 +91,10 @@ u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[])
 			}
 			if ( Local_u16Timer == MUART_TIMEOUT )
 			{
-				DTC_u8DetectFault(&UART_DTC[0], 1);
+				//DTC_u8DetectFault(&UART_DTC[0], 1);
 				return TIMEOUT_ERROR;
 			}
-			DTC_u8DetectFault(&UART_DTC[0], 0);
+			//DTC_u8DetectFault(&UART_DTC[0], 0);
 			i++;
 		}
 	}
@@ -140,10 +147,10 @@ u8 MUART_u8Receive(u8 Copy_u8UartNumber)
 		}
 		if(timeout == MUART_TIMEOUT)
 		{
-			DTC_u8DetectFault(&UART_DTC[1], 1);
+			//DTC_u8DetectFault(&UART_DTC[1], 1);
 			return 255;
 		}
-		DTC_u8DetectFault(&UART_DTC[1], 0);
+		//DTC_u8DetectFault(&UART_DTC[1], 0);
 		return MUART->DR;
 	}
 	else
@@ -154,14 +161,28 @@ u8 MUART_u8Receive(u8 Copy_u8UartNumber)
 		}
 		if(timeout == MUART_TIMEOUT)
 		{
-			DTC_u8DetectFault(&UART_DTC[1], 1);
+			//DTC_u8DetectFault(&UART_DTC[1], 1);
 			return 255;
 		}
-		DTC_u8DetectFault(&UART_DTC[1], 0);
+		//DTC_u8DetectFault(&UART_DTC[1], 0);
 		return MUART2->DR;
 	}
 }
-
+MUART_voidSetCallback(void (*CallBackFunc) (void), u8 Copy_u8UartNumber)
+{
+	UART_CallBack[Copy_u8UartNumber-1] = CallBackFunc;
+}
+USART1_IRQHandler(void)
+{
+	if(UART_CallBack[0] != NULL)
+	{
+		UART_CallBack[0]();
+	}
+	if(UART_CallBack[1] != NULL)
+	{
+		UART_CallBack[1]();
+	}
+}
 /*
 u8 MUART_u8Receive2(u8 Copy_u8UartNumber)
 {
