@@ -11,8 +11,11 @@
  #ifndef DOCAN_INTERFACE_H
  #define DOCAN_INTERFACE_H
 
+ #include "CAN_interface.h"
+
  #define SOURCE_ADDRESS 0x55
  #define TARGET_ADDRESS 0x56
+ #define BUFFERSIZEINBYTES  50
 
  typedef struct {
 	 u16 u12:12;
@@ -23,7 +26,7 @@
 	 u8 TA ;
 	 //TAtype
 	 //AE  
-	 u8* MessageData ;
+	 u8 MessageData[BUFFERSIZEINBYTES] ;
 	 u12 Length ;
 	 
  }REQUEST_SDU;
@@ -33,7 +36,7 @@
 	 u8 TA ;
 	 //TAtype
 	 //AE
-	 u8* MessageData ;
+	 u8 MessageData[BUFFERSIZEINBYTES] ;
 	 u12 Length ;
 	 //RESULT_t Result ;
 	 
@@ -47,7 +50,7 @@
  INDICATION_SDU Received_Data ;
  REQUEST_SDU RequestMassage ;
  void DoCAN_voidRequestUsData(REQUEST_SDU SDU);
- void DoCAN_voidIndicateUsData();
+ void DoCAN_voidIndicateUsData(CAN_msg_t CAN_Message);
  void DoCAN_voidSetCallBackForMassage(void (*FPtr)(INDICATION_SDU SDU));
  void DoCAN_voidSetCallBackForFlowControl(void (*FPtr)(void));
  

@@ -122,8 +122,9 @@ void UDSHandler_voidSendNegResponse(u8 Copy_u8SID, u8 Copy_u8NRC)
 	NegativeResponse.SA = SOURCE_ADDRESS;
 	NegativeResponse.TA = TARGET_ADDRESS;
 	NegativeResponse.Length.u12 = NRC_LENGTH;
-	u8 Local_au8Data[NRC_LENGTH] = {NRC_ID , Copy_u8SID , Copy_u8NRC};
-	NegativeResponse.MessageData = Local_au8Data;
+	NegativeResponse.MessageData[0] = NRC_ID;
+	NegativeResponse.MessageData[1] = Copy_u8SID;
+	NegativeResponse.MessageData[2] = Copy_u8NRC;
 	DoCAN_voidRequestUsData(NegativeResponse);
 }
 
@@ -133,6 +134,9 @@ void UDSHandler_voidSendPosResponse(u8* Copy_pu8Message, u8 Copy_u8Length)
 	PositiveResponse.SA = SOURCE_ADDRESS;
 	PositiveResponse.TA = TARGET_ADDRESS;
 	PositiveResponse.Length.u12 = Copy_u8Length;
-	PositiveResponse.MessageData = Copy_pu8Message;
+	for(u8 Local_u8Counter =0; Local_u8Counter< Copy_u8Length; Local_u8Counter++)
+	{
+		PositiveResponse.MessageData[Local_u8Counter] = Copy_pu8Message[Local_u8Counter];
+	}
 	DoCAN_voidRequestUsData(PositiveResponse);
 }
