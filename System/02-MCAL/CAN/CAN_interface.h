@@ -15,12 +15,6 @@
 typedef u8 TX_STATE_t;
 
 /**
- * @brief Macros of all CAN messages IDs
- * 
- */
-#define CAN_ID_IMAGE_INFO				10
-
-/**
  * @brief Macros of frame types (RTR)
  * 
  */

@@ -25,7 +25,7 @@ void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage)
 {
 	if (ReceivedMessage->Length.u12 != 2)
 	{
-		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(TesterPresent, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
 	if(ReceivedMessage->MessageData[1] == zeroSubFunction)
@@ -37,7 +37,7 @@ void UDS_voidTesterPresent(INDICATION_SDU* ReceivedMessage)
 	}
 	else
 	{
-		UDSHandler_voidSendNegResponse(SID, subFunctionNotSupported);
+		UDSHandler_voidSendNegResponse(TesterPresent, subFunctionNotSupported);
 		return;
 	}
 }

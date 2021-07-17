@@ -14,6 +14,8 @@
 
 #include "EEPROM_interface.h"
 
+#include "UDS_ControlDTCSetting_interface.h"
+
 #include "DTC_interface.h"
 #include "DTC_private.h"
 #include "DTC_config.h"
@@ -38,46 +40,61 @@ void dtcSetPassed(dtcItem_t* it)
 
 u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 {
-	u8 StatusBits;
-	if(isFault)
+	if(UDS_u8DTCSetting == DTC_SETTING_ON)
 	{
-		if(it->FaultDetectionCounter < it->Property->TestFailedThreshold)
+		u8 StatusBits;
+		if(isFault)
 		{
-			if(it->FaultDetectionCounter < 0)
-				it->FaultDetectionCounter = 0;
-			else
-				it->FaultDetectionCounter++;
-		}
-		else
-		{
-			if(!it->Status.TestFailed)
+			if(it->FaultDetectionCounter < it->Property->TestFailedThreshold)
 			{
-				dtcSetFault(it);
-				StatusBits=0x07;
-				StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-				HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
-				return DTC_TEST_RESULT_FAILED;
+				if(it->FaultDetectionCounter < 0)
+					it->FaultDetectionCounter = 0;
+				else
+					it->FaultDetectionCounter++;
+			}
+			else
+			{
+				if(!it->Status.TestFailed)
+				{
+					dtcSetFault(it);
+					StatusBits=0x07;
+					StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
+					HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
+					return DTC_TEST_RESULT_FAILED;
+				}
 			}
 		}
-	}
-	else
-	{
-		if(it->FaultDetectionCounter > it->Property->TestPassedThreshold)
-		{
-			if(it->FaultDetectionCounter > 0)
-				it->FaultDetectionCounter = 0;
-			else
-				it->FaultDetectionCounter--;
-		}
 		else
 		{
-			if(it->Status.TestFailed || it->Status.TestNotCompletedThisOperationCycle)
+			if(it->FaultDetectionCounter > it->Property->TestPassedThreshold)
 			{
-				it->Status.TestFailed = 0;
-				it->Status.TestNotCompletedThisOperationCycle = 0;
-				if (it->Status.TestFailedThisOperationCycle)
+				if(it->FaultDetectionCounter > 0)
+					it->FaultDetectionCounter = 0;
+				else
+					it->FaultDetectionCounter--;
+			}
+			else
+			{
+				if(it->Status.TestFailed || it->Status.TestNotCompletedThisOperationCycle)
 				{
-					if(it->Property->Bits.AutoRestore)
+					it->Status.TestFailed = 0;
+					it->Status.TestNotCompletedThisOperationCycle = 0;
+					if (it->Status.TestFailedThisOperationCycle)
+					{
+						if(it->Property->Bits.AutoRestore)
+						{
+							dtcSetPassed(it);
+							StatusBits=0x02;
+							StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
+							HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
+							return DTC_TEST_RESULT_PASSED;
+						}
+						else if(it->Property->Bits.IsCritical)                  
+						{
+							return DTC_TEST_RESULT_UNCOMPLITED;
+						}
+					}
+					else
 					{
 						dtcSetPassed(it);
 						StatusBits=0x02;
@@ -85,29 +102,21 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 						HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 						return DTC_TEST_RESULT_PASSED;
 					}
-					else if(it->Property->Bits.IsCritical)                  
-					{
-						return DTC_TEST_RESULT_UNCOMPLITED;
-					}
 				}
 				else
 				{
-					dtcSetPassed(it);
 					StatusBits=0x02;
+					StatusBits|=( it->Status.TestFailedThisOperationCycle<<(2));
 					StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
 					HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
 					return DTC_TEST_RESULT_PASSED;
 				}
 			}
-			else
-			{
-				StatusBits=0x02;
-				StatusBits|=( it->Status.TestFailedThisOperationCycle<<(2));
-				StatusBits|=( it->Property->Bits.WarningIndicatorRequested<<(3));
-				HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, StatusBits);
-				return DTC_TEST_RESULT_PASSED;
-			}
 		}
+		return DTC_TEST_RESULT_UNCOMPLITED;
 	}
-	return DTC_TEST_RESULT_UNCOMPLITED;
+	else
+	{
+		return DTC_TEST_RESULT_UNCOMPLITED;
+	}
 }

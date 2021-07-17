@@ -71,6 +71,16 @@ void UDS_voidInputOutputControlByID(INDICATION_SDU* ReceivedMessage)
 	UDSHandler_voidSendPosResponse(Local_u8PosResponse, 5);
 }
 
+void UDS_voidResetInputOutputControlByID()
+{
+	USONIC1_whatShouldIdo = returnControlToECU;
+	USONIC2_whatShouldIdo = returnControlToECU;
+	VOLT_whatShouldIdo = returnControlToECU;
+	SPEED_whatShouldIdo = returnControlToECU;
+	CAR_SPEED_whatShouldIdo = returnControlToECU;
+	CAR_DIRECTION_whatShouldIdo = returnControlToECU;
+}
+
 u16 ExecutecontrolOptionRecord(ControlOptionRecord ControlRecord)   // the return size to be confirmed
 {
 	u8 dumb;

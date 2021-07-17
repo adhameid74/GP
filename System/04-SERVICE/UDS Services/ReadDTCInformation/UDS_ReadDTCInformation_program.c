@@ -24,12 +24,12 @@
 #include "UDS_ReadDTCInformation_config.h"
 
 
-u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
+void UDS_voidReadDTCInformation( INDICATION_SDU *message)
 {
     if (message.Length.u12 != 3)
 	{
 		UDSHandler_voidSendNegResponse(ReadDTCInformation,incorrectMessageLengthOrInvalidFormat);
-		return 0;
+		return ;
 	}
     u8 Local_Au8dtc[DTC_NUMBER];
 	u8 Local_u8temp,Local_u8counter=0;
@@ -70,7 +70,6 @@ u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 			Local_u8temp+=2;
 		}
 		UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce,(2*Local_u8counter)+3);
-		return 1;
     }
     else if(message.MessageData[1] == reportNumberOfMirrorMemoryDTCByStatusMask) //reportNumberOfMirrorMemoryDTCByStatusMask
     {
@@ -92,12 +91,9 @@ u8 UDS_u8ReadDTCInformation( INDICATION_SDU message)
 		}
 		u8 Local_Au8PositiveResponce2[4]={POS_RESPONSE_SID,reportNumberOfMirrorMemoryDTCByStatusMask,DTCStatusAvailabilityMask,Local_u8counter};
 		UDSHandler_voidSendPosResponse(Local_Au8PositiveResponce2,4);
-		return 1;
     }
-
     else
     {
 		UDSHandler_voidSendNegResponse(ReadDTCInformation,subFunctionNotSupported);
-		return 0;
     }
 }

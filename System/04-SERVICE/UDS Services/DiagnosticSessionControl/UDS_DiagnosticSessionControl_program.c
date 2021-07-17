@@ -15,6 +15,8 @@
 #include "DoCAN_interface.h"
 #include "UDSHandler_interface.h"
 
+#include "UDS_ControlDTCSetting_interface.h"
+
 #include "UDS_DiagnosticSessionControl_interface.h"
 #include "UDS_DiagnosticSessionControl_private.h"
 #include "UDS_DiagnosticSessionControl_config.h"
@@ -26,7 +28,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 {
 	if (ReceivedMessage->Length.u12 != 2)
 	{
-		UDSHandler_voidSendNegResponse(SID, incorrectMessageLengthOrInvalidFormat);
+		UDSHandler_voidSendNegResponse(DiagnosticSessionControl, incorrectMessageLengthOrInvalidFormat);
 		return;
 	}
 	if (UDS_DEFAULT_SESSION == ReceivedMessage->MessageData[1])
@@ -35,6 +37,8 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 		UDSHandler_voidSendPosResponse(Local_au8PosResponse, 2);
 		UDS_u8SessionTimer = 0;
 		UDS_u8ActiveSession = UDS_DEFAULT_SESSION;
+		UDS_u8DTCSetting = DTC_SETTING_ON;
+		UDS_voidResetInputOutputControlByID();
 		return;
 	}
 	else if (UDS_PROGRAMMING_SESSION == ReceivedMessage->MessageData[1])
@@ -49,7 +53,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
+			UDSHandler_voidSendNegResponse(DiagnosticSessionControl, conditionsNotCorrect);
 			return;
 		}
 		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_EXTENDED_SESSION};
@@ -62,7 +66,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 	{
 		if (UDS_PROGRAMMING_SESSION == UDS_u8ActiveSession)
 		{
-			UDSHandler_voidSendNegResponse(SID, conditionsNotCorrect);
+			UDSHandler_voidSendNegResponse(DiagnosticSessionControl, conditionsNotCorrect);
 			return;
 		}
 		u8 Local_au8PosResponse[2] = {POS_RESPONSE_SID, UDS_SAFETY_SESSION};
@@ -73,7 +77,7 @@ void UDS_voidDiagnosticSessionControl(INDICATION_SDU* ReceivedMessage)
 	}
 	else
 	{
-		UDSHandler_voidSendNegResponse(SID, subFunctionNotSupported);
+		UDSHandler_voidSendNegResponse(DiagnosticSessionControl, subFunctionNotSupported);
 		return;
 	}
 }
