@@ -3,14 +3,14 @@
 
 #include "RCC_interface.h"
 #include "DIO_interface.h"
-#include "CAN_interface.h"
-#include "DoCAN_interface.h"
+//#include "CAN_interface.h"
+//#include "DoCAN_interface.h"
 #include "NVIC_interface.h"
 #include "UART_interface.h"
 
-static u8 ReceivedCommand[50];
+volatile static u8 ReceivedCommand[50];
 
-void GetDatafromNodeMCU(u8 Data);
+void GetDatafromNodeMCU(void);
 
 void main()
 {
@@ -33,8 +33,22 @@ void main()
     }
 }
 
-void GetDatafromNodeMCU(u8 Data)
+void GetDatafromNodeMCU(void)
 {
+	u8 Data = MUART_u8Receive(MUART1);
     static u8 Local_u8Index = 0;
+    if( (Data!='\r'))
+    {
+        ReceivedCommand[Local_u8Index] = Data;
+        Local_u8Index++;
+
+    }
+    else
+    {
+    	ReceivedCommand[Local_u8Index]='\0';
+    	Local_u8Index = 0;
+    	MUART_u8Transmit(MUART1,"received: ");
+    	MUART_u8Transmit(MUART1,ReceivedCommand);
+    }
 
 }
