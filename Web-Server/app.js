@@ -124,7 +124,7 @@ io.on('connection', function (socket , data) {
 
   socket.on("diagnose",data=>{
       console.log(data);
-      io.sockets.emit('diagnose', { message: data });
+      io.sockets.emit('diagnose', { data });
   })
   
 //   socket.emit("he5a2",{ message: 'Message from server!' });
@@ -140,7 +140,6 @@ let timeout = setTimeout(client_disconnected , 4000);
     clearInterval(timeout);
     timeout = setTimeout(client_disconnected , 4000);
     io.sockets.emit('connected', { message: data.Name });
-    //socket.emit('Event2',{Name: "lol xd"});
    });
 
 function client_disconnected(){
