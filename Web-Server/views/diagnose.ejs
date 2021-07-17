@@ -380,16 +380,16 @@
                         'RequestDownload','TransferData','RequestTransferExit'];
         var Subfunctions = { 'DiagnosticSessionControl': ['defaultSession','programmingSession','extendedDiagnosticSession','safetySystemDiagnosticSession'],
                             'ECUReset': ['softReset'],
-                            'SecurityAccess': [],
+                            'SecurityAccess': [''],
                             'TesterPresent': ['zeroSubFunction'],
-                            'ReadDataByIdentifier': [],
-                            'WriteDataByIdentifier': [],
-                            'ClearDiagnosticInformation': [],
+                            'ReadDataByIdentifier': [''],
+                            'WriteDataByIdentifier': [''],
+                            'ClearDiagnosticInformation': [''],
                             'ReadDTCInformation': ['reportMirrorMemoryDTCByStatusMask','reportNumberOfMirrorMemoryDTCByStatusMask'],
                             'InputOutputControlByIdentifier': ['returnControlToECU','resetToDefault','freezeCurrentState','shortTermAdjustment'],
-                            'RequestDownload': [],
-                            'TransferData': [],
-                            'RequestTransferExit': []
+                            'RequestDownload': [''],
+                            'TransferData': [''],
+                            'RequestTransferExit': ['']
                           };
 
         $.each(Services, function(i) {
@@ -434,7 +434,106 @@
         console.log("service selected is : ",Service);
         console.log("subfunction selected is : ",Subfucntion);
         console.log("parameters :",parameters)
-        var message = Service.concat(' ',Subfucntion,' ',parameters);
+        var ServiceID ;
+        var SubfunctionID = "";
+        // var str = $("#user-message").val();
+      if(Service === "DiagnosticSessionControl") // DiagnosticSessionControl
+      {
+        ServiceID= "10";
+        if(Subfucntion === "defaultSession")
+        {
+          SubfunctionID = "01";
+        }
+        else if (Subfucntion === "programmingSession")
+        {
+          SubfunctionID = "02";
+        }
+        else if (Subfucntion === "extendedDiagnosticSession")
+        {
+          SubfunctionID = "03";
+        }
+        else if (Subfucntion === "safetySystemDiagnosticSession")
+        {
+          SubfunctionID = "04";
+        }
+      }
+      else if(Service === "ECUReset") // ECUReset
+      {
+        ServiceID = "11";
+        if(Subfucntion === "softReset")
+        {
+          SubfunctionID = "03";
+        }
+      }
+      else if(Service === "SecurityAccess") // SecurityAccess
+      {
+        ServiceID= "27";
+      }
+      else if(Service === "TesterPresent") // TesterPresent
+      {
+        ServiceID= "3E";
+        if(Subfucntion === "zeroSubFunction")
+        {
+          SubfunctionID = "00";
+        }
+      }
+      else if(Service === "ReadDataByIdentifier") // ReadDataByIdentifier
+      {
+        ServiceID= "22";
+      }
+      else if(Service === "WriteDataByIdentifier") // WriteDataByIdentifier
+      {
+        ServiceID= "2E";
+      }
+      else if(Service === "ClearDiagnosticInformation") // ClearDiagnosticInformation
+      {
+        ServiceID= "14";
+      }
+      else if(Service === "ReadDTCInformation") // ReadDTCInformation
+      {
+        ServiceID= "19";
+        if(Subfucntion === "reportMirrorMemoryDTCByStatusMask")
+        {
+          SubfunctionID = "0F";
+        }
+        else if(Subfucntion === "reportNumberOfMirrorMemoryDTCByStatusMask")
+        {
+          SubfunctionID = "11";
+        }
+      }
+      else if(Service === "IOControlByIdentifier") // IOControlByIdentifier
+      {
+        ServiceID= "2F";
+        if(Subfucntion === "returnControlToECU")
+        {
+          SubfunctionID = "00";
+        }
+        else if(Subfucntion === "resetToDefault")
+        {
+          SubfunctionID = "01";
+        }
+        else if(Subfucntion === "freezeCurrentState")
+        {
+          SubfunctionID = "02";
+        }
+        else if(Subfucntion === "shortTermAdjustment")
+        {
+          SubfunctionID = "03";
+        }
+      }
+      else if(Service === "RequestDownload") // RequestDownload
+      {
+        ServiceID= "34";
+      }
+      else if(Service === "TransferData") // TransferData
+      {
+        ServiceID= "36";
+      }
+      else if(Service === "RequestTransferExit") // RequestTransferExit
+      {
+        ServiceID= "37";
+      }
+        var message = ServiceID.concat(' ',Subfucntion,' ',parameters);
         socket.emit('diagnose' ,message);
     });
 
