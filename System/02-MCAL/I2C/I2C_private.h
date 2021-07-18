@@ -45,5 +45,6 @@ typedef struct{
 #define AGING_THRESHOLD            255
 
 static dtcItem_t I2C_DTC[DTCNUM];
- 
+static dtcProperty_t I2C_PROP[DTCNUM];
+
 #endif 

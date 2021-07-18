@@ -32,6 +32,10 @@ u16 VSEN_u16ReadVoltage()
 	{
 		for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
 		{
+			VSEN_DTC[Local_u8Counter].Status = DTC_STATUS_MASK;
+			VSEN_DTC[Local_u8Counter].FaultDetectionCounter = 0;
+			VSEN_DTC[Local_u8Counter].Property = &VSEN_PROP[Local_u8Counter];
+			VSEN_DTC[Local_u8Counter].Property->Bits = 0;
 			VSEN_DTC[Local_u8Counter].Property->Code = DTC_VSenVoltageHigh + Local_u8Counter;
 			VSEN_DTC[Local_u8Counter].Property->TestFailedThreshold = FAILED_THRESHOLD;
 			VSEN_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;

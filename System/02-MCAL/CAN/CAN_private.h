@@ -140,5 +140,6 @@ static void ReadMsg(CAN_msg_t* Copy_ptrMsg, u8 Copy_u8FIFOID);
 #define AGING_THRESHOLD         		  		255
 
 static dtcItem_t CAN_DTC[DTCNUM];
+static dtcProperty_t CAN_PROP[DTCNUM];
 
 #endif

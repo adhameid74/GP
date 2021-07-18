@@ -46,6 +46,10 @@ void MI2C_voidInit()
 
     for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
     {
+		I2C_DTC[Local_u8Counter].Status = DTC_STATUS_MASK;
+		I2C_DTC[Local_u8Counter].FaultDetectionCounter = 0;
+		I2C_DTC[Local_u8Counter].Property = &I2C_PROP[Local_u8Counter];
+		I2C_DTC[Local_u8Counter].Property->Bits = 0;
         I2C_DTC[Local_u8Counter].Property->Code = DTC_I2CStartBitNotGenerated + Local_u8Counter;
         I2C_DTC[Local_u8Counter].Property->TestFailedThreshold = FAILED_THRESHOLD;
         I2C_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;

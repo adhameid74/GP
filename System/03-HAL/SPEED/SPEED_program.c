@@ -32,6 +32,10 @@ void SPEED_voidGetReadingAsynch()
 	{
 		for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
 		{
+			SPEED_DTC[Local_u8Counter].Status = DTC_STATUS_MASK;
+			SPEED_DTC[Local_u8Counter].FaultDetectionCounter = 0;
+			SPEED_DTC[Local_u8Counter].Property = &SPEED_PROP[Local_u8Counter];
+			SPEED_DTC[Local_u8Counter].Property->Bits = 0;
 			SPEED_DTC[Local_u8Counter].Property->Code = DTC_SpeedNotMatched + Local_u8Counter;
 			SPEED_DTC[Local_u8Counter].Property->TestFailedThreshold = FAILED_THRESHOLD;
 			SPEED_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;

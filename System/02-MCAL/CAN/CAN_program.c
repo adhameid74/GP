@@ -37,8 +37,12 @@ void CAN_voidInit()
 
     for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
     {
+		CAN_DTC[Local_u8Counter].Status = DTC_STATUS_MASK;
+		CAN_DTC[Local_u8Counter].FaultDetectionCounter = 0;
+		CAN_DTC[Local_u8Counter].Property = &CAN_PROP[Local_u8Counter];
         CAN_DTC[Local_u8Counter].Property->Code = DTC_CANTxFailure+Local_u8Counter;
         CAN_DTC[Local_u8Counter].Property->AgingThreshold = AGING_THRESHOLD;
+		CAN_DTC[Local_u8Counter].Property->Bits = 0;
     }
     CAN_DTC[0].Property->TestFailedThreshold = TxFailure_FAILED_THRESHOLD;
     CAN_DTC[0].Property->TestPassedThreshold = TxFailure_PASSED_THRESHOLD;

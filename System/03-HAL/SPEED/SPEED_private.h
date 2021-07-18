@@ -23,6 +23,8 @@ static u8 Flag = 0;
 #define SPEED_LIMIT                125
 
 static dtcItem_t SPEED_DTC[DTCNUM];
+static dtcProperty_t SPEED_PROP[DTCNUM];
+
 static SPEED_u16PVT;
 
 #endif

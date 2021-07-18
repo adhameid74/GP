@@ -19,6 +19,7 @@
 //static void voidTimeOut (void);
 
 static dtcItem_t dtc_usonic[DTCNUM];
+static dtcProperty_t USONIC_PROP[DTCNUM];
 
 static f32 USONIC1_f32LastValue;
 static f32 USONIC2_f32LastValue;

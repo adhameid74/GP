@@ -6,7 +6,7 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
-//#include "DTC_interface.h"
+#include "DTC_interface.h"
 
 #include  "UART_interface.h"
 #include  "UART_config.h"
@@ -44,15 +44,17 @@ void MUART_voidInit(u8 Copy_u8UartNumber)
 		/*CLR STATUS REGISTER*/
 		MUART2->SR = 0;
 	}
-	/*
     for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
     {
+		UART_DTC[Local_u8Counter].Status = DTC_STATUS_MASK;
+		UART_DTC[Local_u8Counter].FaultDetectionCounter = 0;
+		UART_DTC[Local_u8Counter].Property = &UART_PROP[Local_u8Counter];
+		UART_DTC[Local_u8Counter].Property->Bits = 0;
         UART_DTC[Local_u8Counter].Property->Code = DTC_UARTTxFailure + Local_u8Counter;
         UART_DTC[Local_u8Counter].Property->TestFailedThreshold = FAILED_THRESHOLD;
         UART_DTC[Local_u8Counter].Property->TestPassedThreshold = PASSED_THRESHOLD;
         UART_DTC[Local_u8Counter].Property->AgingThreshold = AGING_THRESHOLD;
     }
-    */
 }
 
 u8 MUART_u8Transmit(u8 Copy_u8UartNumber,u8 arr[])

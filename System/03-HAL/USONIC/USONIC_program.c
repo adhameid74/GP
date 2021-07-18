@@ -45,6 +45,10 @@ void USONIC_voidInit()
     //DTC PART
     for (u8 Local_u8Counter = 0; Local_u8Counter < DTCNUM; Local_u8Counter++)
     {
+        dtc_usonic[Local_u8Counter].Status = DTC_STATUS_MASK;
+		dtc_usonic[Local_u8Counter].FaultDetectionCounter = 0;
+		dtc_usonic[Local_u8Counter].Property = &USONIC_PROP[Local_u8Counter];
+		dtc_usonic[Local_u8Counter].Property->Bits = 0;
         dtc_usonic[Local_u8Counter].Property->Code=DTC_Usonic1EchoDisconnect+Local_u8Counter;
         dtc_usonic[Local_u8Counter].Property->TestFailedThreshold=FAILED_THRESHOLD;
         dtc_usonic[Local_u8Counter].Property->TestPassedThreshold=PASSED_THRESHOLD;

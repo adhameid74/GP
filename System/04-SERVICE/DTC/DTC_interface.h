@@ -46,7 +46,7 @@ typedef enum
 	DTC_UARTRxFailure = 0x17,
 } dtcCategory_e;
 
-
+#define DTC_STATUS_MASK                         0x10
 
 	// **************************** General Failure Information ***********************************
 	
@@ -141,7 +141,7 @@ typedef enum
 	dctCat_LowFluidLevel = 0x7B,		*/			
 	
 
-
+/*
 typedef union
 {
 	u8 Value;
@@ -156,20 +156,21 @@ typedef union
 		dummy							: 4;
 	};
 } dtcPropBits_t;
-
+*/
 
 
 
 typedef struct
 {
 	u16 Code;			                        //code uniqe for each dtc				
-	dtcPropBits_t Bits;
+	u8 Bits;
 	u8 AgingThreshold;							//the number after which the device may not work probably
 	s8 TestFailedThreshold;						//threshold so that the test is considerd failed
 	s8 TestPassedThreshold;						//threshold so that the test is considerd passed
 	//u16 TestSamplePeriod;					
 } dtcProperty_t;
 
+/*
 typedef struct
 {
 	u8
@@ -180,17 +181,15 @@ typedef struct
 	TestNotCompletedThisOperationCycle	: 	1,		//the test not completed yet
 	dummy1								:	3;
 } dtcStatus_t;
-
+*/
 
 typedef struct
 {
 	dtcProperty_t* Property;	
-	dtcStatus_t Status;
+	u8 Status;
 	s8 FaultDetectionCounter;
 	//u16 SamplePeriodCounter;
 } dtcItem_t;
-
-
 
 u8 DTC_u8DetectFault(dtcItem_t* it, u8 isFault);
 
