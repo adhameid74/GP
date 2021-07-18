@@ -10,8 +10,5 @@
  */
  #ifndef DOCAN_PRIVATE_H
  #define DOCAN_PRIVATE_H
- typedef enum {
-	 OK ,
-	 NOT_OK
- }RESULT_t ;
+
  #endif
