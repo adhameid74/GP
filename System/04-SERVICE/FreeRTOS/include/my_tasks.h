@@ -31,8 +31,6 @@
 #include "VSEN_interface.h"
 
 #include "CAR_interface.h"
-#include "DoCAN_interface.h"
-#include "UDSHandler_interface.h"
 
 volatile u8 Direction ;
 TaskHandle_t USONIC_Handle;
@@ -48,7 +46,6 @@ SemaphoreHandle_t xSemaSpeed ;
 SemaphoreHandle_t xSema ;
 SemaphoreHandle_t xSemaDirection ;
 SemaphoreHandle_t xSemaVoltage ;
-SemaphoreHandle_t xSemaService ;
 
 void vUSOINIC_TASK(void *pv);
 void vSwitchPressed(void *pv);
@@ -59,8 +56,7 @@ void vVoltageSensor(void *pv);
 void vTaskVoltage(void *pv);
 void vSpeedSensor(void *pv);
 void vTaskSpeed(void *pv);
-void vServices(void *pv);
-void semaphore_services(INDICATION_SDU SDU);
+
 
 
 

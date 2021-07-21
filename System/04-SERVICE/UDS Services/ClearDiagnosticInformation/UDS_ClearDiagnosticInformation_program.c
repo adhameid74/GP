@@ -25,7 +25,7 @@
 void UDS_voidClearDiagnosticInformation(INDICATION_SDU *message)
 {
 
-    if (message.Length.u12 != 1)
+    if (message->Length.u12 != 1)
 	{
 		UDSHandler_voidSendNegResponse(ClearDiagnosticInformation,incorrectMessageLengthOrInvalidFormat);
 		return ;
