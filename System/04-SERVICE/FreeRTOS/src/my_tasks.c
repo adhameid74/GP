@@ -87,7 +87,7 @@ void vSwitchPressed(void *pv){
 	xLastWakeTime =xTaskGetTickCount();
 	TickType_t xPeriod =pdMS_TO_TICKS(150);
 	while(1){
-		Direction = MUART_u8Receive(1);
+		Direction = MUART_u8ReceiveTimeOut(1);
 		if(Direction == 'W'|Direction =='w')
 			xSemaphoreGive(xSema);
 		if(Direction=='R' | Direction=='F' |Direction=='B' |Direction=='L' |Direction == 'S' )
@@ -140,7 +140,7 @@ void vVoltageSensor(void *pv){
 	TickType_t xPeriod =pdMS_TO_TICKS(300);
 	u16 Local_u16Value = 0;
 	while(1){
-		Local_u16Value = VSEN_u16ReadVoltage();
+		Local_u16Value = VSEN_u8ReadVoltage();
 		if(Local_u16Value > 0){
 			xSemaphoreGive( xSemaVoltage);
 		}
@@ -185,18 +185,7 @@ void vTaskSpeed(void *pv)
 		}
 	}
 }
-void semaphore_services(INDICATION_SDU SDU)
-{
-	xSemaphoreGiveFromISR(xSemaService,4);
-}
-void vServices(void *pv)
-{
-	while(1){
-		if(xSemaphoreTakeFromISR(xSemaService,4)==pdPASS){
 
-		}
-	}
-}
 
 
 
