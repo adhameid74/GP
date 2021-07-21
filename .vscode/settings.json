@@ -8,6 +8,15 @@
         "uart_private.h": "c",
         "uart_interface.h": "c",
         "fpec_interface.h": "c",
-        "uds_inputoutputcontrolbyidentifier_interface.h": "c"
+        "uds_inputoutputcontrolbyidentifier_interface.h": "c",
+        "uds_controldtcsetting_interface.h": "c",
+        "uds_readdatabyid_interface.h": "c",
+        "uds_diagnosticsessioncontrol_interface.h": "c",
+        "rcc_interface.h": "c",
+        "dtc_interface.h": "c",
+        "can_interface.h": "c",
+        "dio_interface.h": "c",
+        "nvic_interface.h": "c",
+        "docan_interface.h": "c"
     }
 }
