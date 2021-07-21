@@ -99,4 +99,5 @@ u16 VSEN_u16ReadVoltage()
 		DTC_u8DetectFault(&VSEN_DTC[0], 0);
 		DTC_u8DetectFault(&VSEN_DTC[1], 0);
 	}
+	return Local_u16Value;
 }
