@@ -1,0 +1,17 @@
+	xSema = xSemaphoreCreateBinary();
+	xSemaDirection =xSemaphoreCreateBinary();
+	xSemaVoltage =xSemaphoreCreateBinary();
+	xSemaSpeed = xSemaphoreCreateBinary();
+
+
+    xTaskCreate(vBUTTON_Task,"BUTTON_Task",250,NULL,5,&BTask);
+    xTaskCreate(vSwitchPressed,"Blue",250,NULL,4,NULL);
+    xTaskCreate(vSetDirection,"Direction",250,NULL,4,NULL);
+    /********************************************************/
+    xTaskCreate(vVoltageSensor,"V",250,NULL,4,NULL);
+    xTaskCreate(vTaskVoltage,"XX",250,NULL,4,NULL);
+    xTaskCreate(vSpeedSensor,"SS",250,NULL,4,NULL);
+    xTaskCreate(vTaskSpeed,"XXX",250,NULL,4,NULL);
+    /*******************************************************/
+
+    vTaskStartScheduler();
