@@ -107,33 +107,34 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
                 if (Local_u16TimerCount<1766)    //less than 30 cm   
                 {
                 	DTC_u8DetectFault(ptr, 1);
+                    *Copy_pu8Light_Color = USONIC_RED_LIGHT;                //RED LED
+
                 }
                 else if (Local_u16TimerCount>=1766)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_RED_LIGHT;                //RED LED
                 }
 
                 ptr=&dtc_usonic[3];
                 if (Local_u16TimerCount>=1766 && Local_u16TimerCount<5900)    //less than 100 cm
                 {
                 	DTC_u8DetectFault(ptr,1);
+                    *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
                 else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
 
                 ptr=&dtc_usonic[4];
-                if (Local_u16TimerCount>=14750)   //less than 250 cm
+                if (Local_u16TimerCount>=5900)   //less than 250 cm
                 {
                 	DTC_u8DetectFault(ptr, 1);
+                    *Copy_pu8Light_Color = USONIC_GREEN_LIGHT;                   //GREEN LED
                 }
-                else if (Local_u16TimerCount<14750)
+                else if (Local_u16TimerCount<5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_GREEN_LIGHT;                   //GREEN LED
                 }
             }
         }
@@ -199,33 +200,34 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
                 if (Local_u16TimerCount<1766)    //less than 30 cm   
                 {
                 	DTC_u8DetectFault(ptr, 1);
+                    *Copy_pu8Light_Color = USONIC_RED_LIGHT;                //RED LED
+
                 }
                 else if (Local_u16TimerCount>=1766)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_RED_LIGHT;                //RED LED
                 }
 
                 ptr=&dtc_usonic[8];
                 if (Local_u16TimerCount>=1766 && Local_u16TimerCount<5900)    //less than 100 cm
                 {
                 	DTC_u8DetectFault(ptr,1);
+                    *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
                 else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
 
                 ptr=&dtc_usonic[9];
-                if (Local_u16TimerCount>=14750)   //less than 250 cm
+                if (Local_u16TimerCount>=5900 )   //less than 250 cm (14750)
                 {
                 	DTC_u8DetectFault(ptr, 1);
+                	*Copy_pu8Light_Color = USONIC_GREEN_LIGHT;                   //GREEN LED
                 }
-                else if (Local_u16TimerCount<14750)
+                else if (Local_u16TimerCount<5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                    *Copy_pu8Light_Color = USONIC_GREEN_LIGHT;                   //GREEN LED
                 }
             }
         }
