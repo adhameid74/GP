@@ -16,7 +16,7 @@
 #define DTC_TEST_RESULT_UNCOMPLITED			0
 #define DTC_TEST_RESULT_PASSED				1
 #define DTC_TEST_RESULT_FAILED				2
-#define DTC_NUMBER							25
+#define DTC_NUMBER							24
 
 typedef enum
 {
@@ -44,7 +44,6 @@ typedef enum
 	DTC_I2CRxFailure = 0x15,
 	DTC_UARTTxFailure = 0x16,
 	DTC_UARTRxFailure = 0x17,
-	DTC_TestFailure =0x18,
 } dtcCategory_e;
 
 #define DTC_STATUS_MASK                         0x10
