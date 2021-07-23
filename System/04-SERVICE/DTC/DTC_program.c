@@ -12,6 +12,8 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
+#include "DoCAN_interface.h"
+
 #include "EEPROM_interface.h"
 
 #include "UDS_ControlDTCSetting_interface.h"
@@ -63,6 +65,13 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 				if(GET_BIT(it->Status, STATUS_TestFailed) == 0)
 				{
 					dtcSetFault(it);
+					REQUEST_SDU DTCMessage;
+					DTCMessage.SA = SOURCE_ADDRESS;
+					DTCMessage.TA = TARGET_ADDRESS;
+					DTCMessage.MessageData[0] = NOTIFICATION_MSG_ID;
+					DTCMessage.MessageData[1] = it->Property->Code;
+					DTCMessage.Length.u12 = 2;
+					DoCAN_voidRequestUsData(DTCMessage);
 					HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, it->Status);
 					return DTC_TEST_RESULT_FAILED;
 				}

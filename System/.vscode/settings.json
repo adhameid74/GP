@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "uds_requestdownload_interface.h": "c",
-        "eeprom_interface.h": "c"
+        "eeprom_interface.h": "c",
+        "can_interface.h": "c",
+        "dtc_interface.h": "c",
+        "dtc_private.h": "c"
     }
 }
