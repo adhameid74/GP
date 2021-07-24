@@ -115,18 +115,18 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
                 	DTC_u8DetectFault(ptr, 0);
                 }
 
-                ptr=&dtc_usonic[3];
+                //ptr=&dtc_usonic[3];
                 if (Local_u16TimerCount>=1766 && Local_u16TimerCount<5900)    //less than 100 cm
                 {
-                	DTC_u8DetectFault(ptr,1);
+                	//DTC_u8DetectFault(ptr,1);
                     *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
-                else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
+                /*else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                }
+                }*/
 
-                ptr=&dtc_usonic[4];
+                ptr=&dtc_usonic[3];
                 if (Local_u16TimerCount>=5900)   //less than 250 cm
                 {
                 	DTC_u8DetectFault(ptr, 1);
@@ -181,14 +181,14 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
             TIMER_voidSetResetTimer(USONIC_TIMER,TIMER_RESET,0);
         }
 
-        ptr=&dtc_usonic[5];
+        ptr=&dtc_usonic[4];
         if (Local_u8Counter==0xFF)       //ECHO PIN DISCONNECTED OR NOT RECEIVED
         {
         	DTC_u8DetectFault(ptr, 1);
         }
         else{                                                        //READ ANY DISTANCE
         	DTC_u8DetectFault(ptr, 0);
-            ptr=&dtc_usonic[6];
+            ptr=&dtc_usonic[5];
             if (Local_u8Counter2==15000)    //ECHO  NOT RECEIVED
             {
             	DTC_u8DetectFault(ptr, 1);
@@ -196,7 +196,7 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
             else{
             	DTC_u8DetectFault(ptr, 0);
 
-                ptr=&dtc_usonic[7];
+                ptr=&dtc_usonic[6];
                 if (Local_u16TimerCount<1766)    //less than 30 cm   
                 {
                 	DTC_u8DetectFault(ptr, 1);
@@ -208,18 +208,18 @@ f32 USONIC_f32GetDistance(u8 Copy_u8UsonicNumber, u8* Copy_pu8Light_Color)
                 	DTC_u8DetectFault(ptr, 0);
                 }
 
-                ptr=&dtc_usonic[8];
+                //ptr=&dtc_usonic[8];
                 if (Local_u16TimerCount>=1766 && Local_u16TimerCount<5900)    //less than 100 cm
                 {
-                	DTC_u8DetectFault(ptr,1);
+                	//DTC_u8DetectFault(ptr,1);
                     *Copy_pu8Light_Color = USONIC_YELLOW_LIGHT;                    //YELLOW LED
                 }
-                else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
+                /*else if (Local_u16TimerCount<1766  || Local_u16TimerCount>=5900)
                 {
                 	DTC_u8DetectFault(ptr, 0);
-                }
+                }*/
 
-                ptr=&dtc_usonic[9];
+                ptr=&dtc_usonic[7];
                 if (Local_u16TimerCount>=5900 )   //less than 250 cm (14750)
                 {
                 	DTC_u8DetectFault(ptr, 1);

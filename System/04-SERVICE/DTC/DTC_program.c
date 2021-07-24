@@ -68,7 +68,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 					REQUEST_SDU DTCMessage;
 					DTCMessage.SA = SOURCE_ADDRESS;
 					DTCMessage.TA = TARGET_ADDRESS;
-					DTCMessage.MessageData[0] = NOTIFICATION_MSG_ID;
+					DTCMessage.MessageData[0] = DTC_ON_ID;
 					DTCMessage.MessageData[1] = it->Property->Code;
 					DTCMessage.Length.u12 = 2;
 					DoCAN_voidRequestUsData(DTCMessage);
@@ -88,6 +88,12 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 			}
 			else
 			{
+					REQUEST_SDU DTCMessage;
+					DTCMessage.SA = SOURCE_ADDRESS;
+					DTCMessage.TA = TARGET_ADDRESS;
+					DTCMessage.MessageData[0] = DTC_OFF_ID;
+					DTCMessage.MessageData[1] = it->Property->Code;
+					DTCMessage.Length.u12 = 2;
 				if(GET_BIT(it->Status, STATUS_TestFailed) || GET_BIT(it->Status, STATUS_TestNotCompletedThisOperationCycle))
 				{
 					it->Status &= 0xEE;
@@ -96,6 +102,7 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 						if(GET_BIT(it->Property->Bits, BITS_AutoRestore))
 						{
 							dtcSetPassed(it);
+							DoCAN_voidRequestUsData(DTCMessage);
 							HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, it->Status);
 							return DTC_TEST_RESULT_PASSED;
 						}
@@ -107,12 +114,14 @@ u8 DTC_u8DetectFault(dtcItem_t* it,  u8 isFault)
 					else
 					{
 						dtcSetPassed(it);
+						DoCAN_voidRequestUsData(DTCMessage);
 						HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, it->Status);
 						return DTC_TEST_RESULT_PASSED;
 					}
 				}
 				else
 				{
+					DoCAN_voidRequestUsData(DTCMessage);
 					HEEPROM_voidWriteByte(EEPROM_ADDRESS, it->Property->Code, it->Status);
 					return DTC_TEST_RESULT_PASSED;
 				}

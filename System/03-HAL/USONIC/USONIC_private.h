@@ -11,7 +11,7 @@
 #ifndef USONIC_private_H
 #define USONIC_private_H
 
-#define DTCNUM                     10
+#define DTCNUM                     8
 #define FAILED_THRESHOLD           25
 #define PASSED_THRESHOLD           -25
 #define AGING_THRESHOLD            255

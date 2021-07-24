@@ -22,7 +22,8 @@
 #define STATUS_WarningIndicatorRequested		        3
 #define STATUS_TestNotCompletedThisOperationCycle       4
 
-#define NOTIFICATION_MSG_ID			                    0x20
+#define DTC_ON_ID			                            0x20
+#define DTC_OFF_ID			                            0x25
 
 void dtcSetFault(dtcItem_t* it);
 void dtcSetPassed(dtcItem_t* it);
